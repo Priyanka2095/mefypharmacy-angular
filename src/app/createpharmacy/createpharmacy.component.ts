@@ -23,6 +23,8 @@ export class CreatepharmacyComponent implements OnInit {
 
     });
 }
+
+
 savePharmacyForm() {
   this.submitted = true;
   if (this.pharmacyform.valid) {
