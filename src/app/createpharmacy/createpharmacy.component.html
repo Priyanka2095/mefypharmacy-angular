@@ -2,18 +2,21 @@
 <div class="createpharmacy">
   <div class="container">
     <div class="formContent">
-      <form  [formGroup]="pharmacyform" class="logformp">
+      <form  [formGroup]="pharmacyForm" class="logformp">
         <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group">
               <label>Pharmacy Name</label>
               <input formControlName="pharmacyName" type="text" class="form-control">
+              <p class="errormessage" *ngIf="pharmacyFormErrors.pharmacyName.required || (pharmacyForm.controls.pharmacyName.pristine && submitted)">Name can not be empty</p>
+
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label>Primary Contact:</label>
-              <input formControlName="primarycontact" type="text" class="form-control">
+              <input formControlName="primaryContact" type="text" class="form-control">
+              <p class="errormessage" *ngIf="pharmacyFormErrors.primaryContact.required || (pharmacyForm.controls.primaryContact.pristine && submitted)">Nuber can not be empty</p>
             </div>
           </div>
         </div>
@@ -23,13 +26,15 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Alternate Contact:</label>
-              <input formControlName="alternatecontact" type="text" class="form-control">
+              <input formControlName="alternateContact" type="text" class="form-control">
+              <!-- <p class="errormessage" *ngIf="pharmacyFormErrors.pharmacyName.required || (pharmacyForm.controls.pharmacyName.pristine && submitted)">Name can not be empty</p> -->
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label>Street:</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" formControlName="street">
+              <p class="errormessage" *ngIf="pharmacyFormErrors.street.required || (pharmacyForm.controls.street.pristine && submitted)">Street can not be empty</p>
             </div>
           </div>
         </div>
@@ -38,13 +43,15 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>City:</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" formControlName="city">
+              <p class="errormessage" *ngIf="pharmacyFormErrors.city.required || (pharmacyForm.controls.city.pristine && submitted)">City can not be empty</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label>Country:</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control"formControlName="country">
+              <p class="errormessage" *ngIf="pharmacyFormErrors.country.required || (pharmacyForm.controls.country.pristine && submitted)">Country can not be empty</p>
             </div>
           </div>
         </div>
@@ -53,13 +60,15 @@
             <div class="col-md-6">
         <div class="form-group">
           <label>Zipcode:</label>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" formControlName="zipCode">
+          <p class="errormessage" *ngIf="pharmacyFormErrors.zipCode.required || (pharmacyForm.controls.zipCode.pristine && submitted)">Zip code can not be empty</p>
         </div>
         </div>
         <div class="col-md-6">
         <div class="form-group">
           <label>Email:</label>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" formControlName="email">
+          <p class="errormessage" *ngIf="pharmacyFormErrors.email.required || pharmacyFormErrors.email.email|| (pharmacyForm.controls.email.pristine && submitted)">Email can not be empty or format should be email type</p>
         </div>
       </div>
     </div>

@@ -3,13 +3,14 @@
   <div class="container">
     <div class="formContent">
     <!-- <h1>LOGIN FORM</h1> -->
-    <form class="logformc">
+    <form class="logformc" [formGroup]="userForm">
       <div class="form-group">
         <label>Name</label>
-        <input type="text" class="form-control" id="name">
+        <input type="text" class="form-control" id="name" formControlName="name">
+        <p class="errormessage" *ngIf="userFormErrors.name.required || (userForm.controls.name.pristine && submitted)">Name can not be empty</p>
       </div>
       <div class="text-center">
-      <button type="submit" class="btn sigin">Submit</button>
+      <button type="submit" class="btn sigin" (click)="saveUserForm()">Submit</button>
     </div>
     </form>
   </div>
