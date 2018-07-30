@@ -59,6 +59,8 @@ export class CreatepharmacyComponent implements OnInit {
       email:['',[Validators.required,Validators.email]]
     });
 }
+
+
 savePharmacyForm() {
   // console.log(this.pharmacyForm.value);
 
