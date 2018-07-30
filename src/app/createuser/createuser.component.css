@@ -1,0 +1,27 @@
+/* createuser css */
+.createuser{
+    background-image:  linear-gradient(#c1b1979e, rgba(93, 176, 212, 0.82)), url('./../../assets/images/medicine.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+  }
+  form.logformc {
+    padding: 9em;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  .formContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  button.btn.sigin {
+    margin-right: 1em;
+    background: #3487b7;
+    color: #fff;
+    height: 33px;
+    width: 79px;
+    font-size: 15px;
+  }
+  /* createuser css */

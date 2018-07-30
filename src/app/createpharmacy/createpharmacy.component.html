@@ -1,0 +1,75 @@
+<!-- createpharmacyform -->
+<div class="createpharmacy">
+  <div class="container">
+    <div class="formContent">
+      <form  [formGroup]="pharmacyform" class="logformp">
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Pharmacy Name</label>
+              <input formControlName="pharmacyName" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Primary Contact:</label>
+              <input formControlName="primarycontact" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Alternate Contact:</label>
+              <input formControlName="alternatecontact" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Street:</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City:</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Country:</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-6">
+        <div class="form-group">
+          <label>Zipcode:</label>
+          <input type="text" class="form-control">
+        </div>
+        </div>
+        <div class="col-md-6">
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+        
+
+        <div class="text-center">
+          <button type="submit" class="btn phsigin"(click)="savePharmacyForm()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- createpharmacyform -->
