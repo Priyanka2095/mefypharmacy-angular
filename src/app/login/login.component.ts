@@ -19,17 +19,37 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.createLoginForm()
-  }
-  createLoginForm() {
-    return this.formBuilder.group({
-      phoneNumber: ['', Validators.required]
+
+    this.loginForm.valueChanges.subscribe(() => {
+      this.onLoginFormValuesChanged();
     });
   }
-  // CREATE LOGIN 
-  saveLoginForm() {
-    this.submitted = true;
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+
+onLoginFormValuesChanged() {
+  for (const field in this.loginFormErrors) {
+    if (!this.loginFormErrors.hasOwnProperty(field)) {
+      continue;
+    }
+    // Clear previous errors
+    this.loginFormErrors[field] = {};
+    // Get the control
+    const control = this.loginForm.get(field);
+
+    if (control && control.dirty && !control.valid) {
+      this.loginFormErrors[field] = control.errors;
     }
   }
+}
+createLoginForm() {
+  return this.formBuilder.group({
+    phoneNumber: ['', Validators.required]
+  });
+}
+// CREATE LOGIN 
+saveLoginForm() {
+  this.submitted = true;
+  if (this.loginForm.valid) {
+    console.log(this.loginForm.value);
+  }
+}
 }

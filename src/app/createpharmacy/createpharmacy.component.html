@@ -68,7 +68,9 @@
         <div class="form-group">
           <label>Email:</label>
           <input type="text" class="form-control" formControlName="email">
-          <p class="errormessage" *ngIf="pharmacyFormErrors.email.required || pharmacyFormErrors.email.email|| (pharmacyForm.controls.email.pristine && submitted)">Email can not be empty or format should be email type</p>
+          <p class="errormessage" *ngIf="pharmacyFormErrors.email.required || (pharmacyForm.controls.email.pristine && submitted)">Email can not be empty </p>
+          <p class="errormessage" *ngIf=" pharmacyFormErrors.email.email">Email format should be email type</p>
+
         </div>
       </div>
     </div>
@@ -77,13 +79,16 @@
         <div class="col-md-6">
     <div class="form-group">
       <label>Degree file:</label>
-      <input type="file" class="form-control">
+      <input type="file" class="form-control" formControlName="degree">
+      <p class="errormessage" *ngIf="pharmacyFormErrors.degree.required || (pharmacyForm.controls.degree.pristine && submitted)"> Degree can not be empty</p>
     </div>
     </div>
     <div class="col-md-6">
     <div class="form-group">
       <label>Drug License:</label>
-      <input type="file" class="form-control">
+      <input type="file" class="form-control" formControlName="drug">
+      <p class="errormessage" *ngIf="pharmacyFormErrors.drug.required || (pharmacyForm.controls.drug.pristine && submitted)">Drug License can not be empty </p>
+
     </div>
   </div>
 </div>
@@ -91,7 +96,9 @@
     <div class="col-md-12">
     <div class="form-group">
       <label>Trade License:</label>
-      <input type="file" class="form-control">
+      <input type="file" class="form-control" formControlName="trade">
+      <p class="errormessage" *ngIf="pharmacyFormErrors.trade.required || (pharmacyForm.controls.trade.pristine && submitted)">Trade License can not be empty </p>
+
     </div>
     </div>
   </div>

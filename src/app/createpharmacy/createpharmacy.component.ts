@@ -9,7 +9,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 export class CreatepharmacyComponent implements OnInit {
   pharmacyForm: FormGroup;
   pharmacyFormErrors: any;
-  submitted: boolean = false;
+  submitted: boolean = false;  //SHOW ERROR,IF INVALID FORM IS SUBMITTED
 
   constructor( private formBuilder: FormBuilder) { 
     this.pharmacyFormErrors = {
@@ -20,32 +20,36 @@ export class CreatepharmacyComponent implements OnInit {
       city: {},
       country: {},
       email: {},
+      trade: {},
+      drug: {},
+      degree: {},
     };
   }
   
 
   ngOnInit() {
-    // this.pharmacyForm.valueChanges.subscribe(() => {
-    //   this.onPharmacyFormValuesChanged();
-    // });
     this.pharmacyForm = this.createpharmacyform()
+
+       this.pharmacyForm.valueChanges.subscribe(() => {
+      this.onPharmacyFormValuesChanged();
+    });
   }
+// IT CATCHES ALL CHANGES IN FORM
+  onPharmacyFormValuesChanged() {
+    for (const field in this.pharmacyFormErrors) {
+      if (!this.pharmacyFormErrors.hasOwnProperty(field)) {
+        continue;
+      }
+      // Clear previous errors
+      this.pharmacyFormErrors[field] = {};
+      // Get the control
+      const control = this.pharmacyForm.get(field);
 
-  // onPharmacyFormValuesChanged() {
-  //   for (const field in this.pharmacyFormErrors) {
-  //     if (!this.pharmacyFormErrors.hasOwnProperty(field)) {
-  //       continue;
-  //     }
-  //     // Clear previous errors
-  //     this.pharmacyFormErrors[field] = {};
-  //     // Get the control
-  //     const control = this.pharmacyForm.get(field);
-
-  //     if (control && control.dirty && !control.valid) {
-  //       this.pharmacyFormErrors[field] = control.errors;
-  //     }
-  //   }
-  // }
+      if (control && control.dirty && !control.valid) {
+        this.pharmacyFormErrors[field] = control.errors;
+      }
+    }
+  }
 
   createpharmacyform() {
     return this.formBuilder.group({
@@ -56,15 +60,17 @@ export class CreatepharmacyComponent implements OnInit {
       zipCode:['',Validators.required],
       city:['',Validators.required],
       country:['',Validators.required],
-      email:['',[Validators.required,Validators.email]]
+      email:['',[Validators.required,Validators.email]],
+      drug:['',Validators.required],
+      trade:['',Validators.required],
+      degree:['',Validators.required]
     });
 }
 
-
+// CREATE NEW PHARMACY
 savePharmacyForm() {
-  // console.log(this.pharmacyForm.value);
-
   this.submitted = true;
+    // STOP  HERE IF FORM IS INVALID
   if (this.pharmacyForm.valid) {
     console.log(this.pharmacyForm.value);
 }
