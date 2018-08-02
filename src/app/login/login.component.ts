@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {UserService} from '../services/user.service'
+import { UserService } from '../services/user.service'
+import { Router } from '@angular/router';
+import { exists } from 'fs';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +12,10 @@ import {UserService} from '../services/user.service'
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginFormErrors: any;
-  submitted: boolean = false;
+  x:any;
+  submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
 
-  constructor(private formBuilder: FormBuilder,public userService: UserService,) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService,private router: Router ) {
     this.loginFormErrors = {
       phoneNumber: {},
     };
@@ -26,31 +29,45 @@ export class LoginComponent implements OnInit {
     });
   }
 
-onLoginFormValuesChanged() {
-  for (const field in this.loginFormErrors) {
-    if (!this.loginFormErrors.hasOwnProperty(field)) {
-      continue;
-    }
-    // Clear previous errors
-    this.loginFormErrors[field] = {};
-    // Get the control
-    const control = this.loginForm.get(field);
+// IT CATCHES ALL CHANGES IN FORM
+  onLoginFormValuesChanged() {
+    for (const field in this.loginFormErrors) {
+      if (!this.loginFormErrors.hasOwnProperty(field)) {
+        continue;
+      }
+      // Clear previous errors
+      this.loginFormErrors[field] = {};
+      // Get the control
+      const control = this.loginForm.get(field);
 
-    if (control && control.dirty && !control.valid) {
-      this.loginFormErrors[field] = control.errors;
+      if (control && control.dirty && !control.valid) {
+        this.loginFormErrors[field] = control.errors;
+      }
     }
   }
-}
-createLoginForm() {
-  return this.formBuilder.group({
-    phoneNumber: ['', Validators.required]
-  });
-}
-// CREATE LOGIN 
-saveLoginForm() {
-  this.submitted = true;
-  if (this.loginForm.valid) {
-    console.log(this.loginForm.value);
+  createLoginForm() {
+    return this.formBuilder.group({
+      phoneNumber: ['', Validators.required]
+    });
   }
-}
+  // CREATE LOGIN 
+  saveLoginForm() {
+    this.submitted = true;
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.value);
+    }
+    this.userService.checkUser(this.loginForm.value).subscribe(data => {
+      // debugger;
+      console.log(data);
+      console.log(Object.values(data))
+      // this.x=Object.values(data)
+      // console.log(this.x)
+      // if(this.x==true){
+      // this.router.navigate(['/dashboard'])
+      // }
+    },
+      err => {
+        // this.router.navigate(['/user'])
+      })
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { UserService } from '../services/user.service'
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
@@ -9,22 +9,23 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 export class CreateuserComponent implements OnInit {
   userForm: FormGroup;
   userFormErrors: any;
-  submitted: boolean = false;
-  constructor(private formBuilder: FormBuilder) {
+  submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
+  constructor(private formBuilder: FormBuilder, public userService: UserService) {
 
     this.userFormErrors = {
       name: {},
     };
-   }
+  }
 
   ngOnInit() {
     this.userForm = this.createuserform()
-    
+
     this.userForm.valueChanges.subscribe(() => {
       this.onUserFormValuesChanged();
     });
   }
-    onUserFormValuesChanged() {
+  // IT CATCHES ALL CHANGES IN FORM
+  onUserFormValuesChanged() {
     for (const field in this.userFormErrors) {
       if (!this.userFormErrors.hasOwnProperty(field)) {
         continue;
@@ -44,15 +45,22 @@ export class CreateuserComponent implements OnInit {
     return this.formBuilder.group({
       name: ['', Validators.required]
     });
-}
-saveUserForm() {
-  console.log(this.userForm.value);
-
-  this.submitted = true;
-  // STOP  HERE IF FORM IS INVALID
-  if (this.userForm.valid) {
+  }
+  saveUserForm() {
     console.log(this.userForm.value);
-}
-}
+
+    this.submitted = true;
+    // STOP  HERE IF FORM IS INVALID
+    if (this.userForm.valid) {
+      console.log(this.userForm.value);
+      this.userService.newUser(this.userForm.value).subscribe(data => {
+      
+        console.log(data)
+      },
+        err => {
+
+        })
+    }
+  }
 
 }

@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { APIURL } from '../urlConfig';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  constructor(private http: HttpClient,) { }
 
-  constructor(private http: HttpClient) { }
   
   // CHECK USER,ITS EXIST OR NOT
 checkUser(phoneNumber){
-  this.http.get
+  console.log(phoneNumber)
+  console.log(APIURL+'User/',phoneNumber.phoneNumber)
+  return this.http.get(APIURL+'User/'+phoneNumber.phoneNumber +'/exists')        
+}
+// CREATE NEW USER
+newUser(data){
+  console.log(data)
+  return this.http.post(APIURL+'User',data)
 }
 
-// CREATE NEW USER
-NewUser(){
-  
-}
 }
