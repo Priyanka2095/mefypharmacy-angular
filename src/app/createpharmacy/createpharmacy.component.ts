@@ -75,4 +75,19 @@ savePharmacyForm() {
     console.log(this.pharmacyForm.value);
 }
 }
+// file upload
+// upload(event) {
+//   let fileList: FileList = event.target.files;
+//   let fileTarget = fileList;
+//   let file: File = fileTarget[0];
+//   this.names = file;
+//   console.log("File information :", file.name);
+//   let formData: FormData = new FormData();
+//   formData.append('file', file, file.name);
+//   this.discussionService.fileUpload(formData).subscribe(result => {
+//     this.files.push(result.upload._id)
+
+//   }, err => {
+//   });
+// }
 }

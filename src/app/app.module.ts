@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { RoutingModule } from './/routing.module';
+import { RoutingModule } from './routing.module';
 import { CreateuserComponent } from './createuser/createuser.component';
 import { CreatepharmacyComponent } from './createpharmacy/createpharmacy.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     BrowserModule,
     RoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
