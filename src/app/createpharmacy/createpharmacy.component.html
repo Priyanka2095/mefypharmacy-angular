@@ -72,21 +72,42 @@
           <p class="errormessage" *ngIf=" pharmacyFormErrors.email.email">Email format should be email type</p>
 
         </div>
-      </div>
+        </div>
     </div>
         
+
+    <div class="col-md-12">
+      <div class="col-md-6">
+  <div class="form-group">
+    <label>Trade License Id:</label>
+    <input type="text" class="form-control" formControlName="tradeId">
+    <p class="errormessage" *ngIf="pharmacyFormErrors.tradeId.required || (pharmacyForm.controls.tradeId.pristine && submitted)">tradeId can not be empty</p>
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group">
+    <label>GSTNo.:</label>
+    <input type="text" class="form-control" formControlName="gstNo">
+    <p class="errormessage" *ngIf="pharmacyFormErrors.gstNo.required || (pharmacyForm.controls.gstNo.pristine && submitted)">gstNo can not be empty </p>
+  
+  </div>
+  </div>
+</div>
+
+
+
     <div class="col-md-12">
         <div class="col-md-6">
     <div class="form-group">
       <label>Degree file:</label>
-      <input type="file" class="form-control" formControlName="degree">
+      <input type="file" class="form-control" formControlName="degree" (change)="upload($event,'degree')" >
       <p class="errormessage" *ngIf="pharmacyFormErrors.degree.required || (pharmacyForm.controls.degree.pristine && submitted)"> Degree can not be empty</p>
     </div>
     </div>
     <div class="col-md-6">
     <div class="form-group">
       <label>Drug License:</label>
-      <input type="file" class="form-control" formControlName="drug">
+      <input type="file" class="form-control" formControlName="drug" (change)="upload($event,'drug')">
       <p class="errormessage" *ngIf="pharmacyFormErrors.drug.required || (pharmacyForm.controls.drug.pristine && submitted)">Drug License can not be empty </p>
 
     </div>
@@ -96,7 +117,7 @@
     <div class="col-md-12">
     <div class="form-group">
       <label>Trade License:</label>
-      <input type="file" class="form-control" formControlName="trade">
+      <input type="file" class="form-control" formControlName="trade" (change)="upload($event,'trade')">
       <p class="errormessage" *ngIf="pharmacyFormErrors.trade.required || (pharmacyForm.controls.trade.pristine && submitted)">Trade License can not be empty </p>
 
     </div>
