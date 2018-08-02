@@ -10,7 +10,7 @@ export class UserService {
   
   // CHECK USER,ITS EXIST OR NOT
 checkUser(phoneNumber){
-  this.http.post
+  this.http.get
 }
 
 // CREATE NEW USER
