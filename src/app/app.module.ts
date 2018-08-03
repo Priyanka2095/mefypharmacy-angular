@@ -8,6 +8,7 @@ import { CreateuserComponent } from './createuser/createuser.component';
 import { CreatepharmacyComponent } from './createpharmacy/createpharmacy.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboard.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     CreateuserComponent,
     CreatepharmacyComponent,
-    DashboardComponent
+    DashboardComponent,
+    PharmacydashboardComponent
   ],
   imports: [
     BrowserModule,

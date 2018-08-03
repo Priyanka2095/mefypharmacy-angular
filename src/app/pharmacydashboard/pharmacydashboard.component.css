@@ -1,0 +1,124 @@
+body {
+    padding : 10px ;
+    
+  }
+  
+  #exTab1 .tab-content {
+    color : #000;
+    background-color: #428bca;
+    padding : 5px 15px;
+  }
+  
+  #exTab2 h3 {
+    color : #000;
+    background-color: #428bca;
+    padding : 5px 15px;
+  }
+  
+  /* remove border radius for the tab */
+  
+  #exTab1 .nav-pills > li > a {
+    border-radius: 0;
+  }
+  
+  /* change border radius for the tab , apply corners on top*/
+  
+  #exTab3 .nav-pills > li > a {
+    border-radius: 4px 4px 0 0 ;
+  }
+  
+  #exTab3 .tab-content {
+    color : #000;
+    background-color: #428bca;
+    padding : 5px 15px;
+  } 
+  form.drugType {
+    padding: 1em 5em 1em 4em;
+}
+.drugT {
+  /* padding: 1em; */
+  font-size: 17px;
+}
+label.dT {
+  margin-right: 2em;
+}
+p.desc {
+  font-size: 17px;
+  font-weight: 700;
+}
+ul.nav.nav-pills.pharmacyBoard {
+  background: #d7d7d7;
+  border-radius: 5px 5px 0 0;
+}
+button.submitbtndrug {
+  height: 33px;
+  width: 100px;
+  background: #fff;
+  border-radius: 50px;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  background: white;
+  cursor: pointer;
+  color: #000;
+  font-weight: 800;
+  margin-top: 1em;
+}
+.dtpe {
+  margin-top: 1em;
+} 
+form.medicineMaster{
+  padding: 1em 2em 1em 2em;
+}
+form.pharmacyitem {
+     padding: 1em 5em 1em 4em;
+}
+form.pharmacyitem .row {
+  margin-bottom: 1em;
+}
+table.pharmacyTable {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.pharmacyTable td, th {
+  border: 1px solid #000;
+  text-align: left;
+  padding: 8px;
+  /* background-color: #fff; */
+}
+button.createform {
+  height: 30px;
+  width: 30px;
+  border-radius: 50px;
+  outline: none;
+  border: none;
+  float: right;
+  margin: 1em 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+table.pharmacyTable tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+}
+  
+  
+  

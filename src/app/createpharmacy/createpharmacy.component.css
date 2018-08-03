@@ -6,14 +6,16 @@
       height: 100vh;
   }
   form.logformp {
-    padding: 5em;
+    padding: 2em 0 1em 0;
     background: #fff;
+    overflow-y: scroll;
+    margin-top: 4em;
   }
   .formContent {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
   }
   button.btn.phsigin {
     margin-right: 1em;
