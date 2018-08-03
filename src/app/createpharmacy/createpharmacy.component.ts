@@ -124,7 +124,6 @@ export class CreatepharmacyComponent implements OnInit {
     console.log("File information :", file.name);
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    // *******SERVICE API CALL ************************************************
     this.PharmacyService.fileUpload(formData).subscribe(response => {
       console.log(response);
       let result: any = {};

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../services/user.service'
+import { UserService } from '../services/user.service';
+import { SharedService } from '../services/shared.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
@@ -9,9 +11,14 @@ import { UserService } from '../services/user.service'
 export class CreateuserComponent implements OnInit {
   userForm: FormGroup;
   userFormErrors: any;
+  userData: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
-  constructor(private formBuilder: FormBuilder, public userService: UserService) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService, private sharedService: SharedService, private router: Router) {
 
+    this.sharedService.userNumber.subscribe(data => {
+      console.log(data);
+      this.userData = data;
+    })
     this.userFormErrors = {
       name: {},
     };
@@ -53,9 +60,13 @@ export class CreateuserComponent implements OnInit {
     // STOP  HERE IF FORM IS INVALID
     if (this.userForm.valid) {
       console.log(this.userForm.value);
-      this.userService.newUser(this.userForm.value).subscribe(data => {
-      
+      var data: any = {
+        phoneNumber: this.userData.phoneNumber,
+        name: this.userForm.value.name
+      }
+      this.userService.newUser(data).subscribe(data => {
         console.log(data)
+        this.router.navigate(['/createpharmacy'])
       },
         err => {
 
