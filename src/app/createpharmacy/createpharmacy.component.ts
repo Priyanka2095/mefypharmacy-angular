@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PharmacyService } from '../services/pharmacy.service';
-import {SharedService} from '../services/shared.service';
-import { ActivatedRoute ,Router} from '@angular/router';
+import { SharedService } from '../services/shared.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-createpharmacy',
   templateUrl: './createpharmacy.component.html',
@@ -16,7 +16,11 @@ export class CreatepharmacyComponent implements OnInit {
   tradeId: any;
   drugId: any;
 
+<<<<<<< HEAD
   constructor(private formBuilder: FormBuilder, private PharmacyService: PharmacyService,private router: Router,private SharedService:SharedService) {
+=======
+  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService) {
+>>>>>>> 57de55eb08be96b85ab27308c717740e442ae145
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
@@ -126,17 +130,19 @@ export class CreatepharmacyComponent implements OnInit {
     formData.append('file', file, file.name);
     this.PharmacyService.fileUpload(formData).subscribe(response => {
       console.log(response);
+      let result: any = {};
+      result = response;
       if (type == "degree") {
-        this.degreeId = response.upload._id;
+        this.degreeId = result.upload._id;
 
         // this.pharmacyForm.controls['degree'].setValue(response.upload._id);
         // this.pharmacyForm.patchValue({degree: response.upload._id}) 
       }
       else if (type == "drug") {
-        this.drugId = response.upload._id;
+        this.drugId = result.upload._id;
       }
       else if (type == "trade") {
-        this.tradeId = response.upload._id;
+        this.tradeId = result.upload._id;
       }
       console.log(this.pharmacyForm.value)
     }, err => {

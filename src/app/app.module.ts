@@ -8,6 +8,7 @@ import { CreateuserComponent } from './createuser/createuser.component';
 import { CreatepharmacyComponent } from './createpharmacy/createpharmacy.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { UserService } from './services/user.service';
 import {SharedService} from './services/shared.service';
@@ -20,7 +21,8 @@ import { PharmacyService } from './services/pharmacy.service';
     LoginComponent,
     CreateuserComponent,
     CreatepharmacyComponent,
-    DashboardComponent
+    DashboardComponent,
+    PharmacydashboardComponent
   ],
   imports: [
     BrowserModule,
