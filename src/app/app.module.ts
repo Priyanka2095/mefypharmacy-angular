@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboard.component';
 import { RouterModule, Routes } from '@angular/router';
+import { PharmalistComponent } from './pharmalist/pharmalist.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { RouterModule, Routes } from '@angular/router';
     CreateuserComponent,
     CreatepharmacyComponent,
     DashboardComponent,
-    PharmacydashboardComponent
+    PharmacydashboardComponent,
+    PharmalistComponent
   ],
   imports: [
     BrowserModule,

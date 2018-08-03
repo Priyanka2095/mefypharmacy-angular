@@ -6,6 +6,7 @@ import { CreateuserComponent } from './createuser/createuser.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreatepharmacyComponent } from './createpharmacy/createpharmacy.component';
 import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboard.component';
+import { PharmalistComponent } from './pharmalist/pharmalist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,7 +14,9 @@ const routes: Routes = [
   { path: 'user', component: CreateuserComponent },
   { path: 'createpharmacy', component: CreatepharmacyComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'pharmacydashboard', component: PharmacydashboardComponent }
+  { path: 'pharmacydashboard', component: PharmacydashboardComponent },
+  { path: 'pharmalist', component: PharmalistComponent },
+  
 ];
 
 @NgModule({
