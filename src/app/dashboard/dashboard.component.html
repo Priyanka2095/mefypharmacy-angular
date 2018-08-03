@@ -7,13 +7,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Pharmacy Name</label>
-             <p>abcd</p>
+             <p>{{pharmaData.pharmacyName}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Primary Contact:</label>
-             <p>abcd</p>
+             <p>{{pharmaData.primaryContact}}</p>
               </div>
             </div>
           </div>
@@ -23,13 +23,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Alternate Contact:</label>
-             <p>abcd</p>
+             <p>{{pharmaData.alternateContact}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Street:</label>
-             <p>abcd</p>
+             <p>{{pharmaData.address?pharmaData.address.street:''}}</p>
               </div>
             </div>
           </div>
@@ -38,13 +38,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>City:</label>
-             <p>abcd</p>
+             <p>{{pharmaData.address?pharmaData.address.city:''}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Country:</label>
-             <p>abcd</p>
+             <p>{{pharmaData.address?pharmaData.address.country:''}}</p>
               </div>
             </div>
           </div>
@@ -53,13 +53,13 @@
               <div class="col-md-6">
           <div class="form-group">
             <label>Zipcode:</label>
-         <p>abcd</p>
+         <p>{{pharmaData.address?pharmaData.address.zipcode:''}}</p>
           </div>
           </div>
           <div class="col-md-6">
           <div class="form-group">
             <label>Email:</label>
-         <p>abcd</p>
+         <p>{{pharmaData.email}}</p>
           </div>
         </div>
       </div>

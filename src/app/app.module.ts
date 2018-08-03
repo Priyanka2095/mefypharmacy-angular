@@ -9,6 +9,7 @@ import { CreatepharmacyComponent } from './createpharmacy/createpharmacy.compone
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboard.component';
+import { RouterModule, Routes } from '@angular/router';
 
 
 @NgModule({
@@ -26,6 +27,8 @@ import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboar
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
