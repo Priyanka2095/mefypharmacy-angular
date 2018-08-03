@@ -16,7 +16,7 @@ export class CreatepharmacyComponent implements OnInit {
   tradeId: any;
   drugId: any;
 
-  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService,private router: Router,private SharedService:SharedService) {
+  constructor(private formBuilder: FormBuilder, private PharmacyService: PharmacyService,private router: Router,private SharedService:SharedService) {
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
@@ -124,7 +124,6 @@ export class CreatepharmacyComponent implements OnInit {
     console.log("File information :", file.name);
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    // *******SERVICE API CALL ************************************************
     this.PharmacyService.fileUpload(formData).subscribe(response => {
       console.log(response);
       if (type == "degree") {

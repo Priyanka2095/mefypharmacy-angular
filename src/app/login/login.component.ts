@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service'
+import {SharedService} from '../services/shared.service';
 import { Router } from '@angular/router';
-import { exists } from 'fs';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   x:any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
 
-  constructor(private formBuilder: FormBuilder, public userService: UserService,private router: Router ) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService,private router: Router,private sharedService:SharedService ) {
     this.loginFormErrors = {
       phoneNumber: {},
     };
@@ -56,14 +56,14 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
     }
+    this.sharedService.userCreate(this.loginForm.value);
     this.userService.checkUser(this.loginForm.value).subscribe(data => {
-      // debugger;
       console.log(data);
       console.log(Object.values(data))
       // this.x=Object.values(data)
       // console.log(this.x)
-      // if(this.x==true){
-      // this.router.navigate(['/dashboard'])
+      // if(true){
+      this.router.navigate(['/dashboard'])
       // }
     },
       err => {

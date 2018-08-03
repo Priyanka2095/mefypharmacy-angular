@@ -9,6 +9,9 @@ import { CreatepharmacyComponent } from './createpharmacy/createpharmacy.compone
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { UserService } from './services/user.service';
+import {SharedService} from './services/shared.service';
+import { PharmacyService } from './services/pharmacy.service';
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import { RouterModule, Routes } from '@angular/router';
     RouterModule,
 
   ],
-  providers: [],
+  providers: [UserService,SharedService,PharmacyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
