@@ -16,11 +16,7 @@ export class CreatepharmacyComponent implements OnInit {
   tradeId: any;
   drugId: any;
 
-<<<<<<< HEAD
-  constructor(private formBuilder: FormBuilder, private PharmacyService: PharmacyService,private router: Router,private SharedService:SharedService) {
-=======
   constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService) {
->>>>>>> 57de55eb08be96b85ab27308c717740e442ae145
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
