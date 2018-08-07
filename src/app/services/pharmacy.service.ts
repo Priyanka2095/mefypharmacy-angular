@@ -22,6 +22,8 @@ export class PharmacyService {
     console.log('file data',data)
     return this.httpClient.post(FILEURL, data)
   }
+  // CREATE PHARMACY AGAINST USER
+  
 
 
 }

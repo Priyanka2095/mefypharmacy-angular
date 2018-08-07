@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginFormErrors: any;
-  x: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
 
   constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService) {
@@ -56,20 +55,35 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
     }
-    this.sharedService.userCreate(this.loginForm.value);
+    this.sharedService.userCreate(this.loginForm.value); //STORED LOGIN USER PHONENUMBER
+    //CHECK USER ALREADY REGISTERED OR NOT
     this.userService.checkUser(this.loginForm.value).subscribe(data => {
       console.log(data);
       let result: any = {};
       result = data;
       console.log(result.exists)
       if (result.exists) {
-        this.router.navigate(['/dashboard'])
+        localStorage.setItem('phoneNumber', this.loginForm.value.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
+        let data = {
+          user: this.loginForm.value.phoneNumber
+        }
+        //CHECK PHARMACY EXIST WITH USER PHONENUMBER OR NOT
+        this.userService.checkPharmacy(data).subscribe(data => {
+          console.log(data);
+          let pharmacy: any = {};
+          pharmacy = data
+          console.log(pharmacy.count)
+          if (pharmacy.count==0) {
+            this.router.navigate(['/createpharmacy'])
+          }
+          else {
+            this.router.navigate(['/pharmacydashboard'])
+          }
+        })
       }
       else {
         this.router.navigate(['/user'])
       }
-
-
     },
       err => {
 

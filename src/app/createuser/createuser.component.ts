@@ -17,7 +17,8 @@ export class CreateuserComponent implements OnInit {
 
     this.sharedService.userNumber.subscribe(data => {
       console.log(data);
-      this.userData = data;
+      this.userData = data;   // STORED LOGIN USER PHONENUMBER
+
     })
     this.userFormErrors = {
       name: {},
@@ -50,7 +51,7 @@ export class CreateuserComponent implements OnInit {
 
   createuserform() {
     return this.formBuilder.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
     });
   }
   saveUserForm() {

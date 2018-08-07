@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   constructor(private http: HttpClient,) { }
-
   
   // CHECK USER,ITS EXIST OR NOT
 checkUser(phoneNumber){
@@ -21,6 +20,13 @@ checkUser(phoneNumber){
 newUser(data){
   console.log(data)
   return this.http.post(APIURL+'User',data)
+}
+//CHECK USER HAS PHARMACY OR NOT
+checkPharmacy(user){
+  console.log(user.user) //USERID:USER'S PHONENUMBER
+  console.log(APIURL+'UserPharmacy/count?filter={"where":{"user":"'+user.user+'"}}')
+  return this.http.get(APIURL+'UserPharmacy/count?filter={"where":{"user":"'+user.user+'"}}');
+
 }
 
 }
