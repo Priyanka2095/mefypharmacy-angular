@@ -15,8 +15,9 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Primary Contact:</label>
-              <input formControlName="primaryContact" type="text" class="form-control">
-              <p class="errormessage" *ngIf="pharmacyFormErrors.primaryContact.required || (pharmacyForm.controls.primaryContact.pristine && submitted)">Nuber can not be empty</p>
+              <input formControlName="primaryContact" [textMask]="{mask: mask, guide: false}" type="text" class="form-control" minlength="10">
+              <p class="errormessage" *ngIf="pharmacyFormErrors.primaryContact.minlength">Please Enter valid Phone Number</p>
+              <p class="errormessage" *ngIf="pharmacyFormErrors.primaryContact.required || (pharmacyForm.controls.primaryContact.pristine && submitted)">Number can not be empty</p>
             </div>
           </div>
         </div>
@@ -26,8 +27,8 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Alternate Contact:</label>
-              <input formControlName="alternateContact" type="text" class="form-control">
-              <!-- <p class="errormessage" *ngIf="pharmacyFormErrors.pharmacyName.required || (pharmacyForm.controls.pharmacyName.pristine && submitted)">Name can not be empty</p> -->
+              <input formControlName="alternateContact" [textMask]="{mask: mask, guide: false}" type="text" class="form-control" minlength="10">
+              <p class="errormessage" *ngIf="pharmacyFormErrors.alternateContact.minlength">Please Enter valid Phone Number</p>
             </div>
           </div>
           <div class="col-md-6">

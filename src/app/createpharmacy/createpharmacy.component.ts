@@ -15,11 +15,13 @@ export class CreatepharmacyComponent implements OnInit {
   degreeId: any;
   tradeId: any;
   drugId: any;
+  public mask = [ /[1-9]/,/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/,/\d/,/\d/, /\d/, /\d/, /\d/] // Phone number validation 
 
   constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService) {
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
+      alternateContact:{},
       street: {},
       zipCode: {},
       city: {},
