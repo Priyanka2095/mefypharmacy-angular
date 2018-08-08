@@ -6,7 +6,8 @@
     <form class="logform" [formGroup]="loginForm">
       <div class="form-group">
         <label>Phone No.</label>
-        <input type="text" class="form-control" id="phone" formControlName="phoneNumber">
+        <input type="text" class="form-control" id="phone" [textMask]="{mask: mask, guide: false}" formControlName="phoneNumber" minlength="10">
+        <p class="errormessage" *ngIf="loginFormErrors.phoneNumber.minlength">Please Enter valid Phone Number</p>
         <p class="errormessage" *ngIf="loginFormErrors.phoneNumber.required || (loginForm.controls.phoneNumber.pristine && submitted)">Number can not be empty</p>
 
       </div>

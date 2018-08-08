@@ -10,14 +10,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboard.component';
 import { RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
 import { PharmalistComponent } from './pharmalist/pharmalist.component';
-=======
 import { UserService } from './services/user.service';
 import {SharedService} from './services/shared.service';
 import { PharmacyService } from './services/pharmacy.service';
->>>>>>> c74ca69e0e1f33e35c2c8b73d4552f973d31905b
-
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -36,6 +33,7 @@ import { PharmacyService } from './services/pharmacy.service';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    TextMaskModule
 
   ],
   providers: [UserService,SharedService,PharmacyService],

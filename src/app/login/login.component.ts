@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginFormErrors: any;
   x: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
+  public mask = [ /[1-9]/,/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/,/\d/,/\d/, /\d/, /\d/, /\d/] // Phone number validation 
 
   constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService) {
     this.loginFormErrors = {
@@ -55,7 +56,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
-    }
+    
     this.sharedService.userCreate(this.loginForm.value);
     this.userService.checkUser(this.loginForm.value).subscribe(data => {
       console.log(data);
@@ -75,4 +76,5 @@ export class LoginComponent implements OnInit {
 
       })
   }
+}
 }
