@@ -15,6 +15,7 @@ import { UserService } from './services/user.service';
 import {SharedService} from './services/shared.service';
 import { PharmacyService } from './services/pharmacy.service';
 import { TextMaskModule } from 'angular2-text-mask';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    TextMaskModule
+    TextMaskModule,
+    NgxSpinnerModule
 
   ],
   providers: [UserService,SharedService,PharmacyService],

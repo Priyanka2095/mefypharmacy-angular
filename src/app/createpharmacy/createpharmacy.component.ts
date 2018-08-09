@@ -3,6 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { PharmacyService } from '../services/pharmacy.service';
 import { SharedService } from '../services/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-createpharmacy',
   templateUrl: './createpharmacy.component.html',
@@ -17,7 +18,7 @@ export class CreatepharmacyComponent implements OnInit {
   drugId: any;
   public mask = [ /[1-9]/,/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/,/\d/,/\d/, /\d/, /\d/, /\d/] // Phone number validation 
 
-  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService) {
+  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService,private spinner: NgxSpinnerService) {
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
@@ -37,6 +38,14 @@ export class CreatepharmacyComponent implements OnInit {
 
 
   ngOnInit() {
+    this.spinner.show();
+ 
+    setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+    }, 5000);
+  
+
     this.pharmacyForm = this.createpharmacyform()
 
     this.pharmacyForm.valueChanges.subscribe(() => {
