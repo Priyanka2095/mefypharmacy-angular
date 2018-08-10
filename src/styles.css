@@ -5,3 +5,7 @@
     text-align: center;
     font-size: 14px;
   }
+  .black-overlay {
+    position: fixed !important;
+  }
+    
