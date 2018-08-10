@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginFormErrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
+  public mask = [ /[1-9]/,/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/,/\d/,/\d/, /\d/, /\d/, /\d/] // Phone number validation 
 
   constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService, public pharmacyService: PharmacyService, private toastr: ToastrService) {
     this.loginFormErrors = {
@@ -102,4 +103,5 @@ export class LoginComponent implements OnInit {
     this.toastr.error('Server Error!', 'Major Error', {
     });
   }
+}
 }

@@ -16,8 +16,8 @@ import { UserService } from './services/user.service';
 import {SharedService} from './services/shared.service';
 import { PharmacyService } from './services/pharmacy.service';
 import { ToastrModule } from 'ngx-toastr';
-
-
+import { TextMaskModule } from 'angular2-text-mask';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -40,8 +40,9 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({   // ToastrModule added
       timeOut: 999,
       preventDuplicates: true,
-    }) 
-
+    }) ,
+    TextMaskModule,
+    NgxSpinnerModule
 
   ],
   providers: [UserService,SharedService,PharmacyService],

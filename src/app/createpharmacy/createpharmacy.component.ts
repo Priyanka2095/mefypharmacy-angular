@@ -4,6 +4,7 @@ import { PharmacyService } from '../services/pharmacy.service';
 import { SharedService } from '../services/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-createpharmacy',
   templateUrl: './createpharmacy.component.html',
@@ -16,13 +17,14 @@ export class CreatepharmacyComponent implements OnInit {
   degreeId: any;
   tradeId: any;
   drugId: any;
-  // userData:any;
-  userInfo: any;
-
-  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService, private toastr: ToastrService) {
+   // userData:any;
+   userInfo: any;
+  public mask = [ /[1-9]/,/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/,/\d/,/\d/, /\d/, /\d/, /\d/] // Phone number validation 
+  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService,private spinner: NgxSpinnerService, private toastr: ToastrService) {
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
+      alternateContact:{},
       street: {},
       zipCode: {},
       city: {},
@@ -48,6 +50,14 @@ export class CreatepharmacyComponent implements OnInit {
 
 
   ngOnInit() {
+   
+ 
+    // setTimeout(() => {
+    //     /** spinner ends after 5 seconds */
+    //     this.spinner.hide();
+    // }, 5000);
+  
+
     this.pharmacyForm = this.createpharmacyform()
 
     this.pharmacyForm.valueChanges.subscribe(() => {
@@ -96,6 +106,7 @@ export class CreatepharmacyComponent implements OnInit {
     /********** STOP  HERE IF FORM IS INVALID **********/
     if (this.pharmacyForm.valid) {
       /***** Data To be sent to APICALL***** */
+      this.spinner.show();
       let pharmacyData = {
         tradeLicenseId: this.pharmacyForm.value.tradeId,
         pharmacyName: this.pharmacyForm.value.pharmacyName,
@@ -139,6 +150,9 @@ export class CreatepharmacyComponent implements OnInit {
           })
         }
         this.SharedService.pharmacyInfo(result);  /****STORE PHARMACY DETAIL */
+        this.spinner.hide();
+        this.SharedService.pharmacyInfo(result);
+        this.router.navigate(['/dashboard']);
       }, error => {
         console.log(error)
       })
