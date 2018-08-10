@@ -3,6 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { PharmacyService } from '../services/pharmacy.service';
 import { SharedService } from '../services/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-createpharmacy',
   templateUrl: './createpharmacy.component.html',
@@ -15,8 +16,10 @@ export class CreatepharmacyComponent implements OnInit {
   degreeId: any;
   tradeId: any;
   drugId: any;
+  // userData:any;
+  userInfo: any;
 
-  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService) {
+  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService, private toastr: ToastrService) {
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
@@ -31,6 +34,16 @@ export class CreatepharmacyComponent implements OnInit {
       degree: {},
       tradeId: {}
     };
+    this.SharedService.userNumber.subscribe(data => {
+      console.log(data);
+      this.userInfo = data;   // STORED LOGIN USER PHONENUMBER FROM LOGIN PAGE
+
+    })
+    this.SharedService.userData.subscribe(data => {
+      console.log(data);
+      this.userInfo = data;   // STORED  USER DATA FROM USERCREATE PAGE
+
+    })
   }
 
 
@@ -102,16 +115,37 @@ export class CreatepharmacyComponent implements OnInit {
       }
       console.log(pharmacyData);
       /***** Data To be sent to APICALL ends AND API CALL STARTS***** */
-      this.PharmacyService.addPharmacy(pharmacyData).subscribe(result => {
+      this.PharmacyService.addPharmacy(pharmacyData).then(result => {
         console.log(result)
-        this.SharedService.pharmacyInfo(result);
-        this.router.navigate(['/dashboard']);
+        this.showPharmmacySuccess();
+        let pharmacyData: any = {};
+        pharmacyData = result
+        /*******CREATE PHARMACY AGAINST USER*****/
+        if(pharmacyData!={}){
+        let data = {
+          user: this.userInfo.phoneNumber,
+          pharmacy: pharmacyData.tradeLicenseId,
+          recordId: "",
+          role: "admin"
+        }
+        console.log(data)
+        this.PharmacyService.userPharmacy(data).subscribe(value => {
+          console.log(value);
+          this.SharedService.userPharmacy(value); /**STORE USERPHARMACY DETAIL */
+          this.router.navigate(['/dashboard']);
+        },
+          err => {
+            console.log(err)
+          })
+        }
+        this.SharedService.pharmacyInfo(result);  /****STORE PHARMACY DETAIL */
       }, error => {
         console.log(error)
       })
 
     }
   }
+
 
 
   //FILE UPLOAD SECTION
@@ -124,25 +158,43 @@ export class CreatepharmacyComponent implements OnInit {
     console.log("File information :", file.name);
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    this.PharmacyService.fileUpload(formData).subscribe(response => {
+    this.PharmacyService.fileUpload(formData).then(response => {
+      this.showSuccess();
       console.log(response);
       let result: any = {};
       result = response;
       if (type == "degree") {
         this.degreeId = result.upload._id;
-
+console.log(this.degreeId)
         // this.pharmacyForm.controls['degree'].setValue(response.upload._id);
         // this.pharmacyForm.patchValue({degree: response.upload._id}) 
       }
       else if (type == "drug") {
         this.drugId = result.upload._id;
+        console.log(this.drugId)
       }
       else if (type == "trade") {
         this.tradeId = result.upload._id;
+        console.log(this.tradeId)
       }
       console.log(this.pharmacyForm.value)
     }, err => {
       console.log(err);
     });
   }
+    //SHOW TOAST NOTIFICATION
+    showSuccess() {
+      this.toastr.success('File Uploded!', 'Toastr fun!', {
+      });
+    }
+     //SHOW TOAST NOTIFICATION
+     showPharmmacySuccess() {
+      this.toastr.success('Pharmacy Created!', 'Toastr fun!', {
+      });
+    }
+     // SHOW  TOAST NOTIFICTATION,
+     showError() {
+      this.toastr.error('Server Error!', 'Major Error', {
+      });
+    }
 }

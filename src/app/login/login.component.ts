@@ -3,6 +3,9 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { UserService } from '../services/user.service'
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
+import { PharmacyService } from '../services/pharmacy.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginFormErrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
 
-  constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService, public pharmacyService: PharmacyService, private toastr: ToastrService) {
     this.loginFormErrors = {
       phoneNumber: {},
     };
@@ -62,7 +65,7 @@ export class LoginComponent implements OnInit {
       let result: any = {};
       result = data;
       console.log(result.exists)
-      if (result.exists) {
+      if (result.exists == true) {
         localStorage.setItem('phoneNumber', this.loginForm.value.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
         let data = {
           user: this.loginForm.value.phoneNumber
@@ -73,20 +76,30 @@ export class LoginComponent implements OnInit {
           let pharmacy: any = {};
           pharmacy = data
           console.log(pharmacy.count)
-          if (pharmacy.count==0) {
+          if (pharmacy.count == 0) {
             this.router.navigate(['/createpharmacy'])
           }
           else {
-            this.router.navigate(['/pharmacydashboard'])
+            this.router.navigate(['/pharmalist'])
           }
-        })
+        },
+          err => {
+            this.showError();
+          }
+        )
       }
       else {
+
         this.router.navigate(['/user'])
       }
     },
       err => {
-
+        this.showError();
       })
+  }
+  // SHOW  TOAST NOTIFICTATION,
+  showError() {
+    this.toastr.error('Server Error!', 'Major Error', {
+    });
   }
 }

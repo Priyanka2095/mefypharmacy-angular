@@ -9,6 +9,9 @@ import { BehaviorSubject } from 'rxjs';
 export class SharedService {
   pharmacyDetails: BehaviorSubject<any> = new BehaviorSubject({});
   userNumber: BehaviorSubject<any> = new BehaviorSubject({});
+  userData:BehaviorSubject<any> = new BehaviorSubject({});
+  userPharmacyInfo:BehaviorSubject<any> = new BehaviorSubject({});
+
 
   constructor() { }
 
@@ -18,5 +21,11 @@ export class SharedService {
   // SAVE USER NUMBER,FOR CREATE 
   userCreate(params){
     this.userNumber.next(params)
+  }
+  userInfo(params){
+    this.userData.next(params)
+  }
+  userPharmacy(params){
+    this.userPharmacyInfo.next(params)
   }
 }
