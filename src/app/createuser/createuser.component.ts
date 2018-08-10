@@ -67,6 +67,7 @@ export class CreateuserComponent implements OnInit {
       }
       this.userService.newUser(data).subscribe(data => {
         console.log(data)
+        localStorage.setItem('phoneNumber', this.userData.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
         this.showSuccess();
         this.sharedService.userInfo(data);
         this.router.navigate(['/createpharmacy'])

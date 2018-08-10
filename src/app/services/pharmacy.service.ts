@@ -3,9 +3,8 @@ import { APIURL } from '../urlConfig';
 import { FILEURL } from '../urlConfig';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map,tap } from 'rxjs/operators';
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { catchError } from 'rxjs/operators';
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -17,21 +16,21 @@ export class PharmacyService {
   // PHARMACY CREATION METHOD
   addPharmacy(data) {
     console.log(data)
-    // return this.httpClient.post(APIURL + 'pharmacy', data)
-    return new Promise((resolve, reject) => {
-      this.httpClient.post(APIURL + 'pharmacy', data)
-        .pipe(
-          tap(console.log),
-          map(res => res)
-        )
-        .subscribe(response => {
-          console.log(response);
-          resolve(response);
-        }, function (error) {
-          resolve(error.json());
-        })
+    return this.httpClient.post(APIURL + 'pharmacy', data)
+    // return new Promise((resolve, reject) => {
+    //   this.httpClient.post(APIURL + 'pharmacy', data)
+    //     .pipe(
+    //       tap(console.log),
+    //       map(res => res)
+    //     )
+    //     .subscribe(response => {
+    //       console.log(response);
+    //       resolve(response);
+    //     }, function (error) {
+    //       resolve(error.json());
+    //     })
 
-    })
+    // })
     //     let promise = new Promise((resolve,reject)=>{
     // this.httpClient.post(APIURL+'pharmacy',data)
     // .toPromise()
@@ -47,21 +46,22 @@ export class PharmacyService {
   // FILE UPLOAD METHOD
   fileUpload(data) {
     console.log('file data', data)
-    // return this.httpClient.post(FILEURL, data)
-    return new Promise((resolve, reject) => {
-      this.httpClient.post(FILEURL , data)
-        .pipe(
-          tap(console.log),
-          map(res => res)
-        )
-        .subscribe(response => {
-          console.log(response);
-          resolve(response);
-        }, function (error) {
-          resolve(error.json());
-        })
+    return this.httpClient.post(FILEURL, data)
+    // return new Promise((resolve, reject) => {
+    //   debugger
+    //   this.httpClient.post(FILEURL , data)
+    //     .pipe(
+    //       tap(console.log),
+    //       map(res => res)
+    //     )
+    //     .subscribe(response => {
+    //       console.log(response);
+    //       resolve(response);
+    //     }, function (error) {
+    //       resolve(error.json());
+    //     })
 
-    })
+    // })
   }
   // CREATE PHARMACY AGAINST USER
   userPharmacy(data) {
@@ -77,4 +77,8 @@ export class PharmacyService {
   getPharmacy(tradeId) {
     return this.httpClient.get(APIURL + 'Pharmacy/' + tradeId.id)
   }
+     // catch errors
+// public handleError = (error: Response) => {
+//   return Observable.throw(error.json());
+//  }
 }

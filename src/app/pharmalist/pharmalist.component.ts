@@ -10,18 +10,11 @@ import { PharmacyService } from '../services/pharmacy.service';
 export class PharmalistComponent implements OnInit {
   pharmacyInfo:any;
   pharmacyList:any=[];
+  userInfo:any
   constructor(private sharedShervice:SharedService,public pharmacyService: PharmacyService) {
 
-    // this.sharedShervice.userPharmacyInfo.subscribe(data => {
-    //   console.log(data);
-    //   this.pharmacyInfo = data;   // STORED  USER DATA FROM Pharmacy PAGE
-    // })
-
-    this.sharedShervice.userNumber.subscribe(data => {
-      console.log(data);
-      this.pharmacyInfo = data.phoneNumber;   // STORED LOGIN USER PHONENUMBER FROM LOGIN PAGE
-
-    })
+    this.userInfo = localStorage.getItem('phoneNumber');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
+    console.log(this.userInfo)
    }
 
   ngOnInit() {
@@ -30,7 +23,7 @@ export class PharmalistComponent implements OnInit {
 
 getUserPharmacyList(){
   let data = {
-    phonenumber:this.pharmacyInfo
+    phonenumber:this.userInfo
   }
   console.log(data);
   this.pharmacyService.getUserPharmacy(data).subscribe(value=>{

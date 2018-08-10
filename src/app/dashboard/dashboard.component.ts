@@ -23,7 +23,7 @@ pharmaData:any={};
 //GET PHARMACY DETAIL THROUGH API CALL
 getPharmacyDetail(){
   let data={
-    id:this.pharmaData.tradeLicenseId
+    id:this.pharmaData.tradeLicenseId   
   }
   console.log(data);
   this.pharmacyService.getPharmacy(data).subscribe(result=>{
