@@ -38,12 +38,12 @@ export class CreatepharmacyComponent implements OnInit {
 
 
   ngOnInit() {
-    this.spinner.show();
+   
  
-    setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-    }, 5000);
+    // setTimeout(() => {
+    //     /** spinner ends after 5 seconds */
+    //     this.spinner.hide();
+    // }, 5000);
   
 
     this.pharmacyForm = this.createpharmacyform()
@@ -94,6 +94,7 @@ export class CreatepharmacyComponent implements OnInit {
     /********** STOP  HERE IF FORM IS INVALID **********/
     if (this.pharmacyForm.valid) {
       /***** Data To be sent to APICALL***** */
+      this.spinner.show();
       let pharmacyData = {
         tradeLicenseId: this.pharmacyForm.value.tradeId,
         pharmacyName: this.pharmacyForm.value.pharmacyName,
@@ -115,6 +116,7 @@ export class CreatepharmacyComponent implements OnInit {
       /***** Data To be sent to APICALL ends AND API CALL STARTS***** */
       this.PharmacyService.addPharmacy(pharmacyData).subscribe(result => {
         console.log(result)
+        this.spinner.hide();
         this.SharedService.pharmacyInfo(result);
         this.router.navigate(['/dashboard']);
       }, error => {
