@@ -199,20 +199,28 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
 
-  submitform() {
-    this.submitted = true;
+  saveDrugForm() {
     console.log("drugformvalue", this.drugtypeForm.value);
-    $('#myModal').modal('hide');
-    let data = {
-      type: this.drugtypeForm.value.type,
-      description: this.drugtypeForm.value.description
+    if (this.drugtypeForm.valid) {
+      $('#myModal').modal('hide');
+      let data = {
+        type: this.drugtypeForm.value.type,
+        description: this.drugtypeForm.value.description
+      }
+      this.medicineService.createdrug(data).subscribe(value => {
+        console.log(value);
+        this.toastr.success('Drug form created!', 'Toastr fun!', {
+        });
+      },
+
+        err => {
+          console.log(err);
+        })
+      this.drugtypeForm.reset();
     }
-    this.medicineService.drugdesc(data).subscribe(value => {
-      console.log(value);
-    },
-      err => {
-        console.log(err);
-      })
+    else {
+      this.showError();
+    }
   }
   /*****************GET ALL DRUG TYPE****************/
   getAllDrug(){
@@ -230,6 +238,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
   //SHOW TOAST NOTIFICATION
   showSuccess() {
+
     this.toastr.success('Medicine form created!', 'Toastr fun!', {
     });
   }

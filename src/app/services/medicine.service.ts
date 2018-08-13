@@ -7,18 +7,18 @@ import { APIURL } from '../urlConfig';
 export class MedicineService {
 
   constructor(private httpClient: HttpClient) { }
-    /**************** DRUG TYPE METHOD*******************/
-    drugdesc(data) {
-      console.log(data)
-      return this.httpClient.post(APIURL + 'DrugType', data)
-    }
-    
-/*************************GET DRUG TYPE*******************/
-getDrugType(){
-  return this.httpClient.get(APIURL + 'DrugType')
-}
-/******************* CREATE MEDICINE MASTER*****************************/
-createMedicineMaster(data){
-  return this.httpClient.post(APIURL +'MedicineMaster',data)
-}
+  /********************8 DRUG TYPE METHOD**********************/
+  createdrug(data) {
+    console.log(data)
+    return this.httpClient.post(APIURL + 'DrugType', data)
+  }
+
+  /*************************GET DRUG TYPE*******************/
+  getDrugType() {
+    return this.httpClient.get(APIURL + 'DrugType')
+  }
+  /******************* CREATE MEDICINE MASTER*****************************/
+  createMedicineMaster(data) {
+    return this.httpClient.post(APIURL + 'MedicineMaster', data)
+  }
 }
