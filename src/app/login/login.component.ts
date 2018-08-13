@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
-    }
+    
     this.sharedService.userCreate(this.loginForm.value); //STORED LOGIN USER PHONENUMBER
     //CHECK USER ALREADY REGISTERED OR NOT
     this.userService.checkUser(this.loginForm.value).subscribe(data => {
@@ -97,6 +97,10 @@ export class LoginComponent implements OnInit {
       err => {
         this.showError();
       })
+    }
+    else{
+      
+    }
   }
   // SHOW  TOAST NOTIFICTATION,
   showError() {

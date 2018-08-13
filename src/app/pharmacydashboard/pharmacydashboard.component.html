@@ -102,81 +102,97 @@
                     <div class="col-md-6">
                       <label>Name:</label>
                       <input type="text" class="form-control" formControlName="name">
+                    <p class="errormessage" *ngIf="medicineFormErrors.name.required || (medicineForm.controls.name.pristine && submitted)">Name can not be empty</p>
+
                     </div>
                     <div class="col-md-6">
                       <label>Form:</label>
                       <input type="text" class="form-control" formControlName="form">
+                    <p class="errormessage" *ngIf="medicineFormErrors.form.required || (medicineForm.controls.form.pristine && submitted)">Form can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Rx Name:</label>
-                      <input type="text" class="form-control" formControlName="rxname">
+                    <input type="text" class="form-control" formControlName="rxname">
+                    <p class="errormessage" *ngIf="medicineFormErrors.rxname.required || (medicineForm.controls.rxname.pristine && submitted)">Rx name can not be empty</p>
+
                     </div>
                     <div class="col-md-6">
                       <label>Description:</label>
                       <input type="text" class="form-control" formControlName="description">
+                    <p class="errormessage" *ngIf="medicineFormErrors.description.required || (medicineForm.controls.description.pristine && submitted)">Description can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Manufacturer:</label>
                       <input type="text" class="form-control" formControlName="manufacturer">
+                    <p class="errormessage" *ngIf="medicineFormErrors.manufacturer.required || (medicineForm.controls.manufacturer.pristine && submitted)">Manufacturer can not be empty</p>
+
                     </div>
                     <div class="col-md-6">
                       <label>Drug Type:</label>
-                      <!-- <input type="text" class="form-control"> -->
-                      <select class="form-control">
+                      <select class="form-control" formControlName="drugtype">
                         <option value="" disabled selected>Choose your option</option>
                         <option *ngFor="let list of drugList">{{list.type}}</option>
                       </select>
+                    <p class="errormessage" *ngIf="medicineFormErrors.drugtype.required || (medicineForm.controls.drugtype.pristine && submitted)">Drugtype can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Condition:</label>
                       <input type="text" class="form-control" formControlName="condition">
+                    <p class="errormessage" *ngIf="medicineFormErrors.condition.required || (medicineForm.controls.condition.pristine && submitted)">Condition can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Precaution:</label>
                       <input type="text" class="form-control" formControlName="precaution">
+                    <p class="errormessage" *ngIf="medicineFormErrors.precaution.required || (medicineForm.controls.precaution.pristine && submitted)">Precaution can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Direction:</label>
                       <input type="text" class="form-control" formControlName="direction">
+                    <p class="errormessage" *ngIf="medicineFormErrors.direction.required || (medicineForm.controls.direction.pristine && submitted)">Direction can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Strength:</label>
                       <input type="text" class="form-control" formControlName="strength">
+                    <p class="errormessage" *ngIf="medicineFormErrors.strength.required || (medicineForm.controls.strength.pristine && submitted)">Strength can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Unit:</label>
                       <input type="text" class="form-control" formControlName="unit">
+                    <p class="errormessage" *ngIf="medicineFormErrors.unit.required || (medicineForm.controls.unit.pristine && submitted)">Unit can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Quantity:</label>
                       <input type="text" class="form-control" formControlName="quantity">
+                    <p class="errormessage" *ngIf="medicineFormErrors.quantity.required || (medicineForm.controls.quantity.pristine && submitted)">Quantity can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Substitute:</label>
                       <input type="text" class="form-control" formControlName="substitute">
+                    <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>GST Rate:</label>
                       <input type="text" class="form-control" formControlName="gstrate">
+                    <p class="errormessage" *ngIf="medicineFormErrors.gstrate.required || (medicineForm.controls.gstrate.pristine && submitted)">Gst rate can not be empty</p>
                     </div>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="saveMedicineForm()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="saveMedicineForm()">Save</button>
               </div>
             </div>
           </div>

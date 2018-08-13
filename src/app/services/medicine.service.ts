@@ -7,7 +7,7 @@ import { APIURL } from '../urlConfig';
 export class MedicineService {
 
   constructor(private httpClient: HttpClient) { }
-  /********************8 DRUG TYPE METHOD**********************/
+  /*********************DRUG TYPE METHOD**********************/
   createdrug(data) {
     console.log(data)
     return this.httpClient.post(APIURL + 'DrugType', data)
@@ -19,6 +19,7 @@ export class MedicineService {
   }
   /******************* CREATE MEDICINE MASTER*****************************/
   createMedicineMaster(data) {
+    console.log(data)
     return this.httpClient.post(APIURL + 'MedicineMaster', data)
   }
 }
