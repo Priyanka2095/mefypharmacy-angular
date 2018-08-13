@@ -8,7 +8,7 @@ export class MedicineService {
 
   constructor(private httpClient: HttpClient) { }
     // DRUG TYPE METHOD
-    drugdesc(data) {
+    createdrug(data) {
       console.log(data)
       return this.httpClient.post(APIURL + 'DrugType', data)
     }
