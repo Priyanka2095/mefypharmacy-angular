@@ -65,7 +65,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.drugtypeForm = this.drugform()
 
     this.drugtypeForm.valueChanges.subscribe(() => {
-      this.ondrugFormValuesChanged();
+      this.onDrugFormValuesChanged();
     });
     //MEDICINE FORM 
     this.medicineForm = this.createMedicineForm()
@@ -91,7 +91,7 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
   // IT CATCHES ALL CHANGES IN FORM
-  ondrugFormValuesChanged() {
+  onDrugFormValuesChanged() {
     for (const field in this.drugtypeFormErrors) {
       if (!this.drugtypeFormErrors.hasOwnProperty(field)) {
         continue;
@@ -156,21 +156,29 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
 
-  submitform() {
+  saveDrugForm() {
     console.log(this.drugtypeForm.value)
-    this.submitted = true;
     console.log("drugformvalue", this.drugtypeForm.value);
-    $('#myModal').modal('hide');
-    let data = {
-      type: this.drugtypeForm.value.type,
-      description: this.drugtypeForm.value.description
+    if (this.drugtypeForm.valid) {
+      $('#myModal').modal('hide');
+      let data = {
+        type: this.drugtypeForm.value.type,
+        description: this.drugtypeForm.value.description
+      }
+      this.medicineService.createdrug(data).subscribe(value => {
+        console.log(value);
+        this.toastr.success('Drug form created!', 'Toastr fun!', {
+        });
+      },
+
+        err => {
+          console.log(err);
+        })
+      this.drugtypeForm.reset();
     }
-    this.medicineService.drugdesc(data).subscribe(value => {
-      console.log(value);
-    },
-      err => {
-        console.log(err);
-      })
+    else {
+      this.showError();
+    }
   }
   // SHOW  TOAST NOTIFICTATION,
   showError() {
@@ -179,6 +187,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
   //SHOW TOAST NOTIFICATION
   showSuccess() {
+
     this.toastr.success('Medicine form created!', 'Toastr fun!', {
     });
   }
