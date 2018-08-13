@@ -15,6 +15,7 @@ import { PharmalistComponent } from './pharmalist/pharmalist.component';
 import { UserService } from './services/user.service';
 import {SharedService} from './services/shared.service';
 import { PharmacyService } from './services/pharmacy.service';
+import { MedicineService} from './services/medicine.service'
 import { ToastrModule } from 'ngx-toastr';
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -45,7 +46,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxSpinnerModule
 
   ],
-  providers: [UserService,SharedService,PharmacyService],
+  providers: [UserService,SharedService,PharmacyService,MedicineService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

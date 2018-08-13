@@ -37,8 +37,8 @@
                 <form [formGroup]="drugtypeForm" class="drugType">
                   <div class="drugT">
                     <label class="dT">Drug Type:</label>
-                    <input type="text" formControlName="drugtype" class="form-control">
-                    <p class="errormessage" *ngIf="drugtypeFormErrors.drugtype.required || (drugtypeForm.controls.drugtype.pristine && submitted)">drugtype can not be empty</p>
+                    <input type="text" formControlName="type" class="form-control">
+                    <p class="errormessage" *ngIf="drugtypeFormErrors.type.required || (drugtypeForm.controls.type.pristine && submitted)">drugtype can not be empty</p>
                   </div>
                   <div>
                     <p class="desc">Description:</p>

@@ -3,6 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { MedicineService} from '../services/medicine.service'
 import { SharedService } from '../services/shared.service';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 
 
@@ -48,7 +49,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.drugtypeForm = this.drugform()
 
     this.drugtypeForm.valueChanges.subscribe(() => {
-      this.onPharmacyFormValuesChanged();
+      this.ondrugFormValuesChanged();
     });
     //MEDICINE FORM 
     this.medicineForm = this.createMedicineForm()
@@ -95,7 +96,7 @@ export class PharmacydashboardComponent implements OnInit {
 
 
   // IT CATCHES ALL CHANGES IN FORM
-  onPharmacyFormValuesChanged() {
+  ondrugFormValuesChanged() {
     for (const field in this.drugtypeFormErrors) {
       if (!this.drugtypeFormErrors.hasOwnProperty(field)) {
         continue;
@@ -127,6 +128,9 @@ let data={
 }
     this.medicineService.drugdesc(data).subscribe(value=>{
       console.log(value);
-    })
+    },
+  err=>{
+    console.log(err);
+  })
 }
 }

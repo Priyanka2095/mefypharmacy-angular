@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DRUG } from '../urlConfig';
 import { HttpClient } from '@angular/common/http';
+import { APIURL } from '../urlConfig';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +10,6 @@ export class MedicineService {
     // DRUG TYPE METHOD
     drugdesc(data) {
       console.log(data)
-      return this.httpClient.post(DRUG + 'drugdata', data)
+      return this.httpClient.post(APIURL + 'DrugType', data)
     }
 }
