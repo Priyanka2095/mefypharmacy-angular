@@ -34,34 +34,21 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
-                <form class="drugType">
+                <form [formGroup]="drugtypeForm" class="drugType">
                   <div class="drugT">
                     <label class="dT">Drug Type:</label>
-                    <select>
-                      <option value="" disabled selected>Choose your option</option>
-                      <option value="1">Drug A</option>
-                      <option value="2">Drug B</option>
-                      <option value="3">Drug C</option>
-                      <option value="3">Drug D</option>
-                      <option value="3">Drug E</option>
-                      <option value="3">Drug F</option>
-                      <option value="3">Drug G</option>
-                      <option value="3">Drug H</option>
-                    </select>
+                    <input type="text" formControlName="drugtype" class="form-control">
+                    <p class="errormessage" *ngIf="drugtypeFormErrors.drugtype.required || (drugtypeForm.controls.drugtype.pristine && submitted)">drugtype can not be empty</p>
                   </div>
                   <div>
                     <p class="desc">Description:</p>
-                    <textarea rows="4" cols="50" placeholder="Enter description here..."></textarea>
+                    <textarea rows="4" cols="50" formControlName="description" placeholder="Enter description here..."></textarea>
+                    <p class="errormessage" *ngIf="drugtypeFormErrors.description.required || (drugtypeForm.controls.description.pristine && submitted)">description can not be empty</p>
                   </div>
-                  <!-- <div class="dtpe">
-                        <button class="submitbtndrug">Submit</button>
-                      </div> -->
-
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="submitform()">Submit</button>
               </div>
             </div>
           </div>
@@ -353,7 +340,7 @@
                       <input type="text" class="form-control">
                     </div>
                     <div class="col-md-6">
-                      <label>Address:</label>
+                      <label>GSTIN:</label>
                       <input type="text" class="form-control">
                     </div>
                   </div>
@@ -369,11 +356,21 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <label>Email:</label>
+                      <label>Street:</label>
                       <input type="text" class="form-control">
                     </div>
                     <div class="col-md-6">
-                      <label>GSTIN:</label>
+                      <label>City:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Country:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Zipcode:</label>
                       <input type="text" class="form-control">
                     </div>
                   </div>
@@ -391,14 +388,18 @@
           <table class="pharmacyTable">
             <tr>
               <th>Name:</th>
-              <th>Address:</th>
+              <th>Gstin:</th>
               <th>Contact Name:</th>
               <th>Contact Number:</th>
-              <th>Email:</th>
-              <th>GSTIN:</th>
+              <th>Street:</th>
+              <th>City:</th>
+              <th>Country:</th>
+              <th>Code:</th>
             </tr>
             <tr>
               <td>Alfreds Futterkiste</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
               <td>Maria Anders</td>
               <td>Maria Anders</td>
               <td>Maria Anders</td>
