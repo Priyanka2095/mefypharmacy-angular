@@ -5,17 +5,21 @@
   <div>
       <a [routerLink]="['/createpharmacy']"><button class="createform">+</button></a>
   </div>
-  <div>
+  <div >
    
       <table class="pharmaTable">
+        <tbody>
         <tr>
           <th>Pharmacy Name:</th>
           <th>Role:</th>
         </tr>
-        <tr>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
+        <!-- <div  *ngFor="let list of pharmacylist; let i=index"> -->
+        <tr *ngFor="let list of pharmacyList ; let i=index" >
+          <td>{{ list?.pharmacy.pharmacyName}}</td>
+          <td>{{ list?.role}}</td>
         </tr>
+        <!-- </div> -->
+      </tbody>
       </table>
     </div>
   </div>

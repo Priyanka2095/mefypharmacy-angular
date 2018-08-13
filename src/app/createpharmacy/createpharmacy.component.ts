@@ -3,6 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { PharmacyService } from '../services/pharmacy.service';
 import { SharedService } from '../services/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-createpharmacy',
@@ -16,13 +17,13 @@ export class CreatepharmacyComponent implements OnInit {
   degreeId: any;
   tradeId: any;
   drugId: any;
-  public mask = [ /[1-9]/,/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/,/\d/,/\d/, /\d/, /\d/, /\d/] // Phone number validation 
-
-  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService,private spinner: NgxSpinnerService) {
+  userInfo: any;
+  public mask = [/[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
+  constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
     this.pharmacyFormErrors = {
       pharmacyName: {},
       primaryContact: {},
-      alternateContact:{},
+      alternateContact: {},
       street: {},
       zipCode: {},
       city: {},
@@ -34,17 +35,14 @@ export class CreatepharmacyComponent implements OnInit {
       degree: {},
       tradeId: {}
     };
+   
+    this.userInfo = localStorage.getItem('phoneNumber');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
+    console.log(this.userInfo)
   }
 
 
   ngOnInit() {
-   
- 
-    // setTimeout(() => {
-    //     /** spinner ends after 5 seconds */
-    //     this.spinner.hide();
-    // }, 5000);
-  
+
 
     this.pharmacyForm = this.createpharmacyform()
 
@@ -112,23 +110,48 @@ export class CreatepharmacyComponent implements OnInit {
         drugLicense: this.drugId,
         tradeLicense: this.tradeId,
       }
+      console.log(this.userInfo)
       console.log(pharmacyData);
       /***** Data To be sent to APICALL ends AND API CALL STARTS***** */
       this.PharmacyService.addPharmacy(pharmacyData).subscribe(result => {
         console.log(result)
+        this.showPharmmacySuccess();
+        let pharmacyData: any = {};
+        pharmacyData = result
+        /*******CREATE PHARMACY AGAINST USER*****/
+        if (pharmacyData != {}) {
+          let data = {
+            user: this.userInfo,
+            pharmacy: pharmacyData.tradeLicenseId,
+            recordId: "",
+            role: "admin"
+          }
+          console.log(data)
+          this.PharmacyService.userPharmacy(data).subscribe(value => {
+            console.log(value);
+            this.SharedService.userPharmacy(value); /**STORE USERPHARMACY DETAIL */
+            this.router.navigate(['/dashboard']);
+          },
+            err => {
+              console.log(err)
+            })
+        }
+        this.SharedService.pharmacyInfo(result);  /****STORE PHARMACY DETAIL */
         this.spinner.hide();
-        this.SharedService.pharmacyInfo(result);
         this.router.navigate(['/dashboard']);
       }, error => {
-        console.log(error)
+        // console.log(error)
+        this.showInfo();
       })
 
     }
   }
 
 
+
   //FILE UPLOAD SECTION
   upload(event, type) {
+    console.log(this.userInfo)
     console.log(event + 'file upload' + type)
     console.log(event.target)
     let fileList: FileList = event.target.files;
@@ -137,25 +160,48 @@ export class CreatepharmacyComponent implements OnInit {
     console.log("File information :", file.name);
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
+    this.spinner.show();
     this.PharmacyService.fileUpload(formData).subscribe(response => {
+      this.spinner.hide();
+      this.showSuccess();
       console.log(response);
       let result: any = {};
       result = response;
       if (type == "degree") {
         this.degreeId = result.upload._id;
-
+        // console.log('degreee', this.degreeId)
         // this.pharmacyForm.controls['degree'].setValue(response.upload._id);
         // this.pharmacyForm.patchValue({degree: response.upload._id}) 
       }
       else if (type == "drug") {
         this.drugId = result.upload._id;
+        // console.log('drug', this.drugId)
       }
       else if (type == "trade") {
         this.tradeId = result.upload._id;
+        // console.log('traade', this.tradeId)
       }
       console.log(this.pharmacyForm.value)
     }, err => {
       console.log(err);
     });
+  }
+  //SHOW TOAST NOTIFICATION
+  showSuccess() {
+    this.toastr.success('File Uploded!', 'Toastr fun!', {
+    });
+  }
+  //SHOW TOAST NOTIFICATION
+  showPharmmacySuccess() {
+    this.toastr.success('Pharmacy Created!', 'Toastr fun!', {
+    });
+  }
+  // SHOW  TOAST NOTIFICTATION,
+  showError() {
+    this.toastr.error('Server Error!', 'Major Error', {
+    });
+  }
+  showInfo() {
+    this.toastr.info('Trade Id already exist')
   }
 }

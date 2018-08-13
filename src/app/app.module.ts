@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { PharmalistComponent } from './pharmalist/pharmalist.component';
 import { UserService } from './services/user.service';
 import {SharedService} from './services/shared.service';
 import { PharmacyService } from './services/pharmacy.service';
+import { ToastrModule } from 'ngx-toastr';
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -29,11 +31,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, // required animations module
     RoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    ToastrModule.forRoot({   // ToastrModule added
+      timeOut: 999,
+      preventDuplicates: true,
+    }) ,
     TextMaskModule,
     NgxSpinnerModule
 
