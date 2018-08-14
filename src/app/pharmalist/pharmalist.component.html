@@ -23,7 +23,7 @@
         </tr>
         <!-- <div  *ngFor="let list of pharmacylist; let i=index"> -->
         <tr *ngFor="let list of pharmacyList ; let i=index" >
-          <td>{{ list?.pharmacy.pharmacyName}}</td>
+          <td>{{ list?.pharmacy[0].pharmacyName}}</td>
           <td>{{ list?.role}}</td>
         </tr>
         <!-- </div> -->
