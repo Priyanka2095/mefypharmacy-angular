@@ -130,7 +130,7 @@ export class CreatepharmacyComponent implements OnInit {
           this.PharmacyService.userPharmacy(data).subscribe(value => {
             console.log(value);
             this.SharedService.userPharmacy(value); /**STORE USERPHARMACY DETAIL */
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/pharmacydashboard']);
           },
             err => {
               console.log(err)
@@ -138,7 +138,7 @@ export class CreatepharmacyComponent implements OnInit {
         }
         this.SharedService.pharmacyInfo(result);  /****STORE PHARMACY DETAIL */
         this.spinner.hide();
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/pharmacydashboard']);
       }, error => {
         // console.log(error)
         this.showInfo();

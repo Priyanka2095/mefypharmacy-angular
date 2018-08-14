@@ -13,30 +13,31 @@ export class PharmacyService {
 
   constructor(private httpClient: HttpClient) { }
 
-  // PHARMACY CREATION METHOD
+  /****************************** PHARMACY CREATION METHOD******************/
   addPharmacy(data) {
     console.log(data)
     return this.httpClient.post(APIURL + 'pharmacy', data)
   }
 
-  // FILE UPLOAD METHOD
+  /****************************FILE UPLOAD METHOD*****************************/
   fileUpload(data) {
     console.log('file data', data)
-    return this.httpClient.post(FILEURL, data)
+    return this.httpClient.post(FILEURL+'fileUpload', data)
   }
-  // CREATE PHARMACY AGAINST USER
+/***************************GET FILE***************************/
+getFile(data){
+  console.log('file data', data)
+  return this.httpClient.get(FILEURL+'fileShow?fileId='+ data)
+}
+  /*******************************CREATE PHARMACY AGAINST USER**********************/
   userPharmacy(data) {
     console.log(data);
     return this.httpClient.post(APIURL + 'UserPharmacy', data)
   }
-  //GET PHARMACY LIST BY USER'S PHONENUMBER
+  /******************GET PHARMACY LIST BY USER'S PHONENUMBER************************/
   getUserPharmacy(phoneNumber) {
     console.log(phoneNumber)
     return this.httpClient.get(APIURL + 'UserPharmacy/user?phonenumber=' + phoneNumber.phonenumber);
-  }
-  //GET PHARMACY DETAIL BY TRADE LICENSE ID
-  getPharmacy(tradeId) {
-    return this.httpClient.get(APIURL + 'Pharmacy/' + tradeId.id)
   }
   // catch errors
   // public handleError = (error: Response) => {
