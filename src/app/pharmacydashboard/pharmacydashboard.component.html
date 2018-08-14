@@ -35,7 +35,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4> 
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
                 <form [formGroup]="drugtypeForm" class="drugType">
@@ -374,7 +374,7 @@
                     </div>
                     <div class="col-md-6">
                       <label>Contact Number:</label>
-                      <input type="text" class="form-control" [textMask]="{mask: mask, guide: false}"  formControlName="contactNumber" minlength="10">
+                      <input type="text" class="form-control" [textMask]="{mask: mask, guide: false}" formControlName="contactNumber" minlength="10">
                       <p class="errormessage" *ngIf="manufactureFormerrors.contactNumber.minlength">Please Enter valid Phone Number</p>
                       <p class="errormessage" *ngIf="manufactureFormerrors.contactNumber.required || (manuactureForm.controls.contactNumber.pristine && submitted)">Contact number can not be empty</p>
                     </div>
@@ -548,7 +548,7 @@
       <!-- ****VENDOR FORM(END) ****-->
       <!-- ****PHARMACY DETAILS FORM(START) ****-->
       <div class="tab-pane" id="6a">
-        <form  class="logformp">
+        <form class="logformp">
           <div class="col-md-12">
             <div class="col-md-6">
               <div class="form-group">
@@ -623,13 +623,16 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Degree file:</label>
-                <p>{{pharmaData.degreeFile}}</p>
+                <!-- <p>{{pharmaData.degreeFile}}</p> -->
+                <a target="_blank" href="https://api.meme.care/file/fileShow?fileId={{pharmaData.degreeFile}}">Download Me</a>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Drug License:</label>
-                <p>{{pharmaData.drugLicense}}</p>
+                <!-- <p>{{pharmaData.drugLicense}}</p> -->
+                <a target="_blank" href="https://api.meme.care/file/fileShow?fileId={{pharmaData.drugLicense}}">Download Me</a>
+
               </div>
             </div>
           </div>
@@ -637,7 +640,8 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Trade License:</label>
-                <p>{{pharmaData.tradeLicense}}</p>
+                <a target="_blank" href="https://api.meme.care/file/fileShow?fileId={{pharmaData.tradeLicense}}">Download Me</a>
+                <!-- <p>{{pharmaData.tradeLicense}}</p> -->
               </div>
             </div>
           </div>
