@@ -21,18 +21,20 @@ export class PharmacydashboardComponent implements OnInit {
   medicineFormErrors: any;
   drugtypeFormErrors: any;
   manufactureFormerrors: any
+  vendorFormerrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
   drugList: any = [];
-  vendorFormerrors: any;
+  pharmacyId: any
+  pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
 
-  /************DRUG TYPE FORM ERRORS***************/
+    /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
       type: {},
       description: {},
     };
-  /***********************MEDICINE FORM ERRORS******************/
+    /***********************MEDICINE FORM ERRORS******************/
     this.medicineFormErrors = {
       medicineId: {},
       name: {},
@@ -50,7 +52,7 @@ export class PharmacydashboardComponent implements OnInit {
       substitute: {},
       gstrate: {}
     }
-  /*************************MANUFACTURE FORM ERRORS********************/
+    /*************************MANUFACTURE FORM ERRORS********************/
     this.manufactureFormerrors = {
       gstin: {},
       name: {},
@@ -62,17 +64,19 @@ export class PharmacydashboardComponent implements OnInit {
       zipcode: {},
 
     }
-  /*************************VENDOR FORM ERRORS********************/
-      this.vendorFormerrors = {
-        name: {},
-        gstin: {},
-        street: {},
-        city: {},
-        country: {},
-        zipcode: {},
-        contactName: {},
-        contactNumber: {},
-      }
+    /*************************VENDOR FORM ERRORS********************/
+    this.vendorFormerrors = {
+      name: {},
+      gstin: {},
+      street: {},
+      city: {},
+      country: {},
+      zipcode: {},
+      contactName: {},
+      contactNumber: {},
+    }
+    this.pharmacyId = localStorage.getItem('tradeId');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
+    console.log(this.pharmacyId)
   }
 
   ngOnInit() {
@@ -103,10 +107,7 @@ export class PharmacydashboardComponent implements OnInit {
     })
 
     this.getAllDrug();
-    // var options = {
-    //   'backdrop' : 'true'
-    // }
-    // $('#myModal4').modal(options);
+    this.getPharmacyDetail();
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -392,7 +393,17 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
   /*************************SAVE VENDOR FORM (end)************************************/
-
+  /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
+  getPharmacyDetail() {
+    this.spinner.show(); /**SHOW LOADER */
+    this.medicineService.getPharmacy(this.pharmacyId).subscribe(result => {
+      console.log(result);
+      let value: any = {}
+      value = result
+      this.pharmaData = value
+      this.spinner.hide(); /**HIDE LOADER */
+    })
+  }
 }
 
 

@@ -32,4 +32,9 @@ export class MedicineService {
     console.log(data);
     return this.httpClient.post(APIURL+ 'Manufacturer',data)
   }
+   /**************************GET PHARMACY DETAIL BY TRADE LICENSE ID*************************/
+   getPharmacy(tradeId) {
+     console.log(tradeId)
+    return this.httpClient.get(APIURL + 'Pharmacy/' + tradeId)
+  }
 }

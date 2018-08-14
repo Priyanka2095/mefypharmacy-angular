@@ -546,20 +546,20 @@
         </div>
       </div>
       <!-- ****VENDOR FORM(END) ****-->
-      <!-- ****PHARMACYDETAILS FORM(START) ****-->
+      <!-- ****PHARMACY DETAILS FORM(START) ****-->
       <div class="tab-pane" id="6a">
         <form  class="logformp">
           <div class="col-md-12">
             <div class="col-md-6">
               <div class="form-group">
                 <label>Pharmacy Name</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.pharmacyName}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Primary Contact:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.primaryContact}}</p>
               </div>
             </div>
           </div>
@@ -567,13 +567,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Alternate Contact:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData?pharmaData.alternateContact:''}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Street:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.address?pharmaData.address.street:''}}</p>
               </div>
             </div>
           </div>
@@ -581,13 +581,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>City:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.address?pharmaData.address.city:''}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Country:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.address?pharmaData.address.country:''}}</p>
               </div>
             </div>
           </div>
@@ -595,13 +595,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Zipcode:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.address?pharmaData.address.zipcode:''}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Email:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.email}}</p>
               </div>
             </div>
           </div>
@@ -609,13 +609,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Trade License Id:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.tradeLicense}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>GSTNo.:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.gstNo}}</p>
               </div>
             </div>
           </div>
@@ -623,13 +623,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Degree file:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.degreeFile}}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Drug License:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.drugLicense}}</p>
               </div>
             </div>
           </div>
@@ -637,7 +637,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Trade License:</label>
-                <p>ABCD</p>
+                <p>{{pharmaData.tradeLicense}}</p>
               </div>
             </div>
           </div>

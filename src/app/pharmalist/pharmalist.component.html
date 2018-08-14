@@ -22,7 +22,7 @@
           <th>Role:</th>
         </tr>
         <!-- <div  *ngFor="let list of pharmacylist; let i=index"> -->
-        <tr *ngFor="let list of pharmacyList ; let i=index" >
+        <tr  *ngFor="let list of pharmacyList ; let i=index" (click)="setClickedRow(list)" [ngClass]="{'red':selectedRow==true}" >
           <td>{{ list?.pharmacy.pharmacyName}}</td>
           <td>{{ list?.role}}</td>
         </tr>
