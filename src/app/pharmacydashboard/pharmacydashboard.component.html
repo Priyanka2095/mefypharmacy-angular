@@ -3,7 +3,7 @@
   <h1>Pharmacy Dashboard</h1>
   <div id="exTab1" class="container">
     <ul class="nav nav-pills pharmacyBoard">
-      <li class="active">
+      <li>
         <a href="#1a" data-toggle="tab">Drug Type</a>
       </li>
       <li>
@@ -18,14 +18,14 @@
       <li>
         <a href="#5a" data-toggle="tab">Vendor</a>
       </li>
-      <li>
+      <li class="active">
         <a href="#6a" data-toggle="tab">Pharmacy Details</a>
       </li>
     </ul>
 
     <div class="tab-content clearfix">
       <!-- ****DRUG TYPE FORM(START) ****-->
-      <div class="tab-pane active" id="1a">
+      <div class="tab-pane" id="1a">
         <div>
           <button class="createform" data-toggle="modal" data-target="#myModal">+</button>
         </div>
@@ -35,7 +35,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4> 
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
                 <form [formGroup]="drugtypeForm" class="drugType">
@@ -255,20 +255,10 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Pharmacy Item</h4>
               </div>
               <div class="modal-body">
                 <form class="pharmacyitem">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label>ID:</label>
-                      <input type="text" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                      <label>Pharmacy ID:</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Medicine ID:</label>
@@ -374,7 +364,7 @@
                     </div>
                     <div class="col-md-6">
                       <label>Contact Number:</label>
-                      <input type="text" class="form-control" [textMask]="{mask: mask, guide: false}"  formControlName="contactNumber" minlength="10">
+                      <input type="text" class="form-control" [textMask]="{mask: mask, guide: false}" formControlName="contactNumber" minlength="10">
                       <p class="errormessage" *ngIf="manufactureFormerrors.contactNumber.minlength">Please Enter valid Phone Number</p>
                       <p class="errormessage" *ngIf="manufactureFormerrors.contactNumber.required || (manuactureForm.controls.contactNumber.pristine && submitted)">Contact number can not be empty</p>
                     </div>
@@ -546,9 +536,10 @@
         </div>
       </div>
       <!-- ****VENDOR FORM(END) ****-->
+
       <!-- ****PHARMACY DETAILS FORM(START) ****-->
-      <div class="tab-pane" id="6a">
-        <form  class="logformp">
+      <div class="tab-pane active" id="6a">
+        <form class="logformp">
           <div class="col-md-12">
             <div class="col-md-6">
               <div class="form-group">
