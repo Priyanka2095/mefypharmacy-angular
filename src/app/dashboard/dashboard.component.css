@@ -24,4 +24,16 @@ button.btn.phsigin {
   font-size: 15px;
   margin-top: 2em;
 }
+button.logout {
+  float: right;
+  margin: 1em;
+  background: transparent;
+  border-radius: 50px;
+  outline: none;
+  height: 35px;
+  width: 76px;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+}
 /* dashboard css */

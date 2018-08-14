@@ -3,6 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { UserService } from '../services/user.service';
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
@@ -13,11 +14,12 @@ export class CreateuserComponent implements OnInit {
   userFormErrors: any;
   userData: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
-  constructor(private formBuilder: FormBuilder, public userService: UserService, private sharedService: SharedService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService, private sharedService: SharedService, private router: Router, private toastr: ToastrService) {
 
     this.sharedService.userNumber.subscribe(data => {
       console.log(data);
-      this.userData = data;
+      this.userData = data;   // STORED LOGIN USER PHONENUMBER
+
     })
     this.userFormErrors = {
       name: {},
@@ -31,7 +33,7 @@ export class CreateuserComponent implements OnInit {
       this.onUserFormValuesChanged();
     });
   }
-  // IT CATCHES ALL CHANGES IN FORM
+  /*************************** IT CATCHES ALL CHANGES IN FORM***********************/
   onUserFormValuesChanged() {
     for (const field in this.userFormErrors) {
       if (!this.userFormErrors.hasOwnProperty(field)) {
@@ -50,12 +52,12 @@ export class CreateuserComponent implements OnInit {
 
   createuserform() {
     return this.formBuilder.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
     });
   }
+  /**************************NEW USER FORM**************************************** */
   saveUserForm() {
     console.log(this.userForm.value);
-
     this.submitted = true;
     // STOP  HERE IF FORM IS INVALID
     if (this.userForm.valid) {
@@ -66,12 +68,25 @@ export class CreateuserComponent implements OnInit {
       }
       this.userService.newUser(data).subscribe(data => {
         console.log(data)
+        localStorage.setItem('phoneNumber', this.userData.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
+        this.showSuccess();
+        this.sharedService.userInfo(data);
         this.router.navigate(['/createpharmacy'])
       },
         err => {
-
+          this.showError();
         })
     }
+  }
+  /****************************SHOW TOAST NOTIFICATION********************/
+  showSuccess() {
+    this.toastr.success('User created!', 'Toastr fun!', {
+    });
+  }
+  /****************************** SHOW  TOAST NOTIFICTATION********************/
+  showError() {
+    this.toastr.error('Server Error!', 'Major Error', {
+    });
   }
 
 }

@@ -34,34 +34,21 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
-                <form class="drugType">
+                <form [formGroup]="drugtypeForm" class="drugType">
                   <div class="drugT">
                     <label class="dT">Drug Type:</label>
-                    <select>
-                      <option value="" disabled selected>Choose your option</option>
-                      <option value="1">Drug A</option>
-                      <option value="2">Drug B</option>
-                      <option value="3">Drug C</option>
-                      <option value="3">Drug D</option>
-                      <option value="3">Drug E</option>
-                      <option value="3">Drug F</option>
-                      <option value="3">Drug G</option>
-                      <option value="3">Drug H</option>
-                    </select>
+                    <input type="text" formControlName="type" class="form-control">
+                    <p class="errormessage" *ngIf="drugtypeFormErrors.type.required || (drugtypeForm.controls.type.pristine && submitted)">drugtype can not be empty</p>
                   </div>
                   <div>
                     <p class="desc">Description:</p>
-                    <textarea rows="4" cols="50" placeholder="Enter description here..."></textarea>
+                    <textarea rows="4" cols="50" formControlName="description" placeholder="Enter description here..."></textarea>
+                    <p class="errormessage" *ngIf="drugtypeFormErrors.description.required || (drugtypeForm.controls.description.pristine && submitted)">description can not be empty</p>
                   </div>
-                  <!-- <div class="dtpe">
-                        <button class="submitbtndrug">Submit</button>
-                      </div> -->
-
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="saveDrugForm()">Submit</button>
               </div>
             </div>
           </div>
@@ -110,82 +97,102 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
-                <form class="medicineMaster">
+                <form class="medicineMaster" [formGroup]="medicineForm">
                   <div class="row">
                     <div class="col-md-6">
                       <label>Name:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="name">
+                    <p class="errormessage" *ngIf="medicineFormErrors.name.required || (medicineForm.controls.name.pristine && submitted)">Name can not be empty</p>
+
                     </div>
                     <div class="col-md-6">
                       <label>Form:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="form">
+                    <p class="errormessage" *ngIf="medicineFormErrors.form.required || (medicineForm.controls.form.pristine && submitted)">Form can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Rx Name:</label>
-                      <input type="text" class="form-control">
+                    <input type="text" class="form-control" formControlName="rxname">
+                    <p class="errormessage" *ngIf="medicineFormErrors.rxname.required || (medicineForm.controls.rxname.pristine && submitted)">Rx name can not be empty</p>
+
                     </div>
                     <div class="col-md-6">
                       <label>Description:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="description">
+                    <p class="errormessage" *ngIf="medicineFormErrors.description.required || (medicineForm.controls.description.pristine && submitted)">Description can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Manufacturer:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="manufacturer">
+                    <p class="errormessage" *ngIf="medicineFormErrors.manufacturer.required || (medicineForm.controls.manufacturer.pristine && submitted)">Manufacturer can not be empty</p>
+
                     </div>
                     <div class="col-md-6">
                       <label>Drug Type:</label>
-                      <input type="text" class="form-control">
+                      <select class="form-control" formControlName="drugtype">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option *ngFor="let list of drugList">{{list.type}}</option>
+                      </select>
+                    <p class="errormessage" *ngIf="medicineFormErrors.drugtype.required || (medicineForm.controls.drugtype.pristine && submitted)">Drugtype can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Condition:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="condition">
+                    <p class="errormessage" *ngIf="medicineFormErrors.condition.required || (medicineForm.controls.condition.pristine && submitted)">Condition can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Precaution:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="precaution">
+                    <p class="errormessage" *ngIf="medicineFormErrors.precaution.required || (medicineForm.controls.precaution.pristine && submitted)">Precaution can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Direction:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="direction">
+                    <p class="errormessage" *ngIf="medicineFormErrors.direction.required || (medicineForm.controls.direction.pristine && submitted)">Direction can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Strength:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="strength">
+                    <p class="errormessage" *ngIf="medicineFormErrors.strength.required || (medicineForm.controls.strength.pristine && submitted)">Strength can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Unit:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="unit">
+                    <p class="errormessage" *ngIf="medicineFormErrors.unit.required || (medicineForm.controls.unit.pristine && submitted)">Unit can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Quantity:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="quantity">
+                    <p class="errormessage" *ngIf="medicineFormErrors.quantity.required || (medicineForm.controls.quantity.pristine && submitted)">Quantity can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Substitute:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="substitute">
+                    <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>GST Rate:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="gstrate">
+                    <p class="errormessage" *ngIf="medicineFormErrors.gstrate.required || (medicineForm.controls.gstrate.pristine && submitted)">Gst rate can not be empty</p>
                     </div>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="saveMedicineForm()">Save</button>
               </div>
             </div>
           </div>
@@ -288,7 +295,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" >Save changes</button>
               </div>
             </div>
           </div>
@@ -328,6 +335,95 @@
         </div>
         <!-- Modal -->
         <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-vertical-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+              </div>
+              <div class="modal-body">
+                <form class="pharmacyitem">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Name:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label>GSTIN:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Contact Name:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Contact Number:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Street:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label>City:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Country:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Zipcode:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div>
+          <table class="pharmacyTable">
+            <tr>
+              <th>Name:</th>
+              <th>Gstin:</th>
+              <th>Contact Name:</th>
+              <th>Contact Number:</th>
+              <th>Street:</th>
+              <th>City:</th>
+              <th>Country:</th>
+              <th>Code:</th>
+            </tr>
+            <tr>
+              <td>Alfreds Futterkiste</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane" id="5a">
+        <div>
+          <button class="createform" data-toggle="modal" data-target="#myModal5">+</button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-vertical-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -396,81 +492,6 @@
             </tr>
           </table>
         </div>
-      </div>
-      <div class="tab-pane" id="5a">
-          <div>
-              <button class="createform" data-toggle="modal" data-target="#myModal5">+</button>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-vertical-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form class="pharmacyitem">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label>Name:</label>
-                          <input type="text" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                          <label>Address:</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label>Contact Name:</label>
-                          <input type="text" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                          <label>Contact Number:</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label>Email:</label>
-                          <input type="text" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                          <label>GSTIN:</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Modal -->
-            <div>
-              <table class="pharmacyTable">
-                <tr>
-                  <th>Name:</th>
-                  <th>Address:</th>
-                  <th>Contact Name:</th>
-                  <th>Contact Number:</th>
-                  <th>Email:</th>
-                  <th>GSTIN:</th>
-                </tr>
-                <tr>
-                  <td>Alfreds Futterkiste</td>
-                  <td>Maria Anders</td>
-                  <td>Maria Anders</td>
-                  <td>Maria Anders</td>
-                  <td>Maria Anders</td>
-                  <td>Maria Anders</td>
-                </tr>
-              </table>
-            </div>
       </div>
     </div>
   </div>
