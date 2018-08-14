@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit {
       /***********************CHECK USER ALREADY REGISTERED OR NOT*******************/
       this.userService.checkUser(this.loginForm.value).subscribe(data => {
         console.log(data);
-        this.spinner.hide(); /**HIDE LOADER */
         let result: any = {};
         result = data;
         console.log(result.exists)
@@ -80,12 +79,13 @@ export class LoginComponent implements OnInit {
             let pharmacy: any = {};
             pharmacy = data
             console.log(pharmacy.count)
-            if (pharmacy.count == 0) {
+            if (pharmacy.count === 0) {
               this.router.navigate(['/createpharmacy'])
             }
             else {
               this.router.navigate(['/pharmalist'])
             }
+            this.spinner.hide(); /**HIDE LOADER */
           },
             err => {
               this.showError();

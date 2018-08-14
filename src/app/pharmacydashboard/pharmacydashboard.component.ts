@@ -259,6 +259,8 @@ export class PharmacydashboardComponent implements OnInit {
       }
    this.medicineService.createManufacture(data).subscribe(value=>{
      console.log(value);
+     $('#myModal4').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
+     this.submitted=false
      this.spinner.hide(); /**HIDE LOADER */
      this.manuactureForm.reset();
        /****************************SHOW  TOAST NOTIFICTATION*********************/
@@ -272,9 +274,11 @@ export class PharmacydashboardComponent implements OnInit {
       
     }
     else {
-      this.toastr.error('Manufacture Form not created!', 'Major Error')
+      $('#myModal4').modal('show');
+      // this.submitted=false
+      // this.toastr.error('Manufacture Form not created!', 'Major Error')
     }
-    this.manuactureForm.reset();
+    // this.manuactureForm.reset();
 
   }
 
