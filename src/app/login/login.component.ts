@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service'
 import { SharedService } from '../services/shared.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { PharmacyService } from '../services/pharmacy.service';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
 
-  constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService, public pharmacyService: PharmacyService, private toastr: ToastrService) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService, public pharmacyService: PharmacyService, private toastr: ToastrService,private spinner: NgxSpinnerService) {
     this.loginFormErrors = {
       phoneNumber: {},
     };
@@ -58,11 +59,13 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
+      this.spinner.show(); /**SHOW LOADER */
 
       this.sharedService.userCreate(this.loginForm.value); //STORED LOGIN USER PHONENUMBER
       /***********************CHECK USER ALREADY REGISTERED OR NOT*******************/
       this.userService.checkUser(this.loginForm.value).subscribe(data => {
         console.log(data);
+        this.spinner.hide(); /**HIDE LOADER */
         let result: any = {};
         result = data;
         console.log(result.exists)
@@ -71,7 +74,7 @@ export class LoginComponent implements OnInit {
           let data = {
             user: this.loginForm.value.phoneNumber
           }
-          /****************8CHECK PHARMACY EXIST WITH USER PHONENUMBER OR NOT***************/
+          /****************CHECK PHARMACY EXIST WITH USER PHONENUMBER OR NOT***************/
           this.userService.checkPharmacy(data).subscribe(data => {
             console.log(data);
             let pharmacy: any = {};

@@ -92,7 +92,7 @@ export class CreatepharmacyComponent implements OnInit {
     /********** STOP  HERE IF FORM IS INVALID **********/
     if (this.pharmacyForm.valid) {
       /***** Data To be sent to APICALL***** */
-      this.spinner.show();
+      this.spinner.show();  /***Spinner */
       let pharmacyData = {
         tradeLicenseId: this.pharmacyForm.value.tradeId,
         pharmacyName: this.pharmacyForm.value.pharmacyName,

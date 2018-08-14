@@ -28,8 +28,10 @@ newUser(data){
 /***************************CHECK USER HAS PHARMACY OR NOT************************/
 checkPharmacy(user){
   console.log(user.user) //USERID:USER'S PHONENUMBER
-  console.log(APIURL+'UserPharmacy/count?filter={"where":{"user":"'+user.user+'"}}')
-  return this.http.get(APIURL+'UserPharmacy/count?filter={"where":{"user":"'+user.user+'"}}');
+  console.log(APIURL+'UserPharmacy/count?where{"user":"'+user.user+'"}')
+  // return this.http.get(APIURL+'UserPharmacy/count?filter={"where":{"user":"'+user.user+'"}}');
+  return this.http.get(APIURL+'UserPharmacy/count?where={"user":"'+user.user+'"}');
+
 
 }
 // errorHandler(error:HttpErrorResponse){
