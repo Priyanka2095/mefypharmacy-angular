@@ -16,12 +16,15 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
-  manuactureForm: FormGroup
+  manuactureForm: FormGroup;
+  vendorForm:FormGroup;
   medicineFormErrors: any;
   drugtypeFormErrors: any;
   manufactureFormerrors: any
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
   drugList: any = [];
+  vendorFormerrors: any;
+  public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
 
     /************DRUG TYPE FORM ERRORS***************/
@@ -59,6 +62,17 @@ export class PharmacydashboardComponent implements OnInit {
       zipcode: {},
 
     }
+    /*************************VENDOR FORM ERRORS********************/
+        this.vendorFormerrors = {
+          name: {},
+          gstin: {},
+          street: {},
+          city: {},
+          country: {},
+          zipcode: {},
+          contactName: {},
+          contactNumber: {},  
+        }
   }
 
   ngOnInit() {
@@ -68,7 +82,12 @@ export class PharmacydashboardComponent implements OnInit {
     this.drugtypeForm.valueChanges.subscribe(() => {
       this.onDrugFormValuesChanged();
     });
+  /***************************VENDOR FORM*****************/
+  this.vendorForm = this.createVendorForm()
 
+  this.vendorForm.valueChanges.subscribe(() => {
+    this.onVendorFormValuesChanged();
+  });
     /******************************MEDICINE FORM***********************/
     this.medicineForm = this.createMedicineForm()
 
@@ -133,7 +152,22 @@ export class PharmacydashboardComponent implements OnInit {
       }
     }
   }
+  /**********************************IT CATCHES ALL CHANGES IN VENDOR FORM **************************/
+  onVendorFormValuesChanged() {
+    for (const field in this.vendorFormerrors) {
+      if (!this.vendorFormerrors.hasOwnProperty(field)) {
+        continue;
+      }
+      // Clear previous errors
+      this.vendorFormerrors[field] = {};
+      // Get the control
+      const control = this.vendorForm.get(field);
 
+      if (control && control.dirty && !control.valid) {
+        this.vendorFormerrors[field] = control.errors;
+      }
+    }
+  }
   // DRUG FORM
   Drugform() {
     return this.formBuilder.group({
@@ -141,7 +175,19 @@ export class PharmacydashboardComponent implements OnInit {
       description: ['', Validators.required]
     });
   }
-
+  // *****************************CREATE VENDOR FORM*************************************
+  createVendorForm(){
+    return this.formBuilder.group({
+      name: ['', Validators.required],
+      gstin: ['', Validators.required],
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      zipcode: ['', Validators.required],
+      contactName: ['', Validators.required],
+      contactNumber: ['', Validators.required],
+    });
+  }
   /********************************** MEDICINE FORM********************/
   createMedicineForm() {
     return this.formBuilder.group({
@@ -176,6 +222,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /*************************SAVE DRUG FORM************************************/
   saveDrugForm() {
+    this.submitted = true
     console.log("drugformvalue", this.drugtypeForm.value);
     if (this.drugtypeForm.valid) {
       $('#myModal').modal('hide');
@@ -187,11 +234,12 @@ export class PharmacydashboardComponent implements OnInit {
         console.log(value);
         this.drugtypeForm.reset();
         this.toastr.success(' Drug Form created!', 'Toastr fun!')
+        this.submitted = false; 
       }, err => {
         console.log(err);
-        this.toastr.error('Manufacture Form not created!', 'Major Error')
+        this.toastr.error('Drug Form not created!', 'Major Error')
       })
-      
+
     }
     else {
       this.drugtypeForm.reset();
@@ -200,7 +248,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
-    this.submitted=true
+    this.submitted = true
     if (this.medicineForm.valid) {
       console.log(this.medicineForm.value) 
       this.spinner.show(); /**SHOW LOADER */  
@@ -219,7 +267,7 @@ export class PharmacydashboardComponent implements OnInit {
         quantity: this.medicineForm.value.quantity,
         substitute: this.medicineForm.value.substitute,
         gstrate: this.medicineForm.value.gstrate,
-        medicineId:""
+        medicineId: ""
       }
       console.log(data)
       this.medicineService.createMedicineMaster(data).subscribe(value=>{
@@ -290,6 +338,92 @@ export class PharmacydashboardComponent implements OnInit {
       value = data;
       this.drugList = value
     })
+  }
+
+  /*************************SAVE VENDOR FORM (start)************************************/
+
+
+  // saveDrugForm() {
+  //   this.submitted = true
+  //   console.log("drugformvalue", this.drugtypeForm.value);
+  //   if (this.drugtypeForm.valid) {
+  //     $('#myModal').modal('hide');
+  //     let data = {
+  //       type: this.drugtypeForm.value.type,
+  //       description: this.drugtypeForm.value.description
+  //     }
+  //     this.medicineService.createdrug(data).subscribe(value => {
+  //       console.log(value);
+  //       this.drugtypeForm.reset();
+  //       this.toastr.success(' Drug Form created!', 'Toastr fun!')
+  //     }, err => {
+  //       console.log(err);
+  //       this.toastr.error('Drug Form not created!', 'Major Error')
+  //     })
+
+  //   }
+  //   else {
+  //     this.drugtypeForm.reset();
+  //     this.toastr.error('Drug Form not created!', 'Major Error')
+  //   }
+  // }
+
+
+
+
+
+  saveVendorForm(){
+    this.submitted = true;   
+    console.log("Vendorformvalue", this.vendorForm.value);
+    if (this.vendorForm.valid) {
+      this.spinner.show(); /**SHOW LOADER */
+      let data={
+        name: this.vendorForm.value.name,
+        gstin: this.vendorForm.value.gstin,
+        contactName: this.vendorForm.value.contactName,
+        contactNumber: this.vendorForm.value.contactNumber,
+       address:{
+        street: this.vendorForm.value.street,
+        city: this.vendorForm.value.city,
+        country: this.vendorForm.value.country,
+        zipcode:this.vendorForm.value.zipcode
+       }
+      }
+  
+      this.medicineService.createVendor(data).subscribe(value => {
+              console.log(value);
+              $('#myModal5').modal('hide');
+              this.toastr.success(' Vendor Form created!', 'Toastr fun!');
+              this.vendorForm.reset();
+              this.submitted = false;
+              this.spinner.hide();/**HIDE LOADER */ 
+
+            }, err => {
+              console.log(err);
+              this.submitted = false;
+              this.spinner.hide();/**HIDE LOADER */ 
+              this.toastr.error('Vendor Form not created!', 'Major Error')
+            })
+    }
+  else {
+      this.vendorForm.reset();
+      this.submitted = false;
+      this.spinner.hide();/**HIDE LOADER */ 
+      this.toastr.error('Vendor Form not created!', 'Major Error')
+    }
+  }
+
+  /*************************SAVE VENDOR FORM (end)************************************/
+
+  /****************************SHOW  TOAST NOTIFICTATION*********************/
+  showError() {
+    this.toastr.error(' Form not created!', 'Major Error', {
+    });
+  }
+  /*********************************SHOW TOAST NOTIFICATION******************/
+  showSuccess() {
+    this.toastr.success('Form created!', 'Toastr fun!', {
+    });
   }
 
 }

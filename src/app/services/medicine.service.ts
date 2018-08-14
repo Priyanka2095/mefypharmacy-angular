@@ -22,6 +22,11 @@ export class MedicineService {
     console.log(data)
     return this.httpClient.post(APIURL + 'MedicineMaster', data)
   }
+  // ***********************VENDOR METHOD************************************/
+  createVendor(data) {
+    console.log(data)
+    return this.httpClient.post(APIURL + 'Vendor', data)
+  }
   /*****************************CREATE MANUFACTURE****************/
   createManufacture(data){
     console.log(data);
