@@ -18,6 +18,9 @@
       <li>
         <a href="#5a" data-toggle="tab">Vendor</a>
       </li>
+      <li>
+        <a href="#6a" data-toggle="tab">Pharmacy Details</a>
+      </li>
     </ul>
 
     <div class="tab-content clearfix">
@@ -26,7 +29,7 @@
         <div>
           <button class="createform" data-toggle="modal" data-target="#myModal">+</button>
         </div>
-         <!--- DRUG  Modal -->
+        <!--- DRUG  Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-vertical-centered">
             <div class="modal-content">
@@ -353,50 +356,51 @@
                   <div class="row">
                     <div class="col-md-6">
                       <label>Name:</label>
-                      <input type="text" class="form-control"formControlName="name">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.name.required || (manuactureForm.controls.name.pristine && submitted)">Name can not be empty</p>
+                      <input type="text" class="form-control" formControlName="name">
+                      <p class="errormessage" *ngIf="manufactureFormerrors.name.required || (manuactureForm.controls.name.pristine && submitted)">Name can not be empty</p>
 
                     </div>
                     <div class="col-md-6">
                       <label>GSTIN:</label>
-                    <input type="text" class="form-control" formControlName="gstin">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.gstin.required || (manuactureForm.controls.gstin.pristine && submitted)">Gstin can not be empty</p>
+                      <input type="text" class="form-control" formControlName="gstin">
+                      <p class="errormessage" *ngIf="manufactureFormerrors.gstin.required || (manuactureForm.controls.gstin.pristine && submitted)">Gstin can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Contact Name:</label>
                       <input type="text" class="form-control" formControlName="contactName">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.contactName.required || (manuactureForm.controls.contactName.pristine && submitted)">Contact name can not be empty</p>
+                      <p class="errormessage" *ngIf="manufactureFormerrors.contactName.required || (manuactureForm.controls.contactName.pristine && submitted)">Contact name can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Contact Number:</label>
-                      <input type="text" class="form-control" formControlName="contactNumber">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.contactNumber.required || (manuactureForm.controls.contactNumber.pristine && submitted)">Contact number can not be empty</p>
+                      <input type="text" class="form-control" [textMask]="{mask: mask, guide: false}"  formControlName="contactNumber" minlength="10">
+                      <p class="errormessage" *ngIf="manufactureFormerrors.contactNumber.minlength">Please Enter valid Phone Number</p>
+                      <p class="errormessage" *ngIf="manufactureFormerrors.contactNumber.required || (manuactureForm.controls.contactNumber.pristine && submitted)">Contact number can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Street:</label>
                       <input type="text" class="form-control" formControlName="street">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.street.required || (manuactureForm.controls.street.pristine && submitted)">Street can not be empty</p>
+                      <p class="errormessage" *ngIf="manufactureFormerrors.street.required || (manuactureForm.controls.street.pristine && submitted)">Street can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>City:</label>
                       <input type="text" class="form-control" formControlName="city">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.city.required || (manuactureForm.controls.city.pristine && submitted)">City can not be empty</p>
+                      <p class="errormessage" *ngIf="manufactureFormerrors.city.required || (manuactureForm.controls.city.pristine && submitted)">City can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Country:</label>
                       <input type="text" class="form-control" formControlName="country">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.country.required || (manuactureForm.controls.country.pristine && submitted)">Country can not be empty</p>
+                      <p class="errormessage" *ngIf="manufactureFormerrors.country.required || (manuactureForm.controls.country.pristine && submitted)">Country can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Zipcode:</label>
                       <input type="text" class="form-control" formControlName="zipcode">
-                    <p class="errormessage" *ngIf="manufactureFormerrors.zipcode.required || (manuactureForm.controls.zipcode.pristine && submitted)">Zip code can not be empty</p>
+                      <p class="errormessage" *ngIf="manufactureFormerrors.zipcode.required || (manuactureForm.controls.zipcode.pristine && submitted)">Zip code can not be empty</p>
                     </div>
                   </div>
                 </form>
@@ -449,13 +453,8 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
-                  <ngx-spinner
-                  bdColor="rgba(51,51,51,0.8)"
-                  size="large"
-                  color="#fff"
-                  class="ngfixed"
-                  type="ball-scale-multiple">
-                 <p style="font-size: 20px; color: white">Loading...</p>
+                <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
+                  <p style="font-size: 20px; color: white">Loading...</p>
                 </ngx-spinner>
                 <form [formGroup]="vendorForm" class="pharmacyitem">
                   <div class="row">
@@ -471,31 +470,31 @@
                     </div>
                   </div>
 
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Street:</label>
-                        <input type="text" formControlName="street" class="form-control">
-                        <p class="errormessage" *ngIf="vendorFormerrors.street.required || (vendorForm.controls.street.pristine && submitted)">Street can not be empty</p>
-                      </div>
-                      <div class="col-md-6">
-                        <label>City:</label>
-                        <input type="text" formControlName="city" class="form-control">
-                        <p class="errormessage" *ngIf="vendorFormerrors.city.required || (vendorForm.controls.city.pristine && submitted)">City can not be empty</p>
-                      </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Street:</label>
+                      <input type="text" formControlName="street" class="form-control">
+                      <p class="errormessage" *ngIf="vendorFormerrors.street.required || (vendorForm.controls.street.pristine && submitted)">Street can not be empty</p>
                     </div>
+                    <div class="col-md-6">
+                      <label>City:</label>
+                      <input type="text" formControlName="city" class="form-control">
+                      <p class="errormessage" *ngIf="vendorFormerrors.city.required || (vendorForm.controls.city.pristine && submitted)">City can not be empty</p>
+                    </div>
+                  </div>
 
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Country:</label>
-                        <input type="text" formControlName="country" class="form-control">
-                        <p class="errormessage" *ngIf="vendorFormerrors.country.required || (vendorForm.controls.country.pristine && submitted)">Country can not be empty</p>
-                      </div>
-                      <div class="col-md-6">
-                        <label>Zipcode:</label>
-                        <input type="text" formControlName="zipcode" class="form-control">
-                        <p class="errormessage" *ngIf="vendorFormerrors.zipcode.required || (vendorForm.controls.zipcode.pristine && submitted)">Zipcode can not be empty</p>
-                      </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Country:</label>
+                      <input type="text" formControlName="country" class="form-control">
+                      <p class="errormessage" *ngIf="vendorFormerrors.country.required || (vendorForm.controls.country.pristine && submitted)">Country can not be empty</p>
                     </div>
+                    <div class="col-md-6">
+                      <label>Zipcode:</label>
+                      <input type="text" formControlName="zipcode" class="form-control">
+                      <p class="errormessage" *ngIf="vendorFormerrors.zipcode.required || (vendorForm.controls.zipcode.pristine && submitted)">Zipcode can not be empty</p>
+                    </div>
+                  </div>
 
                   <div class="row">
                     <div class="col-md-6">
@@ -505,7 +504,8 @@
                     </div>
                     <div class="col-md-6">
                       <label>Contact Number:</label>
-                      <input type="text" formControlName="contactNumber"[textMask]="{mask: mask, guide: false}"  class="form-control" minlength="10" placeholder="Enter Digits">
+                      <input type="text" formControlName="contactNumber" [textMask]="{mask: mask, guide: false}" class="form-control" minlength="10"
+                        placeholder="Enter Digits">
                       <p class="errormessage" *ngIf="vendorFormerrors.contactNumber.minlength">Please Enter valid Phone Number</p>
                       <p class="errormessage" *ngIf="vendorFormerrors.contactNumber.required || (vendorForm.controls.contactNumber.pristine && submitted)">Contact Number can not be empty</p>
                     </div>
@@ -524,14 +524,18 @@
           <table class="pharmacyTable">
             <tr>
               <th>Name:</th>
-              <th>Address:</th>
+              <th>Gstin:</th>
+              <th>Street:</th>
+              <th>City:</th>
+              <th>Country:</th>
+              <th>ZipCode:</th>
               <th>Contact Name:</th>
               <th>Contact Number:</th>
-              <th>Email:</th>
-              <th>GSTIN:</th>
             </tr>
             <tr>
               <td>Alfreds Futterkiste</td>
+              <td>Maria Anders</td>
+              <td>Maria Anders</td>
               <td>Maria Anders</td>
               <td>Maria Anders</td>
               <td>Maria Anders</td>
@@ -542,6 +546,105 @@
         </div>
       </div>
       <!-- ****VENDOR FORM(END) ****-->
+      <!-- ****PHARMACYDETAILS FORM(START) ****-->
+      <div class="tab-pane" id="6a">
+        <form  class="logformp">
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Pharmacy Name</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Primary Contact:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Alternate Contact:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Street:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>City:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Country:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Zipcode:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Email:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Trade License Id:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>GSTNo.:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Degree file:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Drug License:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12" id="pl0">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Trade License:</label>
+                <p>ABCD</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- ****PHARMACYDETAILS FORM(END) ****-->
+
     </div>
   </div>
 </div>

@@ -374,9 +374,6 @@ export class PharmacydashboardComponent implements OnInit {
 
   saveVendorForm(){
     this.submitted = true;   
-
-
-
     console.log("Vendorformvalue", this.vendorForm.value);
     if (this.vendorForm.valid) {
       this.spinner.show(); /**SHOW LOADER */
@@ -403,11 +400,15 @@ export class PharmacydashboardComponent implements OnInit {
 
             }, err => {
               console.log(err);
+              this.submitted = false;
+              this.spinner.hide();/**HIDE LOADER */ 
               this.toastr.error('Vendor Form not created!', 'Major Error')
             })
     }
   else {
       this.vendorForm.reset();
+      this.submitted = false;
+      this.spinner.hide();/**HIDE LOADER */ 
       this.toastr.error('Vendor Form not created!', 'Major Error')
     }
   }
