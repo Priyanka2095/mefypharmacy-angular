@@ -33,7 +33,7 @@ export class CreateuserComponent implements OnInit {
       this.onUserFormValuesChanged();
     });
   }
-  // IT CATCHES ALL CHANGES IN FORM
+  /*************************** IT CATCHES ALL CHANGES IN FORM***********************/
   onUserFormValuesChanged() {
     for (const field in this.userFormErrors) {
       if (!this.userFormErrors.hasOwnProperty(field)) {
@@ -55,6 +55,7 @@ export class CreateuserComponent implements OnInit {
       name: ['', Validators.required],
     });
   }
+  /**************************NEW USER FORM**************************************** */
   saveUserForm() {
     console.log(this.userForm.value);
     this.submitted = true;
@@ -73,17 +74,17 @@ export class CreateuserComponent implements OnInit {
         this.router.navigate(['/createpharmacy'])
       },
         err => {
-       this.showError();
+          this.showError();
         })
     }
   }
-  //SHOW TOAST NOTIFICATION
+  /****************************SHOW TOAST NOTIFICATION********************/
   showSuccess() {
     this.toastr.success('User created!', 'Toastr fun!', {
     });
   }
-   // SHOW  TOAST NOTIFICTATION,
-   showError() {
+  /****************************** SHOW  TOAST NOTIFICTATION********************/
+  showError() {
     this.toastr.error('Server Error!', 'Major Error', {
     });
   }

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginFormErrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
-  public mask = [ /[0-9]/,/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/,/\d/,/\d/, /\d/, /\d/, /\d/] // Phone number validation 
+  public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
 
   constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService, public pharmacyService: PharmacyService, private toastr: ToastrService) {
     this.loginFormErrors = {
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // IT CATCHES ALL CHANGES IN FORM
+  /******************************IT CATCHES ALL CHANGES IN FORM******************/
   onLoginFormValuesChanged() {
     for (const field in this.loginFormErrors) {
       if (!this.loginFormErrors.hasOwnProperty(field)) {
@@ -53,53 +53,53 @@ export class LoginComponent implements OnInit {
       phoneNumber: ['', Validators.required]
     });
   }
-  // CREATE LOGIN 
+  /*******************CREATE LOGIN ***************************/
   saveLoginForm() {
     this.submitted = true;
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
-    
-    this.sharedService.userCreate(this.loginForm.value); //STORED LOGIN USER PHONENUMBER
-    //CHECK USER ALREADY REGISTERED OR NOT
-    this.userService.checkUser(this.loginForm.value).subscribe(data => {
-      console.log(data);
-      let result: any = {};
-      result = data;
-      console.log(result.exists)
-      if (result.exists == true) {
-        localStorage.setItem('phoneNumber', this.loginForm.value.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
-        let data = {
-          user: this.loginForm.value.phoneNumber
-        }
-        //CHECK PHARMACY EXIST WITH USER PHONENUMBER OR NOT
-        this.userService.checkPharmacy(data).subscribe(data => {
-          console.log(data);
-          let pharmacy: any = {};
-          pharmacy = data
-          console.log(pharmacy.count)
-          if (pharmacy.count == 0) {
-            this.router.navigate(['/createpharmacy'])
-          }
-          else {
-            this.router.navigate(['/pharmalist'])
-          }
-        },
-          err => {
-            this.showError();
-          }
-        )
-      }
-      else {
 
-        this.router.navigate(['/user'])
-      }
-    },
-      err => {
-        this.showError();
-      })
+      this.sharedService.userCreate(this.loginForm.value); //STORED LOGIN USER PHONENUMBER
+      /***********************CHECK USER ALREADY REGISTERED OR NOT*******************/
+      this.userService.checkUser(this.loginForm.value).subscribe(data => {
+        console.log(data);
+        let result: any = {};
+        result = data;
+        console.log(result.exists)
+        if (result.exists == true) {
+          localStorage.setItem('phoneNumber', this.loginForm.value.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
+          let data = {
+            user: this.loginForm.value.phoneNumber
+          }
+          /****************8CHECK PHARMACY EXIST WITH USER PHONENUMBER OR NOT***************/
+          this.userService.checkPharmacy(data).subscribe(data => {
+            console.log(data);
+            let pharmacy: any = {};
+            pharmacy = data
+            console.log(pharmacy.count)
+            if (pharmacy.count == 0) {
+              this.router.navigate(['/createpharmacy'])
+            }
+            else {
+              this.router.navigate(['/pharmalist'])
+            }
+          },
+            err => {
+              this.showError();
+            }
+          )
+        }
+        else {
+
+          this.router.navigate(['/user'])
+        }
+      },
+        err => {
+          this.showError();
+        })
     }
-    else{
-      
+    else {
+
     }
   }
   // SHOW  TOAST NOTIFICTATION,

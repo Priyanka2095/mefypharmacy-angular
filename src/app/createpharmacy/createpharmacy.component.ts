@@ -18,7 +18,7 @@ export class CreatepharmacyComponent implements OnInit {
   tradeId: any;
   drugId: any;
   userInfo: any;
-  public mask = [/[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
+  public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   constructor(private formBuilder: FormBuilder, public PharmacyService: PharmacyService, private router: Router, private SharedService: SharedService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
     this.pharmacyFormErrors = {
       pharmacyName: {},
@@ -50,7 +50,7 @@ export class CreatepharmacyComponent implements OnInit {
       this.onPharmacyFormValuesChanged();
     });
   }
-  // IT CATCHES ALL CHANGES IN FORM
+  /**********************IT CATCHES ALL CHANGES IN FORM*************************/
   onPharmacyFormValuesChanged() {
     for (const field in this.pharmacyFormErrors) {
       if (!this.pharmacyFormErrors.hasOwnProperty(field)) {
@@ -85,7 +85,7 @@ export class CreatepharmacyComponent implements OnInit {
     });
   }
 
-  // CREATE NEW PHARMACY
+  /********************************* CREATE NEW PHARMACY*******************************************************/
   savePharmacyForm() {
     this.submitted = true;
     console.log('pharmcay form data', this.pharmacyForm.value)
@@ -115,7 +115,7 @@ export class CreatepharmacyComponent implements OnInit {
       /***** Data To be sent to APICALL ends AND API CALL STARTS***** */
       this.PharmacyService.addPharmacy(pharmacyData).subscribe(result => {
         console.log(result)
-        this.showPharmmacySuccess();
+        this.toastr.success('Pharmacy Created!', 'Toastr fun!'); /**SHOW TOAST NOTIFICATION**/
         let pharmacyData: any = {};
         pharmacyData = result
         /*******CREATE PHARMACY AGAINST USER*****/
@@ -147,9 +147,7 @@ export class CreatepharmacyComponent implements OnInit {
     }
   }
 
-
-
-  //FILE UPLOAD SECTION
+  /*******************************FILE UPLOAD SECTION**********************/
   upload(event, type) {
     console.log(this.userInfo)
     console.log(event + 'file upload' + type)
@@ -189,11 +187,6 @@ export class CreatepharmacyComponent implements OnInit {
   //SHOW TOAST NOTIFICATION
   showSuccess() {
     this.toastr.success('File Uploded!', 'Toastr fun!', {
-    });
-  }
-  //SHOW TOAST NOTIFICATION
-  showPharmmacySuccess() {
-    this.toastr.success('Pharmacy Created!', 'Toastr fun!', {
     });
   }
   // SHOW  TOAST NOTIFICTATION,
