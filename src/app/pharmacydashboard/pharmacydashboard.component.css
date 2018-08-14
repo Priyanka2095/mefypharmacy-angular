@@ -119,6 +119,6 @@ table.pharmacyTable tr:nth-child(even) {
     /* To center horizontally */
     margin: 0 auto;
 }
-  
-  
-  
+/* .ng2-dropdown-menu {
+  z-index: 1051 !important;
+} */

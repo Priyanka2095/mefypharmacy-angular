@@ -19,7 +19,7 @@ import { MedicineService} from './services/medicine.service'
 import { ToastrModule } from 'ngx-toastr';
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { TagInputModule } from 'ngx-chips';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +32,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   imports: [
     BrowserModule,
+    TagInputModule,
     BrowserAnimationsModule, // required animations module
     RoutingModule,
     FormsModule,
