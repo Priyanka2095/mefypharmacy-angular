@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MedicineService } from '../services/medicine.service'
@@ -59,6 +59,7 @@ export class PharmacydashboardComponent implements OnInit {
       zipcode: {},
 
     }
+  
   }
 
   ngOnInit() {
@@ -84,6 +85,10 @@ export class PharmacydashboardComponent implements OnInit {
     })
 
     this.getAllDrug();
+    // var options = {
+    //   'backdrop' : 'true'
+    // }
+    // $('#myModal4').modal(options);
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -117,7 +122,7 @@ export class PharmacydashboardComponent implements OnInit {
       }
     }
   }
-  /**********************************IT CATCHES ALL CHANGES IN MASNUFACTURE FORM */
+  /**********************************IT CATCHES ALL CHANGES IN MASNUFACTURE FORM*************/
   onManufactureFormValuesChanged() {
     for (const field in this.manufactureFormerrors) {
       if (!this.manufactureFormerrors.hasOwnProperty(field)) {
@@ -281,7 +286,12 @@ export class PharmacydashboardComponent implements OnInit {
     // this.manuactureForm.reset();
 
   }
-
+  /*********ON CLICK EVENT MODAL WILL CLOSE********************8 */
+  closeModal(){
+    this.submitted=false; 
+    this.manuactureForm.reset();
+    this.medicineForm.reset();
+  }
   /*****************GET ALL DRUG TYPE****************/
   getAllDrug() {
     this.medicineService.getDrugType().subscribe(data => {
@@ -291,6 +301,7 @@ export class PharmacydashboardComponent implements OnInit {
       this.drugList = value
     })
   }
+
 
 }
 

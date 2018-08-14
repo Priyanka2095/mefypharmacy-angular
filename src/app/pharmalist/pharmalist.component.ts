@@ -21,7 +21,7 @@ export class PharmalistComponent implements OnInit {
   ngOnInit() {
     this.getUserPharmacyList()
   }
-
+/************************GET PHARMACY LIST AGAINST USER************** */
 getUserPharmacyList(){
   let data = {
     phonenumber:this.userInfo
