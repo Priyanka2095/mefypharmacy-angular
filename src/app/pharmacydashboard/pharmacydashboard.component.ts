@@ -186,22 +186,24 @@ export class PharmacydashboardComponent implements OnInit {
       this.medicineService.createdrug(data).subscribe(value => {
         console.log(value);
         this.drugtypeForm.reset();
-        this.showSuccess();
+        this.toastr.success(' Drug Form created!', 'Toastr fun!')
       }, err => {
         console.log(err);
+        this.toastr.error('Manufacture Form not created!', 'Major Error')
       })
       
     }
     else {
       this.drugtypeForm.reset();
-      this.showError();
+      this.toastr.error('Drug Form not created!', 'Major Error')
     }
   }
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
     this.submitted=true
     if (this.medicineForm.valid) {
-      console.log(this.medicineForm.value)   
+      console.log(this.medicineForm.value) 
+      this.spinner.show(); /**SHOW LOADER */  
       let data={
         name: this.medicineForm.value.name,
         form: this.medicineForm.value.form,
@@ -223,26 +225,61 @@ export class PharmacydashboardComponent implements OnInit {
       this.medicineService.createMedicineMaster(data).subscribe(value=>{
       console.log(value)
        $('#myModal').modal('hide');
-      this.showSuccess();
+       this.spinner.hide(); /**HIDE LOADER */
+       this.toastr.success(' Medicine Form created!', 'Toastr fun!')
       this.medicineForm.reset();  //AFTER SUBMIT OR CANCEL FORM WILL BE RESET
       },
     err=>{
       console.log(err)
-      this.showError();
+      this.toastr.error('Medicine Form not created!', 'Major Error')
     })
     }
     else {
       // this.medicineForm.reset();
+      this.toastr.error('Manufacture Form not created!', 'Major Error')
     }
   }
   /********************************SAVE MANUFACTURE FORM*********************/
   saveManufactureForm() {
     console.log(this.manuactureForm.value)
+    this.submitted=true
     if (this.manuactureForm.valid) {
+      this.spinner.show(); /**SHOW LOADER */
+      let data={
+        gstin: this.manuactureForm.value.gstin,
+        name: this.manuactureForm.value.name,
+        contactName: this.manuactureForm.value.contactName,
+        contactNumber: this.manuactureForm.value.contactNumber,
+       address:{
+        street: this.manuactureForm.value.street,
+        city: this.manuactureForm.value.city,
+        country: this.manuactureForm.value.country,
+        zipcode:this.manuactureForm.value.zipcode
+       }
+      }
+   this.medicineService.createManufacture(data).subscribe(value=>{
+     console.log(value);
+     $('#myModal4').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
+     this.submitted=false
+     this.spinner.hide(); /**HIDE LOADER */
+     this.manuactureForm.reset();
+       /****************************SHOW  TOAST NOTIFICTATION*********************/
+     this.toastr.success(' Manufacture Form created!', 'Toastr fun!')
+   },
+  err=>{
+    console.log(err)
+    /*********************************SHOW TOAST NOTIFICATION******************/
+    this.toastr.error('Manufacture Form not created!', 'Major Error')
+  })
+      
     }
     else {
-      this.showError();
+      $('#myModal4').modal('show');
+      // this.submitted=false
+      // this.toastr.error('Manufacture Form not created!', 'Major Error')
     }
+    // this.manuactureForm.reset();
+
   }
 
   /*****************GET ALL DRUG TYPE****************/
@@ -253,16 +290,6 @@ export class PharmacydashboardComponent implements OnInit {
       value = data;
       this.drugList = value
     })
-  }
-  /****************************SHOW  TOAST NOTIFICTATION*********************/
-  showError() {
-    this.toastr.error(' Form not created!', 'Major Error', {
-    });
-  }
-  /*********************************SHOW TOAST NOTIFICATION******************/
-  showSuccess() {
-    this.toastr.success('Form created!', 'Toastr fun!', {
-    });
   }
 
 }

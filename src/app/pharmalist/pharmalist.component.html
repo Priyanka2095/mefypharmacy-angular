@@ -1,6 +1,14 @@
 <!-- pharmacylist  -->
 <section>
     <div class="container">
+        <ngx-spinner
+        bdColor="rgba(51,51,51,0.8)"
+        size="large"
+        color="#fff"
+        class="ngfixed"
+        type="ball-scale-multiple">
+       <p style="font-size: 20px; color: white">Loading...</p>
+      </ngx-spinner>
   <h1 class="headerList">Pharmacy List</h1>
   <div>
       <a [routerLink]="['/createpharmacy']"><button class="createform">+</button></a>
