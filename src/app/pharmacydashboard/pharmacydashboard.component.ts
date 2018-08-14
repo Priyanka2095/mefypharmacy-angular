@@ -16,7 +16,8 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
-  manuactureForm: FormGroup
+  manuactureForm: FormGroup;
+  vendorForm:FormGroup;
   medicineFormErrors: any;
   drugtypeFormErrors: any;
   manufactureFormerrors: any
@@ -190,7 +191,7 @@ export class PharmacydashboardComponent implements OnInit {
       }, err => {
         console.log(err);
       })
-      
+
     }
     else {
       this.drugtypeForm.reset();
@@ -199,10 +200,10 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
-    this.submitted=true
+    this.submitted = true
     if (this.medicineForm.valid) {
-      console.log(this.medicineForm.value)   
-      let data={
+      console.log(this.medicineForm.value)
+      let data = {
         name: this.medicineForm.value.name,
         form: this.medicineForm.value.form,
         rxname: this.medicineForm.value.rxname,
@@ -217,19 +218,19 @@ export class PharmacydashboardComponent implements OnInit {
         quantity: this.medicineForm.value.quantity,
         substitute: this.medicineForm.value.substitute,
         gstrate: this.medicineForm.value.gstrate,
-        medicineId:""
+        medicineId: ""
       }
       console.log(data)
-      this.medicineService.createMedicineMaster(data).subscribe(value=>{
-      console.log(value)
-       $('#myModal').modal('hide');
-      this.showSuccess();
-      this.medicineForm.reset();  //AFTER SUBMIT OR CANCEL FORM WILL BE RESET
+      this.medicineService.createMedicineMaster(data).subscribe(value => {
+        console.log(value)
+        $('#myModal').modal('hide');
+        this.showSuccess();
+        this.medicineForm.reset();  //AFTER SUBMIT OR CANCEL FORM WILL BE RESET
       },
-    err=>{
-      console.log(err)
-      this.showError();
-    })
+        err => {
+          console.log(err)
+          this.showError();
+        })
     }
     else {
       // this.medicineForm.reset();
@@ -254,6 +255,36 @@ export class PharmacydashboardComponent implements OnInit {
       this.drugList = value
     })
   }
+
+  /*************************SAVE VENDOR FORM (start)************************************/
+  // saveDrugForm() {
+  //   console.log("drugformvalue", this.drugtypeForm.value);
+  //   if (this.drugtypeForm.valid) {
+  //     $('#myModal').modal('hide');
+  //     let data = {
+  //       type: this.drugtypeForm.value.type,
+  //       description: this.drugtypeForm.value.description
+  //     }
+  //     this.medicineService.createdrug(data).subscribe(value => {
+  //       console.log(value);
+  //       this.drugtypeForm.reset();
+  //       this.showSuccess();
+  //     }, err => {
+  //       console.log(err);
+  //     })
+
+  //   }
+  //   else {
+  //     this.drugtypeForm.reset();
+  //     this.showError();
+  //   }
+  // }
+  saveVendorForm(){
+    
+  }
+
+  /*************************SAVE VENDOR FORM (end)************************************/
+
   /****************************SHOW  TOAST NOTIFICTATION*********************/
   showError() {
     this.toastr.error(' Form not created!', 'Major Error', {
