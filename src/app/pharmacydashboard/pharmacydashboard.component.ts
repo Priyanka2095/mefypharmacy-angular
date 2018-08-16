@@ -14,6 +14,8 @@ declare var $: any;
   styleUrls: ['./pharmacydashboard.component.css']
 })
 export class PharmacydashboardComponent implements OnInit {
+  p: number = 1;
+  collection: any[];  
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
   manuactureForm: FormGroup;
@@ -27,6 +29,8 @@ export class PharmacydashboardComponent implements OnInit {
   pharmacyId: any
   pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
+  drugtypeList: any = [];
+  vendorList: any = [];
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
 
     /************DRUG TYPE FORM ERRORS***************/
@@ -230,7 +234,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.submitted = true
     console.log("drugformvalue", this.drugtypeForm.value);
     if (this.drugtypeForm.valid) {
-      $('#myModal').modal('hide');
+      this.spinner.show(); /**SHOW LOADER */
       let data = {
         type: this.drugtypeForm.value.type,
         description: this.drugtypeForm.value.description
@@ -238,18 +242,28 @@ export class PharmacydashboardComponent implements OnInit {
       this.medicineService.createdrug(data).subscribe(value => {
         console.log(value);
         this.drugtypeForm.reset();
-        this.toastr.success(' Drug Form created!', 'Toastr fun!')
+        this.toastr.success(' Drug Form created!', 'Toastr fun!');
+        this.spinner.show();
+        this.getAllDrug();
         this.submitted = false;
+        $('#myModal').modal('hide');
+        this.spinner.hide();
       }, err => {
         console.log(err);
-        this.toastr.error('Drug Form not created!', 'Major Error')
+        this.submitted = false;
+        this.spinner.hide();/**HIDE LOADER */
+        this.toastr.error('Drug Form not created!', 'Server Issue')
       })
 
     }
     else {
       this.drugtypeForm.reset();
-      this.toastr.error('Drug Form not created!', 'Major Error')
+      this.submitted = false;
+      this.spinner.hide();/**HIDE LOADER */
+      this.toastr.error('Drug Form not created!', 'Invalid Details')
     }
+    // this.drugtypeList.push(this.drugtypeForm.value);
+    // console.log(this.drugtypeList);
   }
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
@@ -345,18 +359,29 @@ export class PharmacydashboardComponent implements OnInit {
   /*****************GET ALL DRUG TYPE****************/
   getAllDrug() {
     this.medicineService.getDrugType().subscribe(data => {
-      console.log(data);
+      //console.log(data);
       let value: any = {}
       value = data;
       this.drugList = value
+      console.log(this.drugList);
     })
   }
-
+  /*****************GET ALL VENDOR ****************/
+  getAllVendor() {
+    this.medicineService.getVendorType().subscribe(data => {
+      //console.log(data);
+      let value: any = {}
+      value = data;
+      this.vendorList = value
+      console.log(this.vendorList);
+    })
+  }
   /*************************SAVE VENDOR FORM (start)************************************/
   saveVendorForm() {
     this.submitted = true;
     console.log("Vendorformvalue", this.vendorForm.value);
     if (this.vendorForm.valid) {
+  
       this.spinner.show(); /**SHOW LOADER */
       let data = {
         name: this.vendorForm.value.name,
@@ -376,6 +401,7 @@ export class PharmacydashboardComponent implements OnInit {
         this.toastr.success(' Vendor Form created!', 'Toastr fun!');
         this.vendorForm.reset();
         this.submitted = false;
+        this.getAllVendor();
         this.spinner.hide();/**HIDE LOADER */
 
       }, err => {
@@ -395,7 +421,7 @@ export class PharmacydashboardComponent implements OnInit {
   /*************************SAVE VENDOR FORM (end)************************************/
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
-    this.spinner.show(); /**SHOW LOADER */
+    //this.spinner.show(); /**SHOW LOADER */
     this.medicineService.getPharmacy(this.pharmacyId).subscribe(result => {
       console.log(result);
       let value: any = {}

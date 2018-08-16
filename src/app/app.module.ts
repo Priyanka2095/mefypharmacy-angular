@@ -18,6 +18,7 @@ import { PharmacyService } from './services/pharmacy.service';
 import { MedicineService} from './services/medicine.service'
 import { ToastrModule } from 'ngx-toastr';
 import { TextMaskModule } from 'angular2-text-mask';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TagInputModule } from 'ngx-chips';
 @NgModule({
@@ -44,7 +45,8 @@ import { TagInputModule } from 'ngx-chips';
       preventDuplicates: true,
     }) ,
     TextMaskModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxPaginationModule
 
   ],
   providers: [UserService,SharedService,PharmacyService,MedicineService],

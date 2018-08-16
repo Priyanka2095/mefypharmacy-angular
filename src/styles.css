@@ -10,4 +10,23 @@
   .black-overlay {
     position: fixed !important;
   }
-    
+  ul.ngx-pagination {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 14px;
+    font-weight: 800;
+}
+.ngx-pagination .current {
+  padding: 5px 9px 2px 9px !important;
+  background: #ffffff !important;
+  color: #428bca !important;
+  cursor: pointer;
+}
+.ngx-pagination a:hover, .ngx-pagination button:hover {
+  background: #e6e6e6;
+  padding: 5px 9px 2px 9px;
+}
+.ngx-pagination a, .ngx-pagination button {
+  padding: 5px 9px 2px 9px !important;
+
+}   
