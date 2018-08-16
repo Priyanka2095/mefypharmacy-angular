@@ -34,7 +34,6 @@ export class PharmacydashboardComponent implements OnInit {
   drugtypeList: any = [];
   vendorList: any = [];
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService,public pharmacyService: PharmacyService) {
-
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
       type: {},
@@ -434,8 +433,6 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
-
-
 }
 
 

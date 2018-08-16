@@ -81,7 +81,11 @@ table.pharmacyTable {
   border-collapse: collapse;
   width: 100%;
 }
-
+table.pharmacyTable.scroll {
+  display: block;
+  overflow-x: auto;
+  overflow-y: visible;
+}
 table.pharmacyTable td, th {
   border: 1px solid #000;
   text-align: left;

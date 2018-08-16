@@ -184,15 +184,18 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <label>Substitute:</label>
-                      <input type="text" value="Amsterdam,Washington" data-role="tagsinput" >
-                      <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p>
-                    </div>
-                    <div class="col-md-6">
                       <label>GST Rate:</label>
                       <input type="text" class="form-control" formControlName="gstrate">
                       <p class="errormessage" *ngIf="medicineFormErrors.gstrate.required || (medicineForm.controls.gstrate.pristine && submitted)">Gst rate can not be empty</p>
                     </div>
+                    <div class="col-md-6">
+                        <label>Substitute:</label>
+                        <tag-input  >
+                            <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']">
+                            </tag-input-dropdown>
+                      </tag-input>
+                        <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p>
+                      </div>
                   </div>
                 </form>
           
@@ -206,7 +209,7 @@
         </div>
         <!-- Modal -->
         <div>
-          <table class="pharmacyTable">
+          <table class="pharmacyTable scroll">
             <tr>
               <th>Name</th>
               <th>Form</th>
