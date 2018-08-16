@@ -16,6 +16,7 @@ declare var $: any;
 })
 export class PharmacydashboardComponent implements OnInit {
   p: number = 1;
+  vendorpage: number = 1;
   collection: any[];  
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
@@ -113,6 +114,7 @@ export class PharmacydashboardComponent implements OnInit {
 
     this.getAllDrug();
     this.getPharmacyDetail();
+    this.getAllVendor();
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {

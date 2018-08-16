@@ -67,13 +67,12 @@
               <th>Drug Type</th>
               <th>Drug Description</th>
             </tr>
-            <tr *ngFor="let item of drugList | paginate: { itemsPerPage: 10, currentPage: p }">
+            <tr *ngFor="let item of drugList | paginate:  { id: 'drugpagination',itemsPerPage: 10, currentPage: p } ">
               <td>{{item.type}}</td>
               <td>{{item.description}}</td>
-            </tr>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </tr>  
           </table>
-
+          <pagination-controls id="drugpagination" (pageChange)="p = $event"></pagination-controls>
         </div>
 
       </div>
@@ -538,7 +537,7 @@
               <th>Contact Name:</th>
               <th>Contact Number:</th>
             </tr>
-            <tr *ngFor="let vendor of vendorList  | paginate: { itemsPerPage: 10, currentPage: p }">
+            <tr *ngFor="let vendor of vendorList | paginate: { id: 'vendorpagination',itemsPerPage: 10, currentPage: vendorpage }  ">
               <td>{{vendor.name}}</td>
               <td>{{vendor.gstin}}</td>
               <td>{{vendor.street}}</td>
@@ -547,9 +546,10 @@
               <td>{{vendor.zipcode}}</td>
               <td>{{vendor.contactName}}</td>
               <td>{{vendor.contactNumber}}</td>
-            </tr>         
-          </table>
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </tr>  
+ 
+          </table>       
+              <pagination-controls id="vendorpagination" (pageChange)="vendorpage = $event"></pagination-controls>    
         </div>
       </div>
       <!-- ****VENDOR FORM(END) ****-->
