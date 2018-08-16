@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PharmacyService } from '../services/pharmacy.service';
 import { MedicineService } from '../services/medicine.service'
 import { SharedService } from '../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
@@ -31,7 +32,7 @@ export class PharmacydashboardComponent implements OnInit {
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   vendorList: any = [];
-  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService,public pharmacyService: PharmacyService) {
 
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -419,6 +420,7 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
   /*************************SAVE VENDOR FORM (end)************************************/
+
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     //this.spinner.show(); /**SHOW LOADER */
@@ -430,6 +432,8 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
+
+
 }
 
 

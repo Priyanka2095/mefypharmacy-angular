@@ -22,13 +22,9 @@ export class PharmacyService {
   /****************************FILE UPLOAD METHOD*****************************/
   fileUpload(data) {
     console.log('file data', data)
-    return this.httpClient.post(FILEURL+'fileUpload', data)
+    return this.httpClient.post(FILEURL, data)
   }
-/***************************GET FILE***************************/
-getFile(data){
-  console.log('file data', data)
-  return this.httpClient.get(FILEURL+'fileShow?fileId='+ data)
-}
+
   /*******************************CREATE PHARMACY AGAINST USER**********************/
   userPharmacy(data) {
     console.log(data);
