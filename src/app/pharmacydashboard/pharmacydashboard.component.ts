@@ -17,6 +17,9 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   p: number = 1;
   vendorpage: number = 1;
+  medicineMasterPage:number=1;
+  manufacturePage:number=1;
+  pharmacyPage:number=1;
   collection: any[];
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
@@ -34,6 +37,8 @@ export class PharmacydashboardComponent implements OnInit {
   drugtypeList: any = [];
   vendorList: any = [];
   substitution: any = []
+  medicineMaster:any=[]
+  manuactureList:any=[]
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -115,6 +120,8 @@ export class PharmacydashboardComponent implements OnInit {
     this.getAllDrug();
     this.getPharmacyDetail();
     this.getAllVendor();
+    this.getAllMedicineMaster();
+    this.getAllManufactureList();
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -285,13 +292,14 @@ export class PharmacydashboardComponent implements OnInit {
         strength: this.medicineForm.value.strength,
         unit: this.medicineForm.value.unit,
         quantity: this.medicineForm.value.quantity,
-        substitute: this.medicineForm.value.substitute,
+        // substitute: this.medicineForm.value.substitute,
         gstrate: this.medicineForm.value.gstrate
       }
       console.log(data)
       this.medicineService.createMedicineMaster(data).subscribe(value => {
         console.log(value)
-        $('#myModal').modal('hide');
+        this.getAllMedicineMaster();
+        $('#myModal1').modal('hide');
         this.spinner.hide(); /**HIDE LOADER */
         this.toastr.success(' Medicine Form created!', 'Toastr fun!')
         this.medicineForm.reset();  //AFTER SUBMIT OR CANCEL FORM WILL BE RESET
@@ -326,6 +334,7 @@ export class PharmacydashboardComponent implements OnInit {
       }
       this.medicineService.createManufacture(data).subscribe(value => {
         console.log(value);
+        this.getAllManufactureList();
         $('#myModal4').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
         this.submitted = false
         this.spinner.hide(); /**HIDE LOADER */
@@ -429,6 +438,24 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
+  /******************************GET MEDICINE MASTER LIST****************** */
+  getAllMedicineMaster(){
+    this.medicineService.getMedicineMaster().subscribe(value=>{
+      console.log(value)
+      let result:any={}
+      result=value
+      this.medicineMaster=result
+    })
+  }
+  /***********************************GET MANUFACTURE LIST******************/
+  getAllManufactureList(){
+    this.medicineService.getManufactureList().subscribe(value=>{
+      console.log(value)
+      let result:any={}
+      result=value
+      this.manuactureList=result
+    })
+  }
   // onItemSelectQualification(selected){
 
   //   if (selected) {
@@ -444,7 +471,11 @@ export class PharmacydashboardComponent implements OnInit {
 
   //     }
   //   }
-
+  findChoices(searchText: string) {
+    return this.drugList.filter(item =>
+      item.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }
 }
 
 

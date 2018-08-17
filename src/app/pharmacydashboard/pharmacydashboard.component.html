@@ -130,10 +130,10 @@
                     <div class="col-md-6">
                       <label>Manufacturer:</label>
                       <!-- <input type="text" class="form-control" formControlName="manufacturer"> -->
-                      <select class="selectpicker" data-live-search="true" formControlName="manufacturer">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                      <select class="form-control" data-live-search="true" formControlName="manufacturer">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option *ngFor="let list of manuactureList" value={{list.gstin}}>{{list.gstin}}</option>
+                        <!-- <option data-tokens="frosting">Sugar, Spice and all things nice</option> -->
                       </select>
                       <p class="errormessage" *ngIf="medicineFormErrors.manufacturer.required || (medicineForm.controls.manufacturer.pristine && submitted)">Manufacturer
                         can not be empty</p>
@@ -141,16 +141,15 @@
                     </div>
                     <div class="col-md-6">
                       <label>Drug Type:</label>
-                      <!-- <select class="form-control" data-live-search="true" formControlName="drugtype">
-                        <option value="" disabled selected>Choose your option</option>
-                        <option *ngFor="let list of drugList">{{list.type}}</option>
-                      </select> -->
                       <select class="form-control" data-live-search="true" formControlName="drugtype">
-                        <option *ngFor="let list of drugList" value={{list.type}}>{{list.type}}</option>
-                        <!-- <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option> -->
+                        <option value="" disabled selected>Choose your option</option>
+                        <option *ngFor="let list of drugList" value={{list.typeId}}>{{list.type}}</option>
                       </select>
-
+                      <!-- <select class="form-control" data-live-search="true" formControlName="drugtype">
+                        <option *ngFor="let list of drugList" value={{list.type}}>{{list.type}}</option>
+                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                      </select> -->
 
                       <p class="errormessage" *ngIf="medicineFormErrors.drugtype.required || (medicineForm.controls.drugtype.pristine && submitted)">Drugtype
                         can not be empty</p>
@@ -207,7 +206,7 @@
                     </div>
                     <div class="col-md-6">
                       <label>Substitute:</label>
-                      <tag-input formControlName="substitute">
+                      <tag-input formControlName="substitute" placeholder="asd">
                         <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']">
                         </tag-input-dropdown>
                       </tag-input>
@@ -244,23 +243,24 @@
               <th>Substitute</th>
               <th>GST Rate</th>
             </tr>
-            <tr>
-              <td>Alfreds Futterkiste</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
+            <tr *ngFor="let list of medicineMaster | paginate: { id: 'medicinePagination',itemsPerPage: 2, currentPage: medicineMasterPage }  ">
+              <td>{{list.name}}</td>
+              <td>{{list.form}}</td>
+              <td>{{list.rxname}}</td>
+              <td>{{list.description}}</td>
+              <td>{{list.manufacturer?.gstin}}</td>
+              <td>{{list.drugtype.type}}</td>
+              <td>{{list.condition}}</td>
+              <td>{{list.precaution}}</td>
+              <td>{{list.direction}}</td>
+              <td>{{list.strength}}</td>
+              <td>{{list.unit}}</td>
+              <td>{{list.quantity}}</td>
+              <td>{{list?.substitute}}</td>
+              <td>{{list.gstrate}}</td>
             </tr>
           </table>
+          <pagination-controls id="medicinePagination" (pageChange)="medicineMasterPage = $event"></pagination-controls>
         </div>
 
       </div>
@@ -339,7 +339,8 @@
 
         <div>
           <table class="pharmacyTable">
-            <tr>
+            <tr >
+            <!-- *ngFor="let vendor of vendorList | paginate: { id: 'pharmacyPagination',itemsPerPage: 10, currentPage: pharmacyPage }  " -->
               <th>ID:</th>
               <th>Pharmacy ID:</th>
               <th>Pharmacy ID:</th>
@@ -362,6 +363,8 @@
               <td>Maria Anders</td>
             </tr>
           </table>
+          <!-- <pagination-controls id="pharmacyPagination" (pageChange)="pharmacyPage = $event"></pagination-controls> -->
+
         </div>
       </div>
       <!-- ****PHARMACY ITEM FORM(END) ****-->
@@ -462,17 +465,19 @@
               <th>Country:</th>
               <th>Code:</th>
             </tr>
-            <tr>
-              <td>Alfreds Futterkiste</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
+            <tr *ngFor="let list of manuactureList | paginate: { id: 'manufacturePagination',itemsPerPage: 5, currentPage: manufacturePage }  ">
+              <td>{{list.name}}</td>
+              <td>{{list.gstin}}</td>
+              <td>{{list.contactName}}</td>
+              <td>{{list.contactNumber}}</td>
+              <td>{{list.address.street}}</td>
+              <td>{{list.address.city}}</td>
+              <td>{{list.address.country}}</td>
+              <td>{{list.address.zipcode}}</td>
             </tr>
           </table>
+          <pagination-controls id="manufacturePagination" (pageChange)="manufacturePage = $event"></pagination-controls>
+
         </div>
       </div>
       <!-- ****MANUFACTURER FORM(END) ****-->
