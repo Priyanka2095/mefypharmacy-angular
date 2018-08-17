@@ -25,10 +25,12 @@ export class PharmacydashboardComponent implements OnInit {
   vendorFormerrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
   drugList: any = [];
+  manufacturerList: any = [];
+  vendorList: any = [];
   pharmacyId: any
   pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
-  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService,public pharmacyService: PharmacyService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
 
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -231,25 +233,30 @@ export class PharmacydashboardComponent implements OnInit {
     this.submitted = true
     console.log("drugformvalue", this.drugtypeForm.value);
     if (this.drugtypeForm.valid) {
+      this.spinner.show();
       $('#myModal').modal('hide');
       let data = {
         type: this.drugtypeForm.value.type,
         description: this.drugtypeForm.value.description
       }
       this.medicineService.createdrug(data).subscribe(value => {
-        console.log(value);
+        this.spinner.hide();
         this.drugtypeForm.reset();
-        this.toastr.success(' Drug Form created!', 'Toastr fun!')
+        this.toastr.success(' Drug Type has created!', 'Success!')
+
+        //now fetch drug list
+        this.getAllDrug();
+
         this.submitted = false;
       }, err => {
-        console.log(err);
-        this.toastr.error('Drug Form not created!', 'Major Error')
+        this.spinner.hide();
+        this.toastr.error('Drug type already exists!', 'Error')
       })
 
     }
     else {
       this.drugtypeForm.reset();
-      this.toastr.error('Drug Form not created!', 'Major Error')
+      this.toastr.error('Drug Type has not created!', 'Error')
     }
   }
   /****************************SAVE MEDICINE FORM***************************/
@@ -313,12 +320,13 @@ export class PharmacydashboardComponent implements OnInit {
       }
       this.medicineService.createManufacture(data).subscribe(value => {
         console.log(value);
+        this.getAllManufacturer();
         $('#myModal4').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
         this.submitted = false
         this.spinner.hide(); /**HIDE LOADER */
         this.manuactureForm.reset();
         /****************************SHOW  TOAST NOTIFICTATION*********************/
-        this.toastr.success(' Manufacture Form created!', 'Toastr fun!')
+        this.toastr.success(' Manufacture Form created!', 'Toastr fun!');
       },
         err => {
           console.log(err)
@@ -345,11 +353,13 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /*****************GET ALL DRUG TYPE****************/
   getAllDrug() {
+    this.spinner.show();
     this.medicineService.getDrugType().subscribe(data => {
       console.log(data);
       let value: any = {}
       value = data;
-      this.drugList = value
+      this.drugList = value;
+      this.spinner.hide();
     })
   }
 
@@ -372,7 +382,7 @@ export class PharmacydashboardComponent implements OnInit {
         }
       }
       this.medicineService.createVendor(data).subscribe(value => {
-        console.log(value);
+        this.getAllVendors();
         $('#myModal5').modal('hide');
         this.toastr.success(' Vendor Form created!', 'Toastr fun!');
         this.vendorForm.reset();
@@ -398,15 +408,44 @@ export class PharmacydashboardComponent implements OnInit {
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
+    console.log("show spinner");
     this.medicineService.getPharmacy(this.pharmacyId).subscribe(result => {
       console.log(result);
       let value: any = {}
       value = result
       this.pharmaData = value
+      console.log("hide spinner");
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
 
+  // get all the manufacturers created so far
+
+  getAllManufacturer() {
+    this.spinner.show();
+    this.medicineService.getAllManufacturer()
+      .subscribe((data) => {
+        this.manufacturerList = data;
+        this.spinner.hide();
+      });
+  }
+
+  // get all the vendors created so far
+  getAllVendors() {
+    this.spinner.show();
+    this.medicineService.getAllVendors()
+      .subscribe((vendors) => {
+        this.vendorList = vendors;
+        this.spinner.hide();
+      });
+  }
+
+
+
+  //LOGOUT
+  logout() {
+    this.spinner.show();
+  }
 
 }
 

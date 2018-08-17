@@ -119,6 +119,20 @@ table.pharmacyTable tr:nth-child(even) {
     /* To center horizontally */
     margin: 0 auto;
 }
+
+button.logout {
+  float: right;
+  margin: 1em;
+  /* background: transparent; */
+  border-radius: 50px;
+  outline: none;
+  height: 35px;
+  width: 76px;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+}
+
 /* .ng2-dropdown-menu {
   z-index: 1051 !important;
 } */
