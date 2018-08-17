@@ -35,7 +35,6 @@ export class PharmacydashboardComponent implements OnInit {
   vendorList: any = [];
   substitution:any=[]
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService,public pharmacyService: PharmacyService) {
-
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
       type: {},
@@ -434,10 +433,7 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
-  /********************** SUBSTITUTION****************/
-
-
-// onItemSelectQualification(selected){
+  // onItemSelectQualification(selected){
 
 //   if (selected) {
 //     if (this.qualification.includes(selected.title)) {
@@ -452,12 +448,7 @@ export class PharmacydashboardComponent implements OnInit {
 
 //     }
 //   }
-
-} 
-
-
-
-
+}
 
 
 
