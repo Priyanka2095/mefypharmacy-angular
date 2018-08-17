@@ -15,6 +15,9 @@ declare var $: any;
   styleUrls: ['./pharmacydashboard.component.css']
 })
 export class PharmacydashboardComponent implements OnInit {
+  p: number = 1;
+  vendorpage: number = 1;
+  collection: any[];
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
   manuactureForm: FormGroup;
@@ -30,8 +33,8 @@ export class PharmacydashboardComponent implements OnInit {
   pharmacyId: any
   pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
+  drugtypeList: any = [];
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
-
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
       type: {},
@@ -111,6 +114,7 @@ export class PharmacydashboardComponent implements OnInit {
 
     this.getAllDrug();
     this.getPharmacyDetail();
+    this.getAllVendor();
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -233,8 +237,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.submitted = true
     console.log("drugformvalue", this.drugtypeForm.value);
     if (this.drugtypeForm.valid) {
-      this.spinner.show();
-      $('#myModal').modal('hide');
+      this.spinner.show(); /**SHOW LOADER */
       let data = {
         type: this.drugtypeForm.value.type,
         description: this.drugtypeForm.value.description
@@ -242,22 +245,28 @@ export class PharmacydashboardComponent implements OnInit {
       this.medicineService.createdrug(data).subscribe(value => {
         this.spinner.hide();
         this.drugtypeForm.reset();
-        this.toastr.success(' Drug Type has created!', 'Success!')
-
-        //now fetch drug list
+        this.toastr.success(' Drug Form created!', 'Toastr fun!');
+        this.spinner.show();
         this.getAllDrug();
-
         this.submitted = false;
-      }, err => {
+        $('#myModal').modal('hide');
         this.spinner.hide();
-        this.toastr.error('Drug type already exists!', 'Error')
+      }, err => {
+        console.log(err);
+        this.submitted = false;
+        this.spinner.hide();/**HIDE LOADER */
+        this.toastr.error('Drug Form not created!', 'Server Issue')
       })
 
     }
     else {
       this.drugtypeForm.reset();
-      this.toastr.error('Drug Type has not created!', 'Error')
+      this.submitted = false;
+      this.spinner.hide();/**HIDE LOADER */
+      this.toastr.error('Drug Form not created!', 'Invalid Details')
     }
+    // this.drugtypeList.push(this.drugtypeForm.value);
+    // console.log(this.drugtypeList);
   }
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
@@ -355,19 +364,29 @@ export class PharmacydashboardComponent implements OnInit {
   getAllDrug() {
     this.spinner.show();
     this.medicineService.getDrugType().subscribe(data => {
-      console.log(data);
+      //console.log(data);
       let value: any = {}
       value = data;
-      this.drugList = value;
-      this.spinner.hide();
+      this.drugList = value
+      console.log(this.drugList);
     })
   }
-
+  /*****************GET ALL VENDOR ****************/
+  getAllVendor() {
+    this.medicineService.getVendorType().subscribe(data => {
+      //console.log(data);
+      let value: any = {}
+      value = data;
+      this.vendorList = value
+      console.log(this.vendorList);
+    })
+  }
   /*************************SAVE VENDOR FORM (start)************************************/
   saveVendorForm() {
     this.submitted = true;
     console.log("Vendorformvalue", this.vendorForm.value);
     if (this.vendorForm.valid) {
+
       this.spinner.show(); /**SHOW LOADER */
       let data = {
         name: this.vendorForm.value.name,
@@ -387,6 +406,7 @@ export class PharmacydashboardComponent implements OnInit {
         this.toastr.success(' Vendor Form created!', 'Toastr fun!');
         this.vendorForm.reset();
         this.submitted = false;
+        this.getAllVendor();
         this.spinner.hide();/**HIDE LOADER */
 
       }, err => {

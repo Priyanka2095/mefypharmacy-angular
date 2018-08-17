@@ -44,6 +44,9 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
+                  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
+                      <p style="font-size: 20px; color: white">Loading...</p>
+                    </ngx-spinner>
                 <form [formGroup]="drugtypeForm" class="drugType">
                   <div class="drugT">
                     <label class="dT">Drug Type:</label>
@@ -70,11 +73,12 @@
               <th>Drug Type</th>
               <th>Drug Description</th>
             </tr>
-            <tr *ngFor="let drug of drugList">
-              <td>{{drug.type}}</td>
-              <td>{{drug.description}}</td>
-            </tr>
+            <tr *ngFor="let item of drugList | paginate:  { id: 'drugpagination',itemsPerPage: 10, currentPage: p } ">
+              <td>{{item.type}}</td>
+              <td>{{item.description}}</td>
+            </tr>  
           </table>
+          <pagination-controls id="drugpagination" (pageChange)="p = $event"></pagination-controls>
         </div>
 
       </div>
@@ -186,20 +190,18 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <label>Substitute:</label>
-                      <input type="text" class="form-control" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" formControlName="substitute">
-                      <!-- <tag-input [ngModel]="['@item']">
-                          <tag-input-dropdown [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']">
-                          </tag-input-dropdown>
-                        </tag-input> -->
-                      <!-- <input type="text" value="" class="form-control" data-role="tagsinput" placeholder="Add tags" /> -->
-                      <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p>
-                    </div>
-                    <div class="col-md-6">
                       <label>GST Rate:</label>
                       <input type="text" class="form-control" formControlName="gstrate">
                       <p class="errormessage" *ngIf="medicineFormErrors.gstrate.required || (medicineForm.controls.gstrate.pristine && submitted)">Gst rate can not be empty</p>
                     </div>
+                    <div class="col-md-6">
+                        <label>Substitute:</label>
+                        <tag-input  >
+                            <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']">
+                            </tag-input-dropdown>
+                      </tag-input>
+                        <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p>
+                      </div>
                   </div>
                 </form>
 
@@ -213,7 +215,7 @@
         </div>
         <!-- Modal -->
         <div>
-          <table class="pharmacyTable">
+          <table class="pharmacyTable scroll">
             <tr>
               <th>Name</th>
               <th>Form</th>
@@ -269,8 +271,22 @@
                 <form class="pharmacyitem">
                   <div class="row">
                     <div class="col-md-6">
-                      <label>Medicine ID:</label>
+                      <label>ID:</label>
                       <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Pharmacy ID:</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Medicine:</label>
+                      <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                      </select>
                     </div>
                     <div class="col-md-6">
                       <label>Safety Stock:</label>
@@ -314,7 +330,7 @@
               <th>ID:</th>
               <th>Pharmacy ID:</th>
               <th>Pharmacy ID:</th>
-              <th>Medicine ID:</th>
+              <th>Medicine:</th>
               <th>Safety Stock:</th>
               <th>Min-Max:</th>
               <th>Lead Time:</th>
@@ -527,17 +543,19 @@
               <th>Contact Name:</th>
               <th>Contact Number:</th>
             </tr>
-            <tr *ngFor="let vendor of vendorList">
+            <tr *ngFor="let vendor of vendorList | paginate: { id: 'vendorpagination',itemsPerPage: 10, currentPage: vendorpage }  ">
               <td>{{vendor.name}}</td>
               <td>{{vendor.gstin}}</td>
+              <td>{{vendor.street}}</td>
+              <td>{{vendor.city}}</td>
+              <td>{{vendor.country}}</td>
+              <td>{{vendor.zipcode}}</td>
               <td>{{vendor.contactName}}</td>
               <td>{{vendor.contactNumber}}</td>
-              <td>{{vendor.address.street}}</td>
-              <td>{{vendor.address.city}}</td>
-              <td>{{vendor.address.country}}</td>
-              <td>{{vendor.address.zipcode}}</td>
-            </tr>
-          </table>
+            </tr>  
+ 
+          </table>       
+              <pagination-controls id="vendorpagination" (pageChange)="vendorpage = $event"></pagination-controls>    
         </div>
       </div>
       <!-- ****VENDOR FORM(END) ****-->
