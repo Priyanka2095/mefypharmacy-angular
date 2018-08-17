@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PharmacyService } from '../services/pharmacy.service';
@@ -17,7 +17,7 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   p: number = 1;
   vendorpage: number = 1;
-  collection: any[];  
+  collection: any[];
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
   manuactureForm: FormGroup;
@@ -33,8 +33,8 @@ export class PharmacydashboardComponent implements OnInit {
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   vendorList: any = [];
-  substitution:any=[]
-  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService,public pharmacyService: PharmacyService) {
+  substitution: any = []
+  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
       type: {},
@@ -246,11 +246,10 @@ export class PharmacydashboardComponent implements OnInit {
         console.log(value);
         this.drugtypeForm.reset();
         this.toastr.success(' Drug Form created!', 'Toastr fun!');
-        this.spinner.show();
+        this.spinner.hide();
         this.getAllDrug();
         this.submitted = false;
         $('#myModal').modal('hide');
-        this.spinner.hide();
       }, err => {
         console.log(err);
         this.submitted = false;
@@ -261,7 +260,6 @@ export class PharmacydashboardComponent implements OnInit {
     }
     else {
       this.drugtypeForm.reset();
-      this.submitted = false;
       this.spinner.hide();/**HIDE LOADER */
       this.toastr.error('Drug Form not created!', 'Invalid Details')
     }
@@ -383,7 +381,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.submitted = true;
     console.log("Vendorformvalue", this.vendorForm.value);
     if (this.vendorForm.valid) {
-  
+
       this.spinner.show(); /**SHOW LOADER */
       let data = {
         name: this.vendorForm.value.name,
@@ -415,8 +413,6 @@ export class PharmacydashboardComponent implements OnInit {
     }
     else {
       this.vendorForm.reset();
-      this.submitted = false;
-      this.spinner.hide();/**HIDE LOADER */
       this.toastr.error('Vendor Form not created!', 'Major Error') /**SHOW  TOAST NOTIFICTATION**/
     }
   }
@@ -435,19 +431,20 @@ export class PharmacydashboardComponent implements OnInit {
   }
   // onItemSelectQualification(selected){
 
-//   if (selected) {
-//     if (this.qualification.includes(selected.title)) {
-//       this.qualifications = '';
-//       this.message = 'Qualification Already Exist !';
-//     }
-//     else {
-//       this.qualification.push(selected.title);
-//       this.messageNew ="";
-//       this.qualifications = '';
-//       this.messageQualification ="";
+  //   if (selected) {
+  //     if (this.qualification.includes(selected.title)) {
+  //       this.qualifications = '';
+  //       this.message = 'Qualification Already Exist !';
+  //     }
+  //     else {
+  //       this.qualification.push(selected.title);
+  //       this.messageNew ="";
+  //       this.qualifications = '';
+  //       this.messageQualification ="";
 
-//     }
-//   }
+  //     }
+  //   }
+
 }
 
 
