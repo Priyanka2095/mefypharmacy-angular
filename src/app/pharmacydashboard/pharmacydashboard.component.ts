@@ -33,7 +33,9 @@ export class PharmacydashboardComponent implements OnInit {
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   vendorList: any = [];
-  substitution: any = []
+  substitution: any = [];
+  arrayOfObjects: any = [];
+  medicineList:any = [];
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -86,6 +88,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+  
     /***************************DRUG TYPE*****************/
     this.drugtypeForm = this.Drugform()
 
@@ -115,6 +118,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.getAllDrug();
     this.getPharmacyDetail();
     this.getAllVendor();
+    this.getAllMedicine();
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -268,9 +272,12 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
+
     this.submitted = true
+    console.log(this.medicineList);
     if (this.medicineForm.valid) {
       console.log(this.medicineForm.value)
+      console.log(this.medicineForm.value.substitute)
       this.spinner.show(); /**SHOW LOADER */
       let data = {
         name: this.medicineForm.value.name,
@@ -299,10 +306,12 @@ export class PharmacydashboardComponent implements OnInit {
         err => {
           console.log(err)
           this.toastr.error('Medicine Form not created!', 'Major Error')
+          this.spinner.hide(); /**HIDE LOADER */
         })
     }
     else {
       // this.medicineForm.reset();
+      this.spinner.hide(); /**HIDE LOADER */
       this.toastr.error('Manufacture Form not created!', 'Major Error')
     }
   }
@@ -335,6 +344,7 @@ export class PharmacydashboardComponent implements OnInit {
       },
         err => {
           console.log(err)
+          this.spinner.hide(); /**HIDE LOADER */
           /*********************************SHOW TOAST NOTIFICATION******************/
           this.toastr.error('Manufacture Form not created!', 'Major Error')
         })
@@ -342,6 +352,7 @@ export class PharmacydashboardComponent implements OnInit {
     }
     else {
       $('#myModal4').modal('show');
+      this.spinner.hide(); /**HIDE LOADER */
       // this.submitted=false
       // this.toastr.error('Manufacture Form not created!', 'Major Error')
     }
@@ -366,10 +377,27 @@ export class PharmacydashboardComponent implements OnInit {
       console.log(this.drugList);
     })
   }
+    /*****************GET ALL MEDICINE LIST****************/
+    getAllMedicine() {
+      this.medicineService.getMedicine().subscribe(data => {
+        let value: any = {}
+        value = data;
+        this.medicineList = value
+        console.log(this.medicineList);
+        for(var i=0; i<this.medicineList.length;i++){
+          var datamed={
+            medicinename:this.medicineList[i].name,
+            medid:this.medicineList[i].medicineId
+      
+          }
+          this.arrayOfObjects.push(datamed);
+          console.log(this.arrayOfObjects);
+        }
+      })
+    }
   /*****************GET ALL VENDOR ****************/
   getAllVendor() {
     this.medicineService.getVendorType().subscribe(data => {
-      //console.log(data);
       let value: any = {}
       value = data;
       this.vendorList = value

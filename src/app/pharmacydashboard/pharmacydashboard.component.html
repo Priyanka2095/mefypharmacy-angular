@@ -95,6 +95,9 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
+                  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
+                      <p style="font-size: 20px; color: white">Loading...</p>
+                    </ngx-spinner>
                 <form class="medicineMaster" [formGroup]="medicineForm">
                   <div class="row">
                     <div class="col-md-6">
@@ -207,8 +210,8 @@
                     </div>
                     <div class="col-md-6">
                       <label>Substitute:</label>
-                      <tag-input formControlName="substitute">
-                        <tag-input-dropdown [appendToBody]="false" [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']">
+                      <tag-input formControlName="substitute" placeholder="asd">
+                        <tag-input-dropdown [appendToBody]="false" [identifyBy]="'medid'" [displayBy]="'medicinename'" [showDropdownIfEmpty]="true" [autocompleteItems]="arrayOfObjects">
                         </tag-input-dropdown>
                       </tag-input>
                       <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute
@@ -281,6 +284,9 @@
                 <h4 class="modal-title" id="myModalLabel">Pharmacy Item</h4>
               </div>
               <div class="modal-body">
+                  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
+                      <p style="font-size: 20px; color: white">Loading...</p>
+                    </ngx-spinner>
                 <form class="pharmacyitem">
                   <div class="row">
                     <div class="col-md-6">
@@ -380,6 +386,9 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
+                  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
+                      <p style="font-size: 20px; color: white">Loading...</p>
+                    </ngx-spinner>
                 <form class="pharmacyitem" [formGroup]="manuactureForm">
                   <div class="row">
                     <div class="col-md-6">

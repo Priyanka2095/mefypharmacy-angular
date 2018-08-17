@@ -27,6 +27,10 @@ export class MedicineService {
     console.log(data)
     return this.httpClient.post(APIURL + 'Vendor', data)
   }
+   // *********************** GET MEDICINE LIST************************************/
+   getMedicine() {
+    return this.httpClient.get(APIURL + 'MedicineMaster')
+  }
     /*************************GET DRUG TYPE*******************/
     getVendorType() {
       return this.httpClient.get(APIURL + 'Vendor')
