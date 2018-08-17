@@ -33,6 +33,7 @@ export class PharmacydashboardComponent implements OnInit {
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   vendorList: any = [];
+  substitution:any=[]
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService,public pharmacyService: PharmacyService) {
 
     /************DRUG TYPE FORM ERRORS***************/
@@ -215,7 +216,7 @@ export class PharmacydashboardComponent implements OnInit {
       strength: ['', Validators.required],
       unit: ['', Validators.required],
       quantity: ['', Validators.required],
-      substitute: ['', Validators.required],
+      substitute: [''],
       gstrate: ['', Validators.required],
     });
   }
@@ -288,8 +289,7 @@ export class PharmacydashboardComponent implements OnInit {
         unit: this.medicineForm.value.unit,
         quantity: this.medicineForm.value.quantity,
         substitute: this.medicineForm.value.substitute,
-        gstrate: this.medicineForm.value.gstrate,
-        medicineId: ""
+        gstrate: this.medicineForm.value.gstrate
       }
       console.log(data)
       this.medicineService.createMedicineMaster(data).subscribe(value => {
@@ -434,9 +434,30 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
+  /********************** SUBSTITUTION****************/
 
 
-}
+// onItemSelectQualification(selected){
+
+//   if (selected) {
+//     if (this.qualification.includes(selected.title)) {
+//       this.qualifications = '';
+//       this.message = 'Qualification Already Exist !';
+//     }
+//     else {
+//       this.qualification.push(selected.title);
+//       this.messageNew ="";
+//       this.qualifications = '';
+//       this.messageQualification ="";
+
+//     }
+//   }
+
+} 
+
+
+
+
 
 
 

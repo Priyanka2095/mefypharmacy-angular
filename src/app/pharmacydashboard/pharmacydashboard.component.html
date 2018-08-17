@@ -122,7 +122,7 @@
                     <div class="col-md-6">
                       <label>Manufacturer:</label>
                       <!-- <input type="text" class="form-control" formControlName="manufacturer"> -->
-                      <select class="selectpicker" data-live-search="true">
+                      <select class="selectpicker" data-live-search="true"  formControlName="manufacturer">
                         <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
                         <option data-tokens="mustard">Burger, Shake and a Smile</option>
                         <option data-tokens="frosting">Sugar, Spice and all things nice</option>
@@ -136,10 +136,10 @@
                         <option value="" disabled selected>Choose your option</option>
                         <option *ngFor="let list of drugList">{{list.type}}</option>
                       </select> -->
-                      <select class="selectpicker" data-live-search="true">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                      <select class="form-control" data-live-search="true"  formControlName="drugtype">
+                        <option *ngFor="let list of drugList" value={{list.type}}>{{list.type}}</option>
+                        <!-- <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option> -->
                       </select>
 
 
@@ -185,8 +185,8 @@
                   <div class="row">
                     <div class="col-md-6">
                       <label>Substitute:</label>
-                      <input type="text" value="Amsterdam,Washington" data-role="tagsinput" >
-                      <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p>
+                      <input type="text" value="Amsterdam,Washington" data-role="tagsinput" formControlName="substitute" >
+                      <!-- <p class="errormessage" *ngIf="medicineFormErrors.substitute.required || (medicineForm.controls.substitute.pristine && submitted)">Substitute can not be empty</p> -->
                     </div>
                     <div class="col-md-6">
                       <label>GST Rate:</label>
