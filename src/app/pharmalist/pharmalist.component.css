@@ -33,3 +33,15 @@ button.createform {
   .red{
     color: blue
   }
+  button.logoutp {
+    float: right;
+    margin: 1em;
+    background: #428bca;
+    border-radius: 50px;
+    outline: none;
+    height: 35px;
+    width: 76px;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+  }
