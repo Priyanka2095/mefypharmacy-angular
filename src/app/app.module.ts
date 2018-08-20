@@ -20,6 +20,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 import {NgxPaginationModule} from 'ngx-pagination'; 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TagInputModule } from 'ngx-chips';
+import { TypeaheadModule } from 'ngx-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,8 +46,8 @@ import { TagInputModule } from 'ngx-chips';
     }) ,
     TextMaskModule,
     NgxSpinnerModule,
-    NgxPaginationModule
-
+    NgxPaginationModule,
+    TypeaheadModule.forRoot()
   ],
   providers: [UserService,SharedService,PharmacyService,MedicineService],
   bootstrap: [AppComponent]

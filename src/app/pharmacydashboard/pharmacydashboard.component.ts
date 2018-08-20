@@ -6,6 +6,8 @@ import { MedicineService } from '../services/medicine.service'
 import { SharedService } from '../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TypeaheadModule } from 'ngx-bootstrap'; // for auto complete
+
 declare var $: any;
 
 
@@ -15,6 +17,8 @@ declare var $: any;
   styleUrls: ['./pharmacydashboard.component.css']
 })
 export class PharmacydashboardComponent implements OnInit {
+
+
   p: number = 1;
   vendorpage: number = 1;
   medicineMasterPage: number = 1;
@@ -510,6 +514,12 @@ export class PharmacydashboardComponent implements OnInit {
     return this.drugList.filter(item =>
       item.toLowerCase().includes(searchText.toLowerCase())
     );
+  }
+
+  /** manufactuerer **/
+  manufacturerOnSelect(evt) {
+    console.log(evt.item);
+    console.log(this.medicineForm.value);
   }
 }
 

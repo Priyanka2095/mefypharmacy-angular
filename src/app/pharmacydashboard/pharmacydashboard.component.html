@@ -132,12 +132,21 @@
                   <div class="row">
                     <div class="col-md-6">
                       <label>Manufacturer:</label>
-                      <!-- <input type="text" class="form-control" formControlName="manufacturer"> -->
-                      <select class="form-control" data-live-search="true" formControlName="manufacturer">
+
+                      <!-- custom template -->
+                      <ng-template #customItemTemplate let-model="item" let-index="index">
+                        <h5>{{ model.name }} , {{model.address.city}} </h5>
+                      </ng-template>
+                      <!-- custom templte ends -->
+
+                      <!-- <pre class="card card-block card-header mb-3">Model: {{selected | json}}</pre> -->
+                      <input class="form-control" [typeaheadItemTemplate]="customItemTemplate" formControlName="manufacturer" (typeaheadOnSelect)="manufacturerOnSelect($event)" typeaheadOptionField="name" [typeahead]="manuactureList"
+                        class="form-control">
+
+                      <!-- <select class="form-control" data-live-search="true" formControlName="manufacturer">
                         <option value="" disabled selected>Choose your option</option>
                         <option *ngFor="let list of manuactureList" value={{list.gstin}}>{{list.gstin}}</option>
-                        <!-- <option data-tokens="frosting">Sugar, Spice and all things nice</option> -->
-                      </select>
+                      </select> -->
                       <p class="errormessage" *ngIf="medicineFormErrors.manufacturer.required || (medicineForm.controls.manufacturer.pristine && submitted)">Manufacturer can not be empty</p>
 
                     </div>
