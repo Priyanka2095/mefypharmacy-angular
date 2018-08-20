@@ -18,7 +18,7 @@
         <a href="#2a" data-toggle="tab" (click)="getMedicineMaster()">Medicine Master</a>
       </li>
       <li>
-        <a href="#3a" data-toggle="tab">Pharmacy Item</a>
+        <a href="#3a" data-toggle="tab" (click)="getPharmacyItemList()">Pharmacy Item</a>
       </li>
       <li>
         <a href="#4a" data-toggle="tab" (click)="getAllManufactureList()">Manufacturer</a>
@@ -58,7 +58,7 @@
                   </div>
                   <div>
                     <p class="desc">Description:</p>
-                    <textarea rows="4" cols="50" formControlName="description" placeholder="Enter description here..."></textarea>
+                    <textarea rows="4" cols="50" formControlName="description" placeholder="Enter description here..." maxlength="250"></textarea>
                     <p class="errormessage" *ngIf="drugtypeFormErrors.description.required || (drugtypeForm.controls.description.pristine && submitted)">description can not be empty</p>
                   </div>
                 </form>
@@ -127,7 +127,7 @@
                     </div>
                     <div class="col-md-6">
                       <label>Description:</label>
-                      <input type="text" class="form-control" formControlName="description">
+                      <input type="text" class="form-control" formControlName="description" maxlength="250">
                       <p class="errormessage" *ngIf="medicineFormErrors.description.required || (medicineForm.controls.description.pristine && submitted)">Description can not be empty</p>
                     </div>
                   </div>
@@ -290,56 +290,64 @@
                 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
                   <p style="font-size: 20px; color: white">Loading...</p>
                 </ngx-spinner>
-                <form class="pharmacyitem">
+                <form class="pharmacyitem" [formGroup]="pharmacyItemForm">
                   <div class="row">
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                       <label>ID:</label>
                       <input type="text" class="form-control">
-                    </div>
-                    <div class="col-md-6">
+                    </div> -->
+                    <!-- <div class="col-md-6">
                       <label>Pharmacy ID:</label>
-                      <input type="text" class="form-control">
-                    </div>
+                      <input type="text" class="form-control" formControlName="pharmacyId">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.pharmacyId.required || (pharmacyItemForm.controls.pharmacyId.pristine && submitted)"> can not be empty</p>
+
+                    </div> -->
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Medicine:</label>
-                      <select class="selectpicker" data-live-search="true">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                      <select class="form-control" data-live-search="true" formControlName="medicineId">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option *ngFor="let list of medicineList" value={{list.medicineId}}>{{list.name}}</option>
+                        <!-- <option data-tokens="frosting">Sugar, Spice and all things nice</option> -->
                       </select>
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.medicineId.required || (pharmacyItemForm.controls.medicineId.pristine && submitted)"> can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Safety Stock:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="safetyStock">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.safetyStock.required || (pharmacyItemForm.controls.safetyStock.pristine && submitted)"> can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Min-Max:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="minMax">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.minMax.required || (pharmacyItemForm.controls.minMax.pristine && submitted)"> can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Lead Time:</label>
-                      <input type="text" class="form-control">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.leadTime.required || (pharmacyItemForm.controls.leadTime.pristine && submitted)"> can not be empty</p>
+                      <input type="text" class="form-control" formControlName="leadTime">
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <label>Supplier:</label>
-                      <input type="text" class="form-control">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.supplier.required || (pharmacyItemForm.controls.supplier.pristine && submitted)"> can not be empty</p>
+                      <input type="text" class="form-control" formControlName="supplier">
                     </div>
                     <div class="col-md-6">
                       <label>Bin ID:</label>
-                      <input type="text" class="form-control">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.binId.required || (pharmacyItemForm.controls.binId.pristine && submitted)"> can not be empty</p>
+                      <input type="text" class="form-control" formControlName="binId">
                     </div>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)=" closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="savePharmacyItem()">Save</button>
               </div>
             </div>
           </div>
@@ -349,30 +357,23 @@
         <div>
           <table class="pharmacyTable">
             <tr>
-              <!-- *ngFor="let vendor of vendorList | paginate: { id: 'pharmacyPagination',itemsPerPage: 10, currentPage: pharmacyPage }  " -->
-              <th>ID:</th>
-              <th>Pharmacy ID:</th>
-              <th>Pharmacy ID:</th>
-              <th>Medicine:</th>
+              <!-- <th>Medicine:</th> -->
               <th>Safety Stock:</th>
               <th>Min-Max:</th>
               <th>Lead Time:</th>
               <th>Supplier:</th>
               <th>Bin ID:</th>
             </tr>
-            <tr>
-              <td>Alfreds Futterkiste</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
-              <td>Maria Anders</td>
+            <tr *ngFor="let list of pharmacyItemList | paginate: { id: 'pharmacyPagination',itemsPerPage: 5, currentPage: pharmacyPage }  ">
+              <!-- <td>{{list.medicineId}}</td> -->
+              <td>{{list.safetyStock}}</td>
+              <td>{{list.minMax}}</td>
+              <td>{{list.leadTime}}</td>
+              <td>{{list.supplier}}</td>
+              <td>{{list.binId}}</td>
             </tr>
           </table>
-          <!-- <pagination-controls id="pharmacyPagination" (pageChange)="pharmacyPage = $event"></pagination-controls> -->
+          <pagination-controls id="pharmacyPagination" (pageChange)="pharmacyPage = $event"></pagination-controls>
 
         </div>
       </div>

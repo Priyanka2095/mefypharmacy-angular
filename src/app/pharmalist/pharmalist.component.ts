@@ -47,4 +47,11 @@ export class PharmalistComponent implements OnInit {
     this.selectedRow = true
     this.router.navigate(['/dashboard'])
   }
+   /**************************CLEAR LOCAL STORAGE**********************/
+   logout(){
+    localStorage.removeItem('phoneNumber');
+    localStorage.removeItem('tradeId');
+    this.router.navigate(['/login'])
+
+  }
 }
