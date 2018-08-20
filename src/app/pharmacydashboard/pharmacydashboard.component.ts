@@ -491,6 +491,13 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide();
     })
   }
+  /**************************CLEAR LOCAL STORAGE**********************/
+  logout(){
+    localStorage.removeItem('phoneNumber');
+    localStorage.removeItem('tradeId');
+    this.router.navigate(['/login'])
+
+  }
 }
 
 
