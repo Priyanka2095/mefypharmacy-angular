@@ -197,4 +197,9 @@ export class CreatepharmacyComponent implements OnInit {
   showInfo() {
     this.toastr.info('Trade Id already exist')
   }
+
+  /** cancel pharmacy create and go back to previous page **/
+  cancelCreation(){
+    this.router.navigate(['/pharmalist']);
+  }
 }

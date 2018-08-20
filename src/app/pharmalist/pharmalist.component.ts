@@ -45,7 +45,6 @@ export class PharmalistComponent implements OnInit {
     result = data
     localStorage.setItem('tradeId', result.pharmacy[0].tradeLicenseId);// SET TRADEID IN LOCAL STORAGE
     this.selectedRow = true
-    this.router.navigate(['/pharmacydashboard'])
-
+    this.router.navigate(['/dashboard'])
   }
 }

@@ -7,7 +7,6 @@ import { LoginComponent } from './login/login.component';
 import { RoutingModule } from './routing.module';
 import { CreateuserComponent } from './createuser/createuser.component';
 import { CreatepharmacyComponent } from './createpharmacy/createpharmacy.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PharmacydashboardComponent } from './pharmacydashboard/pharmacydashboard.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -27,7 +26,6 @@ import { TagInputModule } from 'ngx-chips';
     LoginComponent,
     CreateuserComponent,
     CreatepharmacyComponent,
-    DashboardComponent,
     PharmacydashboardComponent,
     PharmalistComponent
   ],
