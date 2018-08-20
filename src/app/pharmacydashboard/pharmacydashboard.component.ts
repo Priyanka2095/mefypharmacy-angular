@@ -17,9 +17,9 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   p: number = 1;
   vendorpage: number = 1;
-  medicineMasterPage:number=1;
-  manufacturePage:number=1;
-  pharmacyPage:number=1;
+  medicineMasterPage: number = 1;
+  manufacturePage: number = 1;
+  pharmacyPage: number = 1;
   collection: any[];
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
@@ -39,9 +39,9 @@ export class PharmacydashboardComponent implements OnInit {
   drugtypeList: any = [];
   substitution: any = [];
   arrayOfObjects: any = [];
-  medicineList:any = [];
-  medicineMaster:any=[]
-  manuactureList:any=[]
+  medicineList: any = [];
+  medicineMaster: any = []
+  manuactureList: any = []
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -94,7 +94,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+
     /***************************DRUG TYPE*****************/
     this.drugtypeForm = this.Drugform()
 
@@ -388,31 +388,33 @@ export class PharmacydashboardComponent implements OnInit {
       console.log(this.drugList);
     })
   }
-    /*****************GET ALL MEDICINE LIST****************/
-    getAllMedicine() {
-      this.medicineService.getMedicine().subscribe(data => {
-        let value: any = {}
-        value = data;
-        this.medicineList = value
-        console.log(this.medicineList);
-        for(var i=0; i<this.medicineList.length;i++){
-          var datamed={
-            medicinename:this.medicineList[i].name,
-            medid:this.medicineList[i].medicineId
-      
-          }
-          this.arrayOfObjects.push(datamed);
-          console.log(this.arrayOfObjects);
+  /*****************GET ALL MEDICINE LIST****************/
+  getAllMedicine() {
+    this.medicineService.getMedicine().subscribe(data => {
+      let value: any = {}
+      value = data;
+      this.medicineList = value
+      console.log(this.medicineList);
+      for (var i = 0; i < this.medicineList.length; i++) {
+        var datamed = {
+          medicinename: this.medicineList[i].name,
+          medid: this.medicineList[i].medicineId
+
         }
-      })
-    }
+        this.arrayOfObjects.push(datamed);
+        console.log(this.arrayOfObjects);
+      }
+    })
+  }
   /*****************GET ALL VENDOR ****************/
   getAllVendor() {
+    this.spinner.show();
     this.medicineService.getVendorType().subscribe(data => {
       let value: any = {}
       value = data;
       this.vendorList = value
       console.log(this.vendorList);
+      this.spinner.hide();
     })
   }
   /*************************SAVE VENDOR FORM (start)************************************/
@@ -470,21 +472,23 @@ export class PharmacydashboardComponent implements OnInit {
     })
   }
   /******************************GET MEDICINE MASTER LIST****************** */
-  getAllMedicineMaster(){
-    this.medicineService.getMedicineMaster().subscribe(value=>{
+  getAllMedicineMaster() {
+    this.medicineService.getMedicineMaster().subscribe(value => {
       console.log(value)
-      let result:any={}
-      result=value
-      this.medicineMaster=result
+      let result: any = {}
+      result = value
+      this.medicineMaster = result
     })
   }
   /***********************************GET MANUFACTURE LIST******************/
-  getAllManufactureList(){
-    this.medicineService.getManufactureList().subscribe(value=>{
-      console.log(value)
-      let result:any={}
-      result=value
-      this.manuactureList=result
+  getAllManufactureList() {
+    this.spinner.show();
+    this.medicineService.getManufactureList().subscribe(value => {
+      console.log(value);
+      let result: any = {};
+      result = value;
+      this.manuactureList = result;
+      this.spinner.hide();
     })
   }
   // onItemSelectQualification(selected){
