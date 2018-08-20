@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PharmacyService } from '../services/pharmacy.service';
@@ -17,6 +17,12 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   p: number = 1;
   vendorpage: number = 1;
+<<<<<<< HEAD
+=======
+  medicineMasterPage:number=1;
+  manufacturePage:number=1;
+  pharmacyPage:number=1;
+>>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
   collection: any[];
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
@@ -34,6 +40,15 @@ export class PharmacydashboardComponent implements OnInit {
   pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
+<<<<<<< HEAD
+=======
+  vendorList: any = [];
+  substitution: any = [];
+  arrayOfObjects: any = [];
+  medicineList:any = [];
+  medicineMaster:any=[]
+  manuactureList:any=[]
+>>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -86,6 +101,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+  
     /***************************DRUG TYPE*****************/
     this.drugtypeForm = this.Drugform()
 
@@ -115,6 +131,9 @@ export class PharmacydashboardComponent implements OnInit {
     this.getAllDrug();
     this.getPharmacyDetail();
     this.getAllVendor();
+    this.getAllMedicine();
+    this.getAllMedicineMaster();
+    this.getAllManufactureList();
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -215,7 +234,7 @@ export class PharmacydashboardComponent implements OnInit {
       strength: ['', Validators.required],
       unit: ['', Validators.required],
       quantity: ['', Validators.required],
-      substitute: ['', Validators.required],
+      substitute: [''],
       gstrate: ['', Validators.required],
     });
   }
@@ -246,11 +265,10 @@ export class PharmacydashboardComponent implements OnInit {
         this.spinner.hide();
         this.drugtypeForm.reset();
         this.toastr.success(' Drug Form created!', 'Toastr fun!');
-        this.spinner.show();
+        this.spinner.hide();
         this.getAllDrug();
         this.submitted = false;
         $('#myModal').modal('hide');
-        this.spinner.hide();
       }, err => {
         console.log(err);
         this.submitted = false;
@@ -261,7 +279,6 @@ export class PharmacydashboardComponent implements OnInit {
     }
     else {
       this.drugtypeForm.reset();
-      this.submitted = false;
       this.spinner.hide();/**HIDE LOADER */
       this.toastr.error('Drug Form not created!', 'Invalid Details')
     }
@@ -270,9 +287,12 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
+
     this.submitted = true
+    console.log(this.medicineList);
     if (this.medicineForm.valid) {
       console.log(this.medicineForm.value)
+      console.log(this.medicineForm.value.substitute)
       this.spinner.show(); /**SHOW LOADER */
       let data = {
         name: this.medicineForm.value.name,
@@ -287,14 +307,14 @@ export class PharmacydashboardComponent implements OnInit {
         strength: this.medicineForm.value.strength,
         unit: this.medicineForm.value.unit,
         quantity: this.medicineForm.value.quantity,
-        substitute: this.medicineForm.value.substitute,
-        gstrate: this.medicineForm.value.gstrate,
-        medicineId: ""
+        // substitute: this.medicineForm.value.substitute,
+        gstrate: this.medicineForm.value.gstrate
       }
       console.log(data)
       this.medicineService.createMedicineMaster(data).subscribe(value => {
         console.log(value)
-        $('#myModal').modal('hide');
+        this.getAllMedicineMaster();
+        $('#myModal1').modal('hide');
         this.spinner.hide(); /**HIDE LOADER */
         this.toastr.success(' Medicine Form created!', 'Toastr fun!')
         this.medicineForm.reset();  //AFTER SUBMIT OR CANCEL FORM WILL BE RESET
@@ -302,10 +322,12 @@ export class PharmacydashboardComponent implements OnInit {
         err => {
           console.log(err)
           this.toastr.error('Medicine Form not created!', 'Major Error')
+          this.spinner.hide(); /**HIDE LOADER */
         })
     }
     else {
       // this.medicineForm.reset();
+      this.spinner.hide(); /**HIDE LOADER */
       this.toastr.error('Manufacture Form not created!', 'Major Error')
     }
   }
@@ -329,7 +351,11 @@ export class PharmacydashboardComponent implements OnInit {
       }
       this.medicineService.createManufacture(data).subscribe(value => {
         console.log(value);
+<<<<<<< HEAD
         this.getAllManufacturer();
+=======
+        this.getAllManufactureList();
+>>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
         $('#myModal4').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
         this.submitted = false
         this.spinner.hide(); /**HIDE LOADER */
@@ -339,6 +365,7 @@ export class PharmacydashboardComponent implements OnInit {
       },
         err => {
           console.log(err)
+          this.spinner.hide(); /**HIDE LOADER */
           /*********************************SHOW TOAST NOTIFICATION******************/
           this.toastr.error('Manufacture Form not created!', 'Major Error')
         })
@@ -346,6 +373,7 @@ export class PharmacydashboardComponent implements OnInit {
     }
     else {
       $('#myModal4').modal('show');
+      this.spinner.hide(); /**HIDE LOADER */
       // this.submitted=false
       // this.toastr.error('Manufacture Form not created!', 'Major Error')
     }
@@ -371,10 +399,27 @@ export class PharmacydashboardComponent implements OnInit {
       console.log(this.drugList);
     })
   }
+    /*****************GET ALL MEDICINE LIST****************/
+    getAllMedicine() {
+      this.medicineService.getMedicine().subscribe(data => {
+        let value: any = {}
+        value = data;
+        this.medicineList = value
+        console.log(this.medicineList);
+        for(var i=0; i<this.medicineList.length;i++){
+          var datamed={
+            medicinename:this.medicineList[i].name,
+            medid:this.medicineList[i].medicineId
+      
+          }
+          this.arrayOfObjects.push(datamed);
+          console.log(this.arrayOfObjects);
+        }
+      })
+    }
   /*****************GET ALL VENDOR ****************/
   getAllVendor() {
     this.medicineService.getVendorType().subscribe(data => {
-      //console.log(data);
       let value: any = {}
       value = data;
       this.vendorList = value
@@ -418,8 +463,6 @@ export class PharmacydashboardComponent implements OnInit {
     }
     else {
       this.vendorForm.reset();
-      this.submitted = false;
-      this.spinner.hide();/**HIDE LOADER */
       this.toastr.error('Vendor Form not created!', 'Major Error') /**SHOW  TOAST NOTIFICTATION**/
     }
   }
@@ -438,6 +481,7 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
+<<<<<<< HEAD
 
   // get all the manufacturers created so far
 
@@ -474,6 +518,46 @@ export class PharmacydashboardComponent implements OnInit {
     this.spinner.show();
   }
 
+=======
+  /******************************GET MEDICINE MASTER LIST****************** */
+  getAllMedicineMaster(){
+    this.medicineService.getMedicineMaster().subscribe(value=>{
+      console.log(value)
+      let result:any={}
+      result=value
+      this.medicineMaster=result
+    })
+  }
+  /***********************************GET MANUFACTURE LIST******************/
+  getAllManufactureList(){
+    this.medicineService.getManufactureList().subscribe(value=>{
+      console.log(value)
+      let result:any={}
+      result=value
+      this.manuactureList=result
+    })
+  }
+  // onItemSelectQualification(selected){
+
+  //   if (selected) {
+  //     if (this.qualification.includes(selected.title)) {
+  //       this.qualifications = '';
+  //       this.message = 'Qualification Already Exist !';
+  //     }
+  //     else {
+  //       this.qualification.push(selected.title);
+  //       this.messageNew ="";
+  //       this.qualifications = '';
+  //       this.messageQualification ="";
+
+  //     }
+  //   }
+  findChoices(searchText: string) {
+    return this.drugList.filter(item =>
+      item.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }
+>>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
 }
 
 
