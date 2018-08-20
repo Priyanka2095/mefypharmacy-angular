@@ -484,26 +484,6 @@ export class PharmacydashboardComponent implements OnInit {
       this.manuactureList=result
     })
   }
-  // onItemSelectQualification(selected){
-
-  //   if (selected) {
-  //     if (this.qualification.includes(selected.title)) {
-  //       this.qualifications = '';
-  //       this.message = 'Qualification Already Exist !';
-  //     }
-  //     else {
-  //       this.qualification.push(selected.title);
-  //       this.messageNew ="";
-  //       this.qualifications = '';
-  //       this.messageQualification ="";
-
-  //     }
-  //   }
-  findChoices(searchText: string) {
-    return this.drugList.filter(item =>
-      item.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }
 }
 
 
