@@ -17,9 +17,9 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   p: number = 1;
   vendorpage: number = 1;
-  medicineMasterPage:number=1;
-  manufacturePage:number=1;
-  pharmacyPage:number=1;
+  medicineMasterPage: number = 1;
+  manufacturePage: number = 1;
+  pharmacyPage: number = 1;
   collection: any[];
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
@@ -31,16 +31,17 @@ export class PharmacydashboardComponent implements OnInit {
   vendorFormerrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
   drugList: any = [];
+  manufacturerList: any = [];
+  vendorList: any = [];
   pharmacyId: any
   pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
-  vendorList: any = [];
   substitution: any = [];
   arrayOfObjects: any = [];
-  medicineList:any = [];
-  medicineMaster:any=[]
-  manuactureList:any=[]
+  medicineList: any = [];
+  medicineMaster: any = []
+  manuactureList: any = []
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -93,7 +94,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+
     /***************************DRUG TYPE*****************/
     this.drugtypeForm = this.Drugform()
 
@@ -254,7 +255,7 @@ export class PharmacydashboardComponent implements OnInit {
         description: this.drugtypeForm.value.description
       }
       this.medicineService.createdrug(data).subscribe(value => {
-        console.log(value);
+        this.spinner.hide();
         this.drugtypeForm.reset();
         this.toastr.success(' Drug Form created!', 'Toastr fun!');
         this.spinner.hide();
@@ -349,7 +350,7 @@ export class PharmacydashboardComponent implements OnInit {
         this.spinner.hide(); /**HIDE LOADER */
         this.manuactureForm.reset();
         /****************************SHOW  TOAST NOTIFICTATION*********************/
-        this.toastr.success(' Manufacture Form created!', 'Toastr fun!')
+        this.toastr.success(' Manufacture Form created!', 'Toastr fun!');
       },
         err => {
           console.log(err)
@@ -378,39 +379,42 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /*****************GET ALL DRUG TYPE****************/
   getAllDrug() {
+    this.spinner.show();
     this.medicineService.getDrugType().subscribe(data => {
-      //console.log(data);
+      this.spinner.hide();
       let value: any = {}
       value = data;
       this.drugList = value
       console.log(this.drugList);
     })
   }
-    /*****************GET ALL MEDICINE LIST****************/
-    getAllMedicine() {
-      this.medicineService.getMedicine().subscribe(data => {
-        let value: any = {}
-        value = data;
-        this.medicineList = value
-        console.log(this.medicineList);
-        for(var i=0; i<this.medicineList.length;i++){
-          var datamed={
-            medicinename:this.medicineList[i].name,
-            medid:this.medicineList[i].medicineId
-      
-          }
-          this.arrayOfObjects.push(datamed);
-          console.log(this.arrayOfObjects);
+  /*****************GET ALL MEDICINE LIST****************/
+  getAllMedicine() {
+    this.medicineService.getMedicine().subscribe(data => {
+      let value: any = {}
+      value = data;
+      this.medicineList = value
+      console.log(this.medicineList);
+      for (var i = 0; i < this.medicineList.length; i++) {
+        var datamed = {
+          medicinename: this.medicineList[i].name,
+          medid: this.medicineList[i].medicineId
+
         }
-      })
-    }
+        this.arrayOfObjects.push(datamed);
+        console.log(this.arrayOfObjects);
+      }
+    })
+  }
   /*****************GET ALL VENDOR ****************/
   getAllVendor() {
+    this.spinner.show();
     this.medicineService.getVendorType().subscribe(data => {
       let value: any = {}
       value = data;
       this.vendorList = value
       console.log(this.vendorList);
+      this.spinner.hide();
     })
   }
   /*************************SAVE VENDOR FORM (start)************************************/
@@ -433,7 +437,6 @@ export class PharmacydashboardComponent implements OnInit {
         }
       }
       this.medicineService.createVendor(data).subscribe(value => {
-        console.log(value);
         $('#myModal5').modal('hide');
         this.toastr.success(' Vendor Form created!', 'Toastr fun!');
         this.vendorForm.reset();
@@ -457,31 +460,35 @@ export class PharmacydashboardComponent implements OnInit {
 
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
-    //this.spinner.show(); /**SHOW LOADER */
+    this.spinner.show(); /**SHOW LOADER */
+    console.log("show spinner");
     this.medicineService.getPharmacy(this.pharmacyId).subscribe(result => {
       console.log(result);
       let value: any = {}
       value = result
       this.pharmaData = value
+      console.log("hide spinner");
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
   /******************************GET MEDICINE MASTER LIST****************** */
-  getAllMedicineMaster(){
-    this.medicineService.getMedicineMaster().subscribe(value=>{
+  getAllMedicineMaster() {
+    this.medicineService.getMedicineMaster().subscribe(value => {
       console.log(value)
-      let result:any={}
-      result=value
-      this.medicineMaster=result
+      let result: any = {}
+      result = value
+      this.medicineMaster = result
     })
   }
   /***********************************GET MANUFACTURE LIST******************/
-  getAllManufactureList(){
-    this.medicineService.getManufactureList().subscribe(value=>{
-      console.log(value)
-      let result:any={}
-      result=value
-      this.manuactureList=result
+  getAllManufactureList() {
+    this.spinner.show();
+    this.medicineService.getManufactureList().subscribe(value => {
+      console.log(value);
+      let result: any = {};
+      result = value;
+      this.manuactureList = result;
+      this.spinner.hide();
     })
   }
   // onItemSelectQualification(selected){

@@ -42,9 +42,9 @@ export class MedicineService {
       return this.httpClient.get(APIURL + 'Vendor')
     }
   /*****************************CREATE MANUFACTURE****************/
-  createManufacture(data){
+  createManufacture(data) {
     console.log(data);
-    return this.httpClient.post(APIURL+ 'Manufacturer',data)
+    return this.httpClient.post(APIURL + 'Manufacturer', data)
   }
    /*************************GET DRUG TYPE*******************/
    getManufactureList() {
@@ -54,5 +54,15 @@ export class MedicineService {
    getPharmacy(tradeId) {
      console.log(tradeId)
     return this.httpClient.get(APIURL + 'Pharmacy/' + tradeId)
+  }
+
+  /** get All manufacturer **/
+  getAllManufacturer() {
+    return this.httpClient.get(APIURL + 'Manufacturer');
+  }
+
+  /** get all vendors **/
+  getAllVendors() {
+    return this.httpClient.get(APIURL + 'Vendor');
   }
 }
