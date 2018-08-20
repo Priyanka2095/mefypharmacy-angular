@@ -521,6 +521,19 @@ export class PharmacydashboardComponent implements OnInit {
     console.log(evt.item);
     console.log(this.medicineForm.value);
   }
+
+  /** drug type on select **/
+  drugtypeOnSelect(evt) {
+    console.log(evt.item);
+    console.log(this.medicineForm.value);
+  }
+
+  /** get medicine master **/
+  getMedicineMaster() {
+    this.getAllMedicineMaster();
+    this.getAllDrug();
+    this.getAllManufactureList();
+  }
 }
 
 
