@@ -364,7 +364,7 @@ export class PharmacydashboardComponent implements OnInit {
   getAllDrug() {
     this.spinner.show();
     this.medicineService.getDrugType().subscribe(data => {
-      //console.log(data);
+      this.spinner.hide();
       let value: any = {}
       value = data;
       this.drugList = value
@@ -458,6 +458,13 @@ export class PharmacydashboardComponent implements OnInit {
         this.vendorList = vendors;
         this.spinner.hide();
       });
+  }
+
+
+  // get all master medicine
+  getAllMasterMedicine() {
+    this.getAllManufacturer()
+    // this.getAllDrug();
   }
 
 
