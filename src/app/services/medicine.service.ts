@@ -46,11 +46,6 @@ export class MedicineService {
     console.log(data);
     return this.httpClient.post(APIURL + 'Manufacturer', data)
   }
-<<<<<<< HEAD
-  /**************************GET PHARMACY DETAIL BY TRADE LICENSE ID*************************/
-  getPharmacy(tradeId) {
-    console.log(tradeId)
-=======
    /*************************GET DRUG TYPE*******************/
    getManufactureList() {
     return this.httpClient.get(APIURL + 'Manufacturer')
@@ -58,7 +53,6 @@ export class MedicineService {
    /**************************GET PHARMACY DETAIL BY TRADE LICENSE ID*************************/
    getPharmacy(tradeId) {
      console.log(tradeId)
->>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
     return this.httpClient.get(APIURL + 'Pharmacy/' + tradeId)
   }
 

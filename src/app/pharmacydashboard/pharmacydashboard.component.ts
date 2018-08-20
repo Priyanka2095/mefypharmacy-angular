@@ -17,12 +17,9 @@ declare var $: any;
 export class PharmacydashboardComponent implements OnInit {
   p: number = 1;
   vendorpage: number = 1;
-<<<<<<< HEAD
-=======
   medicineMasterPage:number=1;
   manufacturePage:number=1;
   pharmacyPage:number=1;
->>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
   collection: any[];
   drugtypeForm: FormGroup;
   medicineForm: FormGroup;
@@ -40,15 +37,11 @@ export class PharmacydashboardComponent implements OnInit {
   pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
-<<<<<<< HEAD
-=======
-  vendorList: any = [];
   substitution: any = [];
   arrayOfObjects: any = [];
   medicineList:any = [];
   medicineMaster:any=[]
   manuactureList:any=[]
->>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -351,11 +344,7 @@ export class PharmacydashboardComponent implements OnInit {
       }
       this.medicineService.createManufacture(data).subscribe(value => {
         console.log(value);
-<<<<<<< HEAD
-        this.getAllManufacturer();
-=======
         this.getAllManufactureList();
->>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
         $('#myModal4').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
         this.submitted = false
         this.spinner.hide(); /**HIDE LOADER */
@@ -446,7 +435,6 @@ export class PharmacydashboardComponent implements OnInit {
         }
       }
       this.medicineService.createVendor(data).subscribe(value => {
-        this.getAllVendors();
         $('#myModal5').modal('hide');
         this.toastr.success(' Vendor Form created!', 'Toastr fun!');
         this.vendorForm.reset();
@@ -481,44 +469,6 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
-<<<<<<< HEAD
-
-  // get all the manufacturers created so far
-
-  getAllManufacturer() {
-    this.spinner.show();
-    this.medicineService.getAllManufacturer()
-      .subscribe((data) => {
-        this.manufacturerList = data;
-        this.spinner.hide();
-      });
-  }
-
-  // get all the vendors created so far
-  getAllVendors() {
-    this.spinner.show();
-    this.medicineService.getAllVendors()
-      .subscribe((vendors) => {
-        this.vendorList = vendors;
-        this.spinner.hide();
-      });
-  }
-
-
-  // get all master medicine
-  getAllMasterMedicine() {
-    this.getAllManufacturer()
-    // this.getAllDrug();
-  }
-
-
-
-  //LOGOUT
-  logout() {
-    this.spinner.show();
-  }
-
-=======
   /******************************GET MEDICINE MASTER LIST****************** */
   getAllMedicineMaster(){
     this.medicineService.getMedicineMaster().subscribe(value=>{
@@ -557,7 +507,6 @@ export class PharmacydashboardComponent implements OnInit {
       item.toLowerCase().includes(searchText.toLowerCase())
     );
   }
->>>>>>> d299094879e9f6f4cd91384d520ca157bdb7219e
 }
 
 
