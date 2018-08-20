@@ -25,6 +25,8 @@ export class PharmacydashboardComponent implements OnInit {
   medicineForm: FormGroup;
   manuactureForm: FormGroup;
   vendorForm: FormGroup;
+  pharmacyItemForm: FormGroup;
+  pharmacyItemFormErrors: any;
   medicineFormErrors: any;
   drugtypeFormErrors: any;
   manufactureFormerrors: any
@@ -33,7 +35,7 @@ export class PharmacydashboardComponent implements OnInit {
   drugList: any = [];
   manufacturerList: any = [];
   vendorList: any = [];
-  pharmacyId: any
+  selectedPharmacyId: any
   pharmaData: any = {}
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
@@ -42,6 +44,7 @@ export class PharmacydashboardComponent implements OnInit {
   medicineList: any = [];
   medicineMaster: any = []
   manuactureList: any = []
+  pharmacyItemList:any=[]
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -66,6 +69,15 @@ export class PharmacydashboardComponent implements OnInit {
       substitute: {},
       gstrate: {}
     }
+    /*************************************PHARMACY ITEM FORM**********************/
+    this.pharmacyItemFormErrors = {
+      safetyStock: {},
+      minMax: {},
+      leadTime: {},
+      binId: {},
+      supplier: {},
+      medicineId: {}
+    }
     /*************************MANUFACTURE FORM ERRORS********************/
     this.manufactureFormerrors = {
       gstin: {},
@@ -89,8 +101,8 @@ export class PharmacydashboardComponent implements OnInit {
       contactName: {},
       contactNumber: {},
     }
-    this.pharmacyId = localStorage.getItem('tradeId');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
-    console.log(this.pharmacyId)
+    this.selectedPharmacyId = localStorage.getItem('tradeId');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
+    console.log(this.selectedPharmacyId)
   }
 
   ngOnInit() {
@@ -120,6 +132,12 @@ export class PharmacydashboardComponent implements OnInit {
     this.medicineForm.valueChanges.subscribe(() => {
       this.onManufactureFormValuesChanged();
     })
+    /***************************PHARMACY ITEM FORM******************* */
+    this.pharmacyItemForm = this.createPharmacyItemForm()
+
+    this.pharmacyItemForm.valueChanges.subscribe(() => {
+      this.onPharmacyFormValuesChanged();
+    })
 
     this.getAllDrug();
     this.getPharmacyDetail();
@@ -127,6 +145,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.getAllMedicine();
     this.getAllMedicineMaster();
     this.getAllManufactureList();
+    this.getPharmacyItemList();
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -157,6 +176,22 @@ export class PharmacydashboardComponent implements OnInit {
 
       if (control && control.dirty && !control.valid) {
         this.medicineFormErrors[field] = control.errors;
+      }
+    }
+  }
+  /**************************** IT CATCHES ALL CHANGES IN PHARMACY ITEM FORM  FORM*******************/
+  onPharmacyFormValuesChanged() {
+    for (const field in this.pharmacyItemFormErrors) {
+      if (!this.pharmacyItemFormErrors.hasOwnProperty(field)) {
+        continue;
+      }
+      // Clear previous errors
+      this.pharmacyItemFormErrors[field] = {};
+      // Get the control
+      const control = this.pharmacyItemForm.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        this.pharmacyItemFormErrors[field] = control.errors;
       }
     }
   }
@@ -242,6 +277,18 @@ export class PharmacydashboardComponent implements OnInit {
       city: ['', Validators.required],
       country: ['', Validators.required],
       zipcode: ['', Validators.required],
+    });
+  }
+  /*********************************** PHARMACY ITEM FORM******************/
+  createPharmacyItemForm() {
+    return this.formBuilder.group({
+      safetyStock: ['', Validators.required],
+      minMax: ['', Validators.required],
+      leadTime: ['', Validators.required],
+      binId: ['', Validators.required],
+      // pharmacyId: ['', Validators.required],
+      medicineId: ['', Validators.required],
+      supplier: ['', Validators.required],
     });
   }
   /*************************SAVE DRUG FORM************************************/
@@ -369,6 +416,42 @@ export class PharmacydashboardComponent implements OnInit {
     // this.manuactureForm.reset();
 
   }
+  /*********************CREATE PHARMACY ITEM***************************/
+  savePharmacyItem() {
+    this.submitted = false;
+    if (this.pharmacyItemForm.valid) {
+      this.spinner.show(); /**SHOW LOADER */
+      let data = {
+        pharmacyId: this.selectedPharmacyId,
+        safetyStock: this.pharmacyItemForm.value.safetyStock,
+        minMax: this.pharmacyItemForm.value.minMax,
+        leadTime: this.pharmacyItemForm.value.leadTime,
+        binId: this.pharmacyItemForm.value.binId,
+        supplier: this.pharmacyItemForm.value.supplier,
+        medicineId: this.pharmacyItemForm.value.medicineId
+      }
+      console.log(data)
+      this.medicineService.createPharmacyItem(data).subscribe(value => {
+        console.log(value);
+        this.getPharmacyItemList();
+        this.spinner.hide(); /**Hide LOADER */
+        $('#myModal3').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
+        this.submitted = false
+        this.manuactureForm.reset();
+        /****************************SHOW  TOAST NOTIFICTATION*********************/
+        this.toastr.success(' Pharmacy Item Form created!', 'Toastr fun!');
+      },
+        err => {
+          console.log(err)
+      this.toastr.error('Pharmacy item Form not created!', 'Major Error')
+
+        })
+    }
+    else{
+      $('#myModal3').modal('show');
+      this.spinner.hide(); /**HIDE LOADER */
+    }
+  }
   /*********ON CLICK EVENT MODAL WILL CLOSE********************8 */
   closeModal() {
     this.submitted = false;
@@ -376,6 +459,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.medicineForm.reset();
     this.vendorForm.reset();
     this.drugtypeForm.reset();
+    this.pharmacyItemForm.reset();
   }
   /*****************GET ALL DRUG TYPE****************/
   getAllDrug() {
@@ -462,7 +546,7 @@ export class PharmacydashboardComponent implements OnInit {
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
     console.log("show spinner");
-    this.medicineService.getPharmacy(this.pharmacyId).subscribe(result => {
+    this.medicineService.getPharmacy(this.selectedPharmacyId).subscribe(result => {
       console.log(result);
       let value: any = {}
       value = result
@@ -491,8 +575,17 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide();
     })
   }
+  /*******************************GET PHARMACY ITEM LIST******************/
+  getPharmacyItemList(){
+    this.medicineService.getAllPharmacyItemList().subscribe(value=>{
+      let result:any={}
+      result=value
+      this.pharmacyItemList=result
+      console.log(this.pharmacyItemList)
+    })
+  }
   /**************************CLEAR LOCAL STORAGE**********************/
-  logout(){
+  logout() {
     localStorage.removeItem('phoneNumber');
     localStorage.removeItem('tradeId');
     this.router.navigate(['/login'])

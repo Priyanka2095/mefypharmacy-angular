@@ -202,4 +202,11 @@ export class CreatepharmacyComponent implements OnInit {
   cancelCreation(){
     this.router.navigate(['/pharmalist']);
   }
+   /**************************CLEAR LOCAL STORAGE**********************/
+   logout(){
+    localStorage.removeItem('phoneNumber');
+    localStorage.removeItem('tradeId');
+    this.router.navigate(['/login'])
+
+  }
 }
