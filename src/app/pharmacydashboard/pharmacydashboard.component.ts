@@ -115,6 +115,9 @@ export class PharmacydashboardComponent implements OnInit {
     }
     this.selectedPharmacyId = localStorage.getItem('tradeId');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
     console.log(this.selectedPharmacyId)
+    if(this.selectedPharmacyId==null){
+      this.router.navigate(['/pharmalist'])   /*IF PHARMACY IS NOT SELECTED THEN ,GO BACK TO PHARMACY LIST**/
+    }
   }
 
   ngOnInit() {
@@ -158,6 +161,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.getAllMedicine();
     this.getAllManufactureList();
     this.getPharmacyItemList();
+   
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -513,46 +517,52 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
   /*************************SAVE VENDOR FORM (end)************************************/
-  /*****************GET ALL DRUG TYPE****************/
-  getAllDrug() {
-    this.spinner.show();
-    this.medicineService.getDrugType().subscribe(data => {
-      this.spinner.hide();
-      let value: any = {}
-      value = data;
-      this.drugList = value
-      console.log(this.drugList);
-    })
-  }
-  /*****************GET ALL MEDICINE LIST****************/
-  getAllMedicine() {
-    this.medicineService.getMedicine().subscribe(data => {
-      let value: any = {}
-      value = data;
-      this.medicineList = value
-      console.log(this.medicineList);
-      for (var i = 0; i < this.medicineList.length; i++) {
-        var datamed = {
-          medicineName: this.medicineList[i].name,
-          medId: this.medicineList[i].medicineId
+ /*****************GET ALL DRUG TYPE****************/
+ getAllDrug() {
+  this.spinner.show();
+  this.medicineService.getDrugType().subscribe(data => {
+    this.spinner.hide();
+    let value: any = {}
+    value = data;
+    this.drugList = value
+    console.log(this.drugList);
+  },
+err=>{
+  console.log(err)
+})
+}
+/*****************GET ALL MEDICINE LIST****************/
+getAllMedicine() {
+  this.medicineService.getMedicine().subscribe(data => {
+    let value: any = {}
+    value = data;
+    this.medicineList = value
+    console.log(this.medicineList);
+    for (var i = 0; i < this.medicineList.length; i++) {
+      var datamed = {
+        medicineName: this.medicineList[i].name,
+        medId: this.medicineList[i].medicineId
 
         }
         this.arrayOfObjects.push(datamed);
         console.log(this.arrayOfObjects);
       }
+    },
+    err=>{
+      console.log(err)
     })
-  }
-  /*****************GET ALL VENDOR ****************/
-  getAllVendor() {
-    this.spinner.show();
-    this.medicineService.getVendorType().subscribe(data => {
-      let value: any = {}
-      value = data;
-      this.vendorList = value
-      console.log(this.vendorList);
-      this.spinner.hide();
-    })
-  }
+    }
+/*****************GET ALL VENDOR ****************/
+getAllVendor() {
+  this.spinner.show();
+  this.medicineService.getVendorType().subscribe(data => {
+    let value: any = {}
+    value = data;
+    this.vendorList = value
+    console.log(this.vendorList);
+    this.spinner.hide();
+  })
+}
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
@@ -564,7 +574,10 @@ export class PharmacydashboardComponent implements OnInit {
       this.pharmaData = value
       console.log("hide spinner");
       this.spinner.hide(); /**HIDE LOADER */
-    })
+    },
+  err=>{
+   console.log(err)
+  })
   }
 
   /***********************************GET MANUFACTURE LIST******************/
@@ -576,7 +589,10 @@ export class PharmacydashboardComponent implements OnInit {
       result = value;
       this.manuactureList = result;
       this.spinner.hide();
-    })
+    },
+  err=>{
+    console.log(err)
+  })
   }
   /*******************************GET PHARMACY ITEM LIST******************/
   getPharmacyItemList() {
@@ -587,7 +603,11 @@ export class PharmacydashboardComponent implements OnInit {
       this.pharmacyItemList = result
       console.log(this.pharmacyItemList)
       this.spinner.hide()
-    })
+    },
+  err=>{
+    console.log(err)
+    this.spinner.hide()
+  })
   }
   /**************************CLEAR LOCAL STORAGE**********************/
   logout() {

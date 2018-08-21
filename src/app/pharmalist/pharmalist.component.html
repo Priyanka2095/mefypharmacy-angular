@@ -9,9 +9,8 @@
         type="ball-scale-multiple">
        <p style="font-size: 20px; color: white">Loading...</p>
       </ngx-spinner>
-      <button class="logoutp">Logout</button>
+      <button class="logoutp" (click)="logout()">Logout</button>
   <h1 class="headerList">Pharmacy List</h1>
-  <p  class="errormessage">{{message}}</p>
   <div>
       <a [routerLink]="['/createpharmacy']"><button class="createform">+</button></a>
   </div>
@@ -28,6 +27,7 @@
           <td>{{ list?.pharmacy[0].pharmacyName}}</td>
           <td>{{ list?.role}}</td>
         </tr>
+        <h2  class="errormessage" *ngIf="showMessage">{{message}}</h2>
         <!-- </div> -->
       </tbody>
       </table>
