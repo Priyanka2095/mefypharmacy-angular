@@ -6,7 +6,7 @@ import { MedicineService } from '../services/medicine.service'
 import { SharedService } from '../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { TypeaheadModule } from 'ngx-bootstrap'; // for auto complete
+// import { TypeaheadModule } from 'ngx-bootstrap'; // for auto complete
 
 declare var $: any;
 
@@ -36,21 +36,27 @@ export class PharmacydashboardComponent implements OnInit {
   manufactureFormerrors: any
   vendorFormerrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
+  noDrugResult = false;
+  noManufactureResult = false
+  noSupplierResult = false
   drugList: any = [];
   manufacturerList: any = [];
   vendorList: any = [];
   selectedPharmacyId: any
   pharmaData: any = {}
+  drugTypeId: any
+  selectedMedicineId: any;
+  manufactureGstin: any;
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   substitution: any = [];
   arrayOfObjects: any = [];
   medicineList: any = [];
   manuactureList: any = []
-  pharmacyItemList:any=[]
-  drugTypeId:any
-  manufactureGstin:any;
-  substituteList:any=[];
+  pharmacyItemList: any = []
+  substituteList: any = [];
+
+
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -354,7 +360,7 @@ export class PharmacydashboardComponent implements OnInit {
         unit: this.medicineForm.value.unit,
         quantity: this.medicineForm.value.quantity,
         substitute: this.substituteList,
-        gstrate:  this.medicineForm.value.gstrate
+        gstrate: this.medicineForm.value.gstrate
       }
       console.log(data)
       this.medicineService.createMedicineMaster(data).subscribe(value => {
@@ -434,7 +440,7 @@ export class PharmacydashboardComponent implements OnInit {
         leadTime: this.pharmacyItemForm.value.leadTime,
         binId: this.pharmacyItemForm.value.binId,
         supplier: this.pharmacyItemForm.value.supplier,
-        medicineId: this.pharmacyItemForm.value.medicineId
+        medicineId: this.selectedMedicineId
       }
       console.log(data)
       this.medicineService.createPharmacyItem(data).subscribe(value => {
@@ -449,11 +455,11 @@ export class PharmacydashboardComponent implements OnInit {
       },
         err => {
           console.log(err)
-      this.toastr.error('Pharmacy item Form not created!', 'Major Error')
+          this.toastr.error('Pharmacy item Form not created!', 'Major Error')
 
         })
     }
-    else{
+    else {
       $('#myModal3').modal('show');
       this.spinner.hide(); /**HIDE LOADER */
     }
@@ -507,46 +513,46 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
   /*************************SAVE VENDOR FORM (end)************************************/
- /*****************GET ALL DRUG TYPE****************/
- getAllDrug() {
-  this.spinner.show();
-  this.medicineService.getDrugType().subscribe(data => {
-    this.spinner.hide();
-    let value: any = {}
-    value = data;
-    this.drugList = value
-    console.log(this.drugList);
-  })
-}
-/*****************GET ALL MEDICINE LIST****************/
-getAllMedicine() {
-  this.medicineService.getMedicine().subscribe(data => {
-    let value: any = {}
-    value = data;
-    this.medicineList = value
-    console.log(this.medicineList);
-    for (var i = 0; i < this.medicineList.length; i++) {
-      var datamed = {
-        medicineName: this.medicineList[i].name,
-        medId: this.medicineList[i].medicineId
+  /*****************GET ALL DRUG TYPE****************/
+  getAllDrug() {
+    this.spinner.show();
+    this.medicineService.getDrugType().subscribe(data => {
+      this.spinner.hide();
+      let value: any = {}
+      value = data;
+      this.drugList = value
+      console.log(this.drugList);
+    })
+  }
+  /*****************GET ALL MEDICINE LIST****************/
+  getAllMedicine() {
+    this.medicineService.getMedicine().subscribe(data => {
+      let value: any = {}
+      value = data;
+      this.medicineList = value
+      console.log(this.medicineList);
+      for (var i = 0; i < this.medicineList.length; i++) {
+        var datamed = {
+          medicineName: this.medicineList[i].name,
+          medId: this.medicineList[i].medicineId
 
+        }
+        this.arrayOfObjects.push(datamed);
+        console.log(this.arrayOfObjects);
       }
-      this.arrayOfObjects.push(datamed);
-      console.log(this.arrayOfObjects);
-    }
-  })
-}
-/*****************GET ALL VENDOR ****************/
-getAllVendor() {
-  this.spinner.show();
-  this.medicineService.getVendorType().subscribe(data => {
-    let value: any = {}
-    value = data;
-    this.vendorList = value
-    console.log(this.vendorList);
-    this.spinner.hide();
-  })
-}
+    })
+  }
+  /*****************GET ALL VENDOR ****************/
+  getAllVendor() {
+    this.spinner.show();
+    this.medicineService.getVendorType().subscribe(data => {
+      let value: any = {}
+      value = data;
+      this.vendorList = value
+      console.log(this.vendorList);
+      this.spinner.hide();
+    })
+  }
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
@@ -573,12 +579,12 @@ getAllVendor() {
     })
   }
   /*******************************GET PHARMACY ITEM LIST******************/
-  getPharmacyItemList(){
+  getPharmacyItemList() {
     this.spinner.show()
-    this.medicineService.getAllPharmacyItemList().subscribe(value=>{
-      let result:any={}
-      result=value
-      this.pharmacyItemList=result
+    this.medicineService.getAllPharmacyItemList().subscribe(value => {
+      let result: any = {}
+      result = value
+      this.pharmacyItemList = result
       console.log(this.pharmacyItemList)
       this.spinner.hide()
     })
@@ -588,21 +594,21 @@ getAllVendor() {
     localStorage.removeItem('phoneNumber');
     localStorage.removeItem('tradeId');
     this.router.navigate(['/login'])
-
+    console.log('hey')
   }
 
-  /** manufactuerer **/
+  /** manufactuerer ON SELECT IN MEDICINE FORM **/
   manufacturerOnSelect(evt) {
     console.log(evt.item);
-    this.manufactureGstin=evt.item.gstin
+    this.manufactureGstin = evt.item.gstin
     console.log(this.manufactureGstin)    /*drug type Id*/
- 
+
   }
 
-  /** drug type on select **/
+  /** drug type on select in MEDICINE FORM **/
   drugtypeOnSelect(evt) {
     console.log(evt.item);
-    this.drugTypeId=evt.item.typeId
+    this.drugTypeId = evt.item.typeId
     console.log(this.drugTypeId)  /*manufacture gistin*/
 
   }
@@ -613,12 +619,37 @@ getAllVendor() {
     this.getAllDrug();
     this.getAllManufactureList();
   }
-  /**************ON SELECTED SUBSTITUE MEDICINE****************************** */
-  onSubstistueAdd(evt){
-  console.log(evt)
-  console.log(this.medicineForm.value)
-  this.substituteList.push(evt.medId)
-}
+  /**************ON SELECTED SUBSTITUE MEDICINE IN MEDICINE FORM****************************** */
+  onSubstistueAdd(evt) {
+    console.log(evt)
+    console.log(this.medicineForm.value)
+    this.substituteList.push(evt.medId)
+  }
+  /***********************MEDICINE ON SELECT IN PHARMACY FORM*********/
+  onMedicineSelect(evt) {
+    console.log(evt.item)
+    this.selectedMedicineId = evt.item.medicineId
+  }
+  /***********************SUPPLIER ON SELECT IN PHARMACY FORM*********/
+  onSupplierSelect(evt) {
+    console.log(evt.item)
+    this.pharmacyItemForm.value.supplier=evt.item.supplier
+  }
+  /**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
+  typeaheadNoDrugResults(event: boolean): void {
+    this.noDrugResult = event;
+
+  }
+  /**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
+  typeaheadNoSupplierResults(event: boolean): void {
+    this.noSupplierResult = event;
+
+  }
+
+  /**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
+  typeaheadNoManufactureResults(event: boolean): void {
+    this.noManufactureResult = event
+  }
 }
 
 
