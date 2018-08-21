@@ -435,7 +435,7 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /*********************CREATE PHARMACY ITEM***************************/
   savePharmacyItem() {
-    this.submitted = false;
+    this.submitted = true;
     if (this.pharmacyItemForm.valid) {
       this.spinner.show(); /**SHOW LOADER */
       let data = {

@@ -321,13 +321,13 @@
                       (typeaheadNoResults)="typeaheadNoDrugResults($event)">
                       <div class="alert alert-danger" *ngIf="noDrugResult">No Results Found</div>
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.medicineId.required || (pharmacyItemForm.controls.medicineId.pristine && submitted)">
-                      can not be empty</p>
+                       Medicine name can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Safety Stock:</label>
                       <input type="text" class="form-control" formControlName="safetyStock">
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.safetyStock.required || (pharmacyItemForm.controls.safetyStock.pristine && submitted)">
-                      can not be empty</p>
+                     Stock can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
@@ -339,9 +339,9 @@
                     </div>
                     <div class="col-md-6">
                       <label>Lead Time:</label>
-                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.leadTime.required || (pharmacyItemForm.controls.leadTime.pristine && submitted)">
-                      can not be empty</p>
                       <input type="text" class="form-control" formControlName="leadTime">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.leadTime.required || (pharmacyItemForm.controls.leadTime.pristine && submitted)">
+                          Lead time can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
@@ -358,13 +358,13 @@
                         (typeaheadNoResults)="typeaheadNoSupplierResults($event)">
                         <div class="alert alert-danger" *ngIf="noSupplierResult">No Results Found</div>
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.supplier.required || (pharmacyItemForm.controls.supplier.pristine && submitted)">
-                      can not be empty</p>
+                     Supplier can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Bin ID:</label>
-                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.binId.required || (pharmacyItemForm.controls.binId.pristine && submitted)">
-                      can not be empty</p>
                       <input type="text" class="form-control" formControlName="binId">
+                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.binId.required || (pharmacyItemForm.controls.binId.pristine && submitted)">
+                          Bin Id can not be empty</p>
                     </div>
                   </div>
                 </form>
