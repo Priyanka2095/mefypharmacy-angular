@@ -14,6 +14,8 @@ export class PharmalistComponent implements OnInit {
   pharmacyList: any = [];
   userInfo: any
   selectedRow = false;
+  message:any;
+  showMessage=false
   constructor(private sharedShervice: SharedService, public pharmacyService: PharmacyService, private spinner: NgxSpinnerService, private router: Router) {
 
     this.userInfo = localStorage.getItem('phoneNumber');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
@@ -21,7 +23,15 @@ export class PharmalistComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.pharmacyList!=[])
+    {
     this.getUserPharmacyList()
+    }
+    else{
+      this.showMessage=true
+      this.message="Thereis no any Pharmacy list";
+     
+    }
   }
   /************************GET PHARMACY LIST AGAINST USER************** */
   getUserPharmacyList() {
@@ -40,11 +50,12 @@ export class PharmalistComponent implements OnInit {
     })
   }
   setClickedRow(data) {
+    this.selectedRow = true
     console.log(data)
     let result: any = {};
     result = data
     localStorage.setItem('tradeId', result.pharmacy[0].tradeLicenseId);// SET TRADEID IN LOCAL STORAGE
-    this.selectedRow = true
+
     this.router.navigate(['/dashboard'])
   }
    /**************************CLEAR LOCAL STORAGE**********************/
@@ -52,6 +63,5 @@ export class PharmalistComponent implements OnInit {
     localStorage.removeItem('phoneNumber');
     localStorage.removeItem('tradeId');
     this.router.navigate(['/login'])
-
   }
 }

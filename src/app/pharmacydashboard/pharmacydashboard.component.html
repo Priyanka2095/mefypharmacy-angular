@@ -1,5 +1,5 @@
 <!-- Pharmacy Dashboard -->
-<button class="logoutp">Logout</button>
+<button class="logoutp" (click)="logout()">Logout</button>
 
 <div class="container">
   <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
@@ -44,7 +44,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Drug</h4>
               </div>
               <div class="modal-body">
                 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
@@ -143,9 +143,9 @@
 
                       <!-- <pre class="card card-block card-header mb-3">Model: {{selected | json}}</pre> -->
                       <input class="form-control" [typeaheadItemTemplate]="customItemTemplate" formControlName="manufacturer" (typeaheadOnSelect)="manufacturerOnSelect($event)"
-                        typeaheadOptionField="name" [typeahead]="manuactureList" class="form-control">
+                        typeaheadOptionField="name" [typeahead]="manuactureList" class="form-control" (typeaheadNoResults)="typeaheadNoManufactureResults($event)">
                       <p class="errormessage" *ngIf="medicineFormErrors.manufacturer.required || (medicineForm.controls.manufacturer.pristine && submitted)">Manufacturer can not be empty</p>
-
+                      <div class="alert alert-danger" *ngIf="noManufactureResult">No Results Found</div>
                     </div>
                     <div class="col-md-6">
                       <label>Drug Type:</label>
@@ -158,8 +158,8 @@
 
                       <!-- <pre class="card card-block card-header mb-3">Model: {{selected | json}}</pre> -->
                       <input class="form-control" formControlName="drugtype" [typeaheadItemTemplate]="customDrugTemplate" (typeaheadOnSelect)="drugtypeOnSelect($event)"
-                        typeaheadOptionField="type" [typeahead]="drugList" class="form-control">
-
+                        typeaheadOptionField="type" [typeahead]="drugList" class="form-control" (typeaheadNoResults)="typeaheadNoDrugResults($event)">
+                        <div class="alert alert-danger" *ngIf="noDrugResult">No Results Found</div>
                       <p class="errormessage" *ngIf="medicineFormErrors.drugtype.required || (medicineForm.controls.drugtype.pristine && submitted)">Drugtype can not be empty</p>
                     </div>
                   </div>
@@ -301,11 +301,14 @@
                   <div class="row">
                     <div class="col-md-6">
                       <label>Medicine:</label>
-                      <select class="form-control" data-live-search="true" formControlName="medicineId">
-                        <option value="" disabled selected>Choose your option</option>
-                        <option *ngFor="let list of medicineList" value={{list.medicineId}}>{{list.name}}</option>
-                        <!-- <option data-tokens="frosting">Sugar, Spice and all things nice</option> -->
-                      </select>
+                   <!-- custom template -->
+                   <ng-template #customPharmacyTemplate let-model="item" let-index="index">
+                    <h5>{{ model.name }} </h5>
+                  </ng-template>
+                  <!-- custom templte ends -->
+                  <input class="form-control" [typeaheadItemTemplate]="customPharmacyTemplate" formControlName="medicineId" (typeaheadOnSelect)="onMedicineSelect($event)"
+                  typeaheadOptionField="name" [typeahead]="medicineList" class="form-control"  (typeaheadNoResults)="typeaheadNoDrugResults($event)">
+                  <div class="alert alert-danger" *ngIf="noDrugResult">No Results Found</div>
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.medicineId.required || (pharmacyItemForm.controls.medicineId.pristine && submitted)"> can not be empty</p>
                     </div>
                     <div class="col-md-6">
@@ -493,7 +496,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Vendor</h4>
               </div>
               <div class="modal-body">
                 <form [formGroup]="vendorForm" class="pharmacyitem">
@@ -652,7 +655,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Trade License Id:</label>
-                <p>{{pharmaData.tradeLicense}}</p>
+                <p>{{pharmaData.tradeLicenseId}}</p>
               </div>
             </div>
             <div class="col-md-6">

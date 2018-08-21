@@ -6,7 +6,7 @@ import { MedicineService } from '../services/medicine.service'
 import { SharedService } from '../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { TypeaheadModule } from 'ngx-bootstrap'; // for auto complete
+// import { TypeaheadModule } from 'ngx-bootstrap'; // for auto complete
 
 declare var $: any;
 
@@ -36,11 +36,16 @@ export class PharmacydashboardComponent implements OnInit {
   manufactureFormerrors: any
   vendorFormerrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
+  noDrugResult = false;
+  noManufactureResult = false
   drugList: any = [];
   manufacturerList: any = [];
   vendorList: any = [];
   selectedPharmacyId: any
   pharmaData: any = {}
+  drugTypeId:any
+  selectedMedicineId:any;
+  manufactureGstin:any;
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   substitution: any = [];
@@ -48,9 +53,9 @@ export class PharmacydashboardComponent implements OnInit {
   medicineList: any = [];
   manuactureList: any = []
   pharmacyItemList:any=[]
-  drugTypeId:any
-  manufactureGstin:any;
   substituteList:any=[];
+
+  
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -434,7 +439,7 @@ export class PharmacydashboardComponent implements OnInit {
         leadTime: this.pharmacyItemForm.value.leadTime,
         binId: this.pharmacyItemForm.value.binId,
         supplier: this.pharmacyItemForm.value.supplier,
-        medicineId: this.pharmacyItemForm.value.medicineId
+        medicineId: this.selectedMedicineId
       }
       console.log(data)
       this.medicineService.createPharmacyItem(data).subscribe(value => {
@@ -588,10 +593,10 @@ getAllVendor() {
     localStorage.removeItem('phoneNumber');
     localStorage.removeItem('tradeId');
     this.router.navigate(['/login'])
-
+    console.log('hey')
   }
 
-  /** manufactuerer **/
+  /** manufactuerer ON SELECT IN MEDICINE FORM **/
   manufacturerOnSelect(evt) {
     console.log(evt.item);
     this.manufactureGstin=evt.item.gstin
@@ -599,7 +604,7 @@ getAllVendor() {
  
   }
 
-  /** drug type on select **/
+  /** drug type on select in MEDICINE FORM **/
   drugtypeOnSelect(evt) {
     console.log(evt.item);
     this.drugTypeId=evt.item.typeId
@@ -613,11 +618,25 @@ getAllVendor() {
     this.getAllDrug();
     this.getAllManufactureList();
   }
-  /**************ON SELECTED SUBSTITUE MEDICINE****************************** */
+  /**************ON SELECTED SUBSTITUE MEDICINE IN MEDICINE FORM****************************** */
   onSubstistueAdd(evt){
   console.log(evt)
   console.log(this.medicineForm.value)
   this.substituteList.push(evt.medId)
+}
+/***********************MEDICINE ON SELECT IN PHARMACY FORM*********/
+onMedicineSelect(evt){
+  console.log(evt.item)
+  this.selectedMedicineId=evt.item.medicineId
+}
+/**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
+typeaheadNoDrugResults(event: boolean): void {
+  this.noDrugResult = event;
+  
+}
+/**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
+typeaheadNoManufactureResults(event: boolean): void {
+  this.noManufactureResult = event
 }
 }
 
