@@ -448,9 +448,9 @@ export class PharmacydashboardComponent implements OnInit {
       }
       console.log(data)
       this.medicineService.createPharmacyItem(data).subscribe(value => {
+        this.spinner.hide(); /**Hide LOADER */
         console.log(value);
         this.getPharmacyItemList();
-        this.spinner.hide(); /**Hide LOADER */
         $('#myModal3').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
         this.submitted = false
         this.manuactureForm.reset();
@@ -460,7 +460,7 @@ export class PharmacydashboardComponent implements OnInit {
         err => {
           console.log(err)
           this.toastr.error('Pharmacy item Form not created!', 'Major Error')
-
+          this.spinner.hide(); /**Hide LOADER */
         })
     }
     else {
