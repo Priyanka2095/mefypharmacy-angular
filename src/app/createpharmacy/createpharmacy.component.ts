@@ -38,6 +38,9 @@ export class CreatepharmacyComponent implements OnInit {
    
     this.userInfo = localStorage.getItem('phoneNumber');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
     console.log(this.userInfo)
+    if(this.userInfo==null){
+      this.router.navigate(['/login'])   /*GO BACK TO LOGIN PAGE**/
+    }
   }
 
 
