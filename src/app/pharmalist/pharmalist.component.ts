@@ -32,19 +32,22 @@ export class PharmalistComponent implements OnInit {
     }
     console.log(data);
     this.spinner.show(); /**SHOW LOADER */
-    this.pharmacyService.getUserPharmacy(data).subscribe(value => {
-      console.log(value);
-      let result: any = {};
-      result = value
-      this.pharmacyList = result.pharmacies
-      console.log(this.pharmacyList)
-      if (this.pharmacyList.length == 0) {
-        console.log(this.pharmacyList.length)
-        this.message = "There is no any Pharmacy list";
-        this.showMessage = true
-      }
-      this.spinner.hide();  /**HIDE LOADER */
-    })
+    let _base = this;
+    setTimeout(function () {
+      _base.pharmacyService.getUserPharmacy(data).subscribe(value => {
+        console.log(value);
+        let result: any = {};
+        result = value
+        _base.pharmacyList = result.pharmacies
+        console.log(_base.pharmacyList)
+        if (_base.pharmacyList.length == 0) {
+          console.log(_base.pharmacyList.length)
+          _base.message = "There is no any Pharmacy list";
+          _base.showMessage = true
+        }
+        _base.spinner.hide();  /**HIDE LOADER */
+      })
+    }, 5000);
   }
   setClickedRow(data) {
     this.selectedRow = true
