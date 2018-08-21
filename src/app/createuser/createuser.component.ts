@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-createuser',
   templateUrl: './createuser.component.html',
@@ -14,7 +15,7 @@ export class CreateuserComponent implements OnInit {
   userFormErrors: any;
   userData: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
-  constructor(private formBuilder: FormBuilder, public userService: UserService, private sharedService: SharedService, private router: Router, private toastr: ToastrService) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService, private sharedService: SharedService, private router: Router, private toastr: ToastrService,private spinner: NgxSpinnerService) {
 
     this.sharedService.userNumber.subscribe(data => {
       console.log(data);
@@ -62,6 +63,7 @@ export class CreateuserComponent implements OnInit {
     // STOP  HERE IF FORM IS INVALID
     if (this.userForm.valid) {
       console.log(this.userForm.value);
+      this.spinner.show(); /**SHOW LOADER */
       var data: any = {
         phoneNumber: this.userData.phoneNumber,
         name: this.userForm.value.name
@@ -72,9 +74,11 @@ export class CreateuserComponent implements OnInit {
         this.showSuccess();
         this.sharedService.userInfo(data);
         this.router.navigate(['/createpharmacy'])
+        this.spinner.hide(); /**HIDE LOADER */
       },
         err => {
           this.showError();
+          this.spinner.hide(); /**HIDE LOADER */
         })
     }
   }
