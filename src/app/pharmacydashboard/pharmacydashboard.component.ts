@@ -46,9 +46,11 @@ export class PharmacydashboardComponent implements OnInit {
   substitution: any = [];
   arrayOfObjects: any = [];
   medicineList: any = [];
-  medicineMaster: any = []
   manuactureList: any = []
   pharmacyItemList:any=[]
+  drugTypeId:any
+  manufactureGstin:any;
+  substituteList:any=[];
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
@@ -147,7 +149,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.getPharmacyDetail();
     this.getAllVendor();
     this.getAllMedicine();
-    this.getAllMedicineMaster();
+    this.getAllMedicine();
     this.getAllManufactureList();
     this.getPharmacyItemList();
   }
@@ -343,21 +345,21 @@ export class PharmacydashboardComponent implements OnInit {
         form: this.medicineForm.value.form,
         rxname: this.medicineForm.value.rxname,
         description: this.medicineForm.value.description,
-        manufacturer: this.medicineForm.value.manufacturer,
-        drugtype: this.medicineForm.value.drugtype,
+        manufacturer: this.manufactureGstin,
+        drugtype: this.drugTypeId,
         condition: this.medicineForm.value.condition,
         precaution: this.medicineForm.value.precaution,
         direction: this.medicineForm.value.direction,
         strength: this.medicineForm.value.strength,
         unit: this.medicineForm.value.unit,
         quantity: this.medicineForm.value.quantity,
-        // substitute: this.medicineForm.value.substitute,
-        gstrate: this.medicineForm.value.gstrate
+        substitute: this.substituteList,
+        gstrate:  this.medicineForm.value.gstrate
       }
       console.log(data)
       this.medicineService.createMedicineMaster(data).subscribe(value => {
         console.log(value)
-        this.getAllMedicineMaster();
+        this.getAllMedicine();
         $('#myModal1').modal('hide');
         this.spinner.hide(); /**HIDE LOADER */
         this.toastr.success(' Medicine Form created!', 'Toastr fun!')
@@ -465,46 +467,6 @@ export class PharmacydashboardComponent implements OnInit {
     this.drugtypeForm.reset();
     this.pharmacyItemForm.reset();
   }
-  /*****************GET ALL DRUG TYPE****************/
-  getAllDrug() {
-    this.spinner.show();
-    this.medicineService.getDrugType().subscribe(data => {
-      this.spinner.hide();
-      let value: any = {}
-      value = data;
-      this.drugList = value
-      console.log(this.drugList);
-    })
-  }
-  /*****************GET ALL MEDICINE LIST****************/
-  getAllMedicine() {
-    this.medicineService.getMedicine().subscribe(data => {
-      let value: any = {}
-      value = data;
-      this.medicineList = value
-      console.log(this.medicineList);
-      for (var i = 0; i < this.medicineList.length; i++) {
-        var datamed = {
-          medicinename: this.medicineList[i].name,
-          medid: this.medicineList[i].medicineId
-
-        }
-        this.arrayOfObjects.push(datamed);
-        console.log(this.arrayOfObjects);
-      }
-    })
-  }
-  /*****************GET ALL VENDOR ****************/
-  getAllVendor() {
-    this.spinner.show();
-    this.medicineService.getVendorType().subscribe(data => {
-      let value: any = {}
-      value = data;
-      this.vendorList = value
-      console.log(this.vendorList);
-      this.spinner.hide();
-    })
-  }
   /*************************SAVE VENDOR FORM (start)************************************/
   saveVendorForm() {
     this.submitted = true;
@@ -545,7 +507,46 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
   /*************************SAVE VENDOR FORM (end)************************************/
+ /*****************GET ALL DRUG TYPE****************/
+ getAllDrug() {
+  this.spinner.show();
+  this.medicineService.getDrugType().subscribe(data => {
+    this.spinner.hide();
+    let value: any = {}
+    value = data;
+    this.drugList = value
+    console.log(this.drugList);
+  })
+}
+/*****************GET ALL MEDICINE LIST****************/
+getAllMedicine() {
+  this.medicineService.getMedicine().subscribe(data => {
+    let value: any = {}
+    value = data;
+    this.medicineList = value
+    console.log(this.medicineList);
+    for (var i = 0; i < this.medicineList.length; i++) {
+      var datamed = {
+        medicineName: this.medicineList[i].name,
+        medId: this.medicineList[i].medicineId
 
+      }
+      this.arrayOfObjects.push(datamed);
+      console.log(this.arrayOfObjects);
+    }
+  })
+}
+/*****************GET ALL VENDOR ****************/
+getAllVendor() {
+  this.spinner.show();
+  this.medicineService.getVendorType().subscribe(data => {
+    let value: any = {}
+    value = data;
+    this.vendorList = value
+    console.log(this.vendorList);
+    this.spinner.hide();
+  })
+}
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
@@ -559,15 +560,7 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide(); /**HIDE LOADER */
     })
   }
-  /******************************GET MEDICINE MASTER LIST****************** */
-  getAllMedicineMaster() {
-    this.medicineService.getMedicineMaster().subscribe(value => {
-      console.log(value)
-      let result: any = {}
-      result = value
-      this.medicineMaster = result
-    })
-  }
+
   /***********************************GET MANUFACTURE LIST******************/
   getAllManufactureList() {
     this.spinner.show();
@@ -581,11 +574,13 @@ export class PharmacydashboardComponent implements OnInit {
   }
   /*******************************GET PHARMACY ITEM LIST******************/
   getPharmacyItemList(){
+    this.spinner.show()
     this.medicineService.getAllPharmacyItemList().subscribe(value=>{
       let result:any={}
       result=value
       this.pharmacyItemList=result
       console.log(this.pharmacyItemList)
+      this.spinner.hide()
     })
   }
   /**************************CLEAR LOCAL STORAGE**********************/
@@ -599,21 +594,31 @@ export class PharmacydashboardComponent implements OnInit {
   /** manufactuerer **/
   manufacturerOnSelect(evt) {
     console.log(evt.item);
-    console.log(this.medicineForm.value);
+    this.manufactureGstin=evt.item.gstin
+    console.log(this.manufactureGstin)    /*drug type Id*/
+ 
   }
 
   /** drug type on select **/
   drugtypeOnSelect(evt) {
     console.log(evt.item);
-    console.log(this.medicineForm.value);
+    this.drugTypeId=evt.item.typeId
+    console.log(this.drugTypeId)  /*manufacture gistin*/
+
   }
 
   /** get medicine master **/
   getMedicineMaster() {
-    this.getAllMedicineMaster();
+    this.getAllMedicine();
     this.getAllDrug();
     this.getAllManufactureList();
   }
+  /**************ON SELECTED SUBSTITUE MEDICINE****************************** */
+  onSubstistueAdd(evt){
+  console.log(evt)
+  console.log(this.medicineForm.value)
+  this.substituteList.push(evt.medId)
+}
 }
 
 
