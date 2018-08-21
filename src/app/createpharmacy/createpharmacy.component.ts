@@ -129,7 +129,6 @@ export class CreatepharmacyComponent implements OnInit {
           console.log(data)
           this.PharmacyService.userPharmacy(data).subscribe(value => {
             console.log(value);
-            this.SharedService.userPharmacy(value); /**STORE USERPHARMACY DETAIL */
             this.router.navigate(['/pharmalist']);
           },
             err => {
