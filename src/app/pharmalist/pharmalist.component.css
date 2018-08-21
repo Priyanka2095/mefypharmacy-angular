@@ -45,3 +45,10 @@ button.createform {
     color: #fff;
     cursor: pointer;
   }
+  /* table.pharmacyTable tr:hover {
+    background-color: rgba(51, 122, 183, 0.18) !important;
+  } */
+  tr.ng-star-inserted:hover {
+    background-color: rgba(51, 122, 183, 0.8) ;
+    cursor:pointer;
+  }

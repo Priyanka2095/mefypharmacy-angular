@@ -103,6 +103,7 @@ button.createform {
   font-size: 24px;
   font-weight: 700;
 }
+
 table.pharmacyTable tr:nth-child(even) {
   background-color: #dddddd;
 }
