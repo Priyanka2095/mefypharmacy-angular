@@ -47,6 +47,7 @@ export class PharmacydashboardComponent implements OnInit {
   drugTypeId: any
   selectedMedicineId: any;
   manufactureGstin: any;
+  selectedSupplierId:any;
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   substitution: any = [];
@@ -443,7 +444,7 @@ export class PharmacydashboardComponent implements OnInit {
         minMax: this.pharmacyItemForm.value.minMax,
         leadTime: this.pharmacyItemForm.value.leadTime,
         binId: this.pharmacyItemForm.value.binId,
-        supplier: this.pharmacyItemForm.value.supplier,
+        supplier: this.selectedSupplierId,
         medicineId: this.selectedMedicineId
       }
       console.log(data)
@@ -455,11 +456,11 @@ export class PharmacydashboardComponent implements OnInit {
         this.submitted = false
         this.manuactureForm.reset();
         /****************************SHOW  TOAST NOTIFICTATION*********************/
-        this.toastr.success(' Pharmacy Item Form created!', 'Toastr fun!');
+        this.toastr.success(' Pharmacy Item  created!', 'Toastr fun!');
       },
         err => {
           console.log(err)
-          this.toastr.error('Pharmacy item Form not created!', 'Major Error')
+          this.toastr.error('Pharmacy item  not created!', 'Major Error')
 
         })
     }
@@ -498,7 +499,7 @@ export class PharmacydashboardComponent implements OnInit {
       }
       this.medicineService.createVendor(data).subscribe(value => {
         $('#myModal5').modal('hide');
-        this.toastr.success(' Vendor Form created!', 'Toastr fun!');
+        this.toastr.success(' Vendor  created!', 'Toastr fun!');
         this.vendorForm.reset();
         this.submitted = false;
         this.getAllVendor();
@@ -508,12 +509,12 @@ export class PharmacydashboardComponent implements OnInit {
         console.log(err);
         this.submitted = false;
         this.spinner.hide();/**HIDE LOADER */
-        this.toastr.error('Vendor Form not created!', 'Major Error') /**SHOW  TOAST NOTIFICTATION**/
+        this.toastr.error('Vendor  not created!', 'Major Error') /**SHOW  TOAST NOTIFICTATION**/
       })
     }
     else {
       this.vendorForm.reset();
-      this.toastr.error('Vendor Form not created!', 'Major Error') /**SHOW  TOAST NOTIFICTATION**/
+      this.toastr.error('Vendor  not created!', 'Major Error') /**SHOW  TOAST NOTIFICTATION**/
     }
   }
   /*************************SAVE VENDOR FORM (end)************************************/
@@ -653,7 +654,7 @@ getAllVendor() {
   /***********************SUPPLIER ON SELECT IN PHARMACY FORM*********/
   onSupplierSelect(evt) {
     console.log(evt.item)
-    this.pharmacyItemForm.value.supplier=evt.item.supplier
+   this.selectedSupplierId=evt.item.gstin
   }
   /**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
   typeaheadNoDrugResults(event: boolean): void {
@@ -663,13 +664,12 @@ getAllVendor() {
   /**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
   typeaheadNoSupplierResults(event: boolean): void {
     this.noSupplierResult = event;
-
   }
-
   /**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
   typeaheadNoManufactureResults(event: boolean): void {
     this.noManufactureResult = event
   }
+  
 }
 
 

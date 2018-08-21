@@ -4,7 +4,7 @@
   <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
     <p style="font-size: 20px; color: white">Loading...</p>
   </ngx-spinner>
-  <button class="logout">Logout</button>
+  <button class="logout" (click)="logout()">Logout</button>
   <div class="container">
     <div class="formContent">
       <form [formGroup]="pharmacyForm" class="logformp">
