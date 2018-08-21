@@ -369,10 +369,10 @@ export class PharmacydashboardComponent implements OnInit {
       }
       console.log(data)
       this.medicineService.createMedicineMaster(data).subscribe(value => {
-        console.log(value)
+        console.log(value);
+        this.spinner.hide(); /**HIDE LOADER */
         this.getAllMedicine();
         $('#myModal1').modal('hide');
-        this.spinner.hide(); /**HIDE LOADER */
         this.toastr.success(' Medicine Form created!', 'Toastr fun!')
         this.medicineForm.reset();  //AFTER SUBMIT OR CANCEL FORM WILL BE RESET
       },
@@ -408,10 +408,10 @@ export class PharmacydashboardComponent implements OnInit {
       }
       this.medicineService.createManufacture(data).subscribe(value => {
         console.log(value);
+        this.spinner.hide(); /**HIDE LOADER */
         this.getAllManufactureList();
         $('#myModal4').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
         this.submitted = false
-        this.spinner.hide(); /**HIDE LOADER */
         this.manuactureForm.reset();
         /****************************SHOW  TOAST NOTIFICTATION*********************/
         this.toastr.success(' Manufacture Form created!', 'Toastr fun!');
@@ -449,9 +449,9 @@ export class PharmacydashboardComponent implements OnInit {
       }
       console.log(data)
       this.medicineService.createPharmacyItem(data).subscribe(value => {
+        this.spinner.hide(); /**Hide LOADER */
         console.log(value);
         this.getPharmacyItemList();
-        this.spinner.hide(); /**Hide LOADER */
         $('#myModal3').modal('hide');/**AFTER SUBMIT MODAL WILL CLOSE */
         this.submitted = false
         this.manuactureForm.reset();
@@ -461,7 +461,7 @@ export class PharmacydashboardComponent implements OnInit {
         err => {
           console.log(err)
           this.toastr.error('Pharmacy item  not created!', 'Major Error')
-
+          this.spinner.hide(); /**Hide LOADER */
         })
     }
     else {
@@ -502,8 +502,8 @@ export class PharmacydashboardComponent implements OnInit {
         this.toastr.success(' Vendor  created!', 'Toastr fun!');
         this.vendorForm.reset();
         this.submitted = false;
-        this.getAllVendor();
         this.spinner.hide();/**HIDE LOADER */
+        this.getAllVendor();
 
       }, err => {
         console.log(err);

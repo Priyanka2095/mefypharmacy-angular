@@ -1,35 +1,33 @@
 <!-- pharmacylist  -->
 <section>
-    <div class="container">
-        <ngx-spinner
-        bdColor="rgba(51,51,51,0.8)"
-        size="large"
-        color="#fff"
-        class="ngfixed"
-        type="ball-scale-multiple">
-       <p style="font-size: 20px; color: white">Loading...</p>
-      </ngx-spinner>
-      <button class="logoutp" (click)="logout()">Logout</button>
-  <h1 class="headerList">Pharmacy List</h1>
-  <div>
-      <a [routerLink]="['/createpharmacy']"><button class="createform">+</button></a>
-  </div>
-  <div >
-   
+  <button (click)="getUserPharmacyList()">Get List</button>
+  <div class="container">
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
+      <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
+    <button class="logoutp" (click)="logout()">Logout</button>
+    <h1 class="headerList">Pharmacy List</h1>
+    <div>
+      <a [routerLink]="['/createpharmacy']">
+        <button class="createform">+</button>
+      </a>
+    </div>
+    <div>
+
       <table class="pharmaTable">
         <tbody>
-        <tr>
-          <th>Pharmacy Name:</th>
-          <th>Role:</th>
-        </tr>
-        <!-- <div  *ngFor="let list of pharmacylist; let i=index"> -->
-        <tr  *ngFor="let list of pharmacyList ; let i=index" (click)="setClickedRow(list)" [ngClass]="{'red':selectedRow==true}" >
-          <td>{{ list?.pharmacy[0].pharmacyName}}</td>
-          <td>{{ list?.role}}</td>
-        </tr>
-        <h2  class="errormessage" *ngIf="showMessage">{{message}}</h2>
-        <!-- </div> -->
-      </tbody>
+          <tr>
+            <th>Pharmacy Name:</th>
+            <th>Role:</th>
+          </tr>
+          <!-- <div  *ngFor="let list of pharmacylist; let i=index"> -->
+          <tr *ngFor="let list of pharmacyList ; let i=index" (click)="setClickedRow(list)" [ngClass]="{'red':selectedRow==true}">
+            <td>{{ list?.pharmacy[0].pharmacyName}}</td>
+            <td>{{ list?.role}}</td>
+          </tr>
+          <h2 class="errormessage" *ngIf="showMessage">{{message}}</h2>
+          <!-- </div> -->
+        </tbody>
       </table>
     </div>
   </div>

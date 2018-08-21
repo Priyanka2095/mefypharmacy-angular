@@ -7,60 +7,60 @@ import { APIURL } from '../urlConfig';
 export class MedicineService {
 
   constructor(private httpClient: HttpClient) { }
-/*********************DRUG TYPE METHOD**********************/
+  /*********************DRUG TYPE METHOD**********************/
   createdrug(data) {
     console.log(data)
     return this.httpClient.post(APIURL + 'DrugType', data)
   }
 
-/*************************GET DRUG TYPE*******************/
+  /*************************GET DRUG TYPE*******************/
   getDrugType() {
     return this.httpClient.get(APIURL + 'DrugType')
   }
-/******************* CREATE MEDICINE MASTER*****************************/
+  /******************* CREATE MEDICINE MASTER*****************************/
   createMedicineMaster(data) {
     console.log(data)
     return this.httpClient.post(APIURL + 'MedicineMaster', data)
   }
 
-/**************************GET MEDICINE MASTER**********************/
-  getMedicineMaster(){
-   return this.httpClient.get(APIURL +'MedicineMaster')
+  /**************************GET MEDICINE MASTER**********************/
+  getMedicineMaster() {
+    return this.httpClient.get(APIURL + 'MedicineMaster')
   }
 
-/***********************VENDOR METHOD************************************/
+  /***********************VENDOR METHOD************************************/
   createVendor(data) {
     console.log(data)
     return this.httpClient.post(APIURL + 'Vendor', data)
   }
-/*********************** GET MEDICINE LIST************************************/
-   getMedicine() {
+  /*********************** GET MEDICINE LIST************************************/
+  getMedicine() {
     return this.httpClient.get(APIURL + 'MedicineMaster')
   }
-/*************************GET DRUG TYPE*******************/
-    getVendorType() {
-      return this.httpClient.get(APIURL + 'Vendor')
-    }
-/*****************************CREATE MANUFACTURE****************/
+  /*************************GET DRUG TYPE*******************/
+  getVendorType() {
+    return this.httpClient.get(APIURL + 'Vendor')
+  }
+  /*****************************CREATE MANUFACTURE****************/
   createManufacture(data) {
     console.log(data);
     return this.httpClient.post(APIURL + 'Manufacturer', data)
   }
-/**************************CREATE PHARMACY ITEM****************************/
-  createPharmacyItem(data){
-console.log(data);
-return this.httpClient.post(APIURL + 'PharmacyItem', data)
+  /**************************CREATE PHARMACY ITEM****************************/
+  createPharmacyItem(data) {
+    console.log(data);
+    return this.httpClient.post(APIURL + 'PharmacyItem', data)
   }
-/*************************GET DRUG TYPE*******************/
-   getManufactureList() {
+  /*************************GET DRUG TYPE*******************/
+  getManufactureList() {
     return this.httpClient.get(APIURL + 'Manufacturer')
   }
-/**************************GET PHARMACY DETAIL BY TRADE LICENSE ID*************************/
-   getPharmacy(tradeId) {
-     console.log(tradeId)
+  /**************************GET PHARMACY DETAIL BY TRADE LICENSE ID*************************/
+  getPharmacy(tradeId) {
+    console.log(tradeId)
     return this.httpClient.get(APIURL + 'Pharmacy/' + tradeId)
   }
-/**************************** get All manufacturer *********************************/
+  /**************************** get All manufacturer *********************************/
   getAllManufacturer() {
     return this.httpClient.get(APIURL + 'Manufacturer');
   }
@@ -70,7 +70,7 @@ return this.httpClient.post(APIURL + 'PharmacyItem', data)
     return this.httpClient.get(APIURL + 'Vendor');
   }
   /********************GET ALL PHARMACY ITEM LIST******************************* */
-  getAllPharmacyItemList(){
-    return this.httpClient.get(APIURL + 'PharmacyItem')
+  getAllPharmacyItemList() {
+    return this.httpClient.get(APIURL + 'PharmacyItem?filter={"where":{"pharmacyId":"resource:io.mefy.pharmacy.Pharmacy%23' + localStorage.getItem('tradeId') + '"}}')
   }
 }
