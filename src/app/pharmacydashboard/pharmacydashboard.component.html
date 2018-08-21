@@ -222,8 +222,7 @@
                     </div>
                     <div class="col-md-6">
                       <label>Substitute:</label>
-                      <tag-input formControlName="substitute" (onAdd)="onSubstistueAdd($event)" onlyFromAutocomplete="true" blinkIfDupe="true"
-                        [validators]="validators">
+                      <tag-input formControlName="substitute" (onAdd)="onSubstistueAdd($event)" onlyFromAutocomplete="true" blinkIfDupe="true">
                         <tag-input-dropdown [appendToBody]="false" [identifyBy]="'medId'" [displayBy]="'medicineName'" [showDropdownIfEmpty]="true"
                           placeholder="Choose Substitute Medicine" [autocompleteItems]="arrayOfObjects">
                         </tag-input-dropdown>
@@ -303,16 +302,6 @@
                 </ngx-spinner>
                 <form class="pharmacyitem" [formGroup]="pharmacyItemForm">
                   <div class="row">
-                    <!-- <div class="col-md-6">
-                      <label>ID:</label>
-                      <input type="text" class="form-control">
-                    </div> -->
-                    <!-- <div class="col-md-6">
-                      <label>Pharmacy ID:</label>
-                      <input type="text" class="form-control" formControlName="pharmacyId">
-                      <p class="errormessage" *ngIf="pharmacyItemFormErrors.pharmacyId.required || (pharmacyItemForm.controls.pharmacyId.pristine && submitted)"> can not be empty</p>
-
-                    </div> -->
                   </div>
                   <div class="row">
                     <div class="col-md-6">
