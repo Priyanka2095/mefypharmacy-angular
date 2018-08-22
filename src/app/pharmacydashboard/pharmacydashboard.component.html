@@ -151,7 +151,7 @@
                       <!-- custom templte ends -->
 
                       <!-- <pre class="card card-block card-header mb-3">Model: {{selected | json}}</pre> -->
-                      <input class="form-control" [typeaheadItemTemplate]="customItemTemplate" formControlName="manufacturer" (typeaheadOnSelect)="manufacturerOnSelect($event)"
+                      <input class="form-control" [typeaheadItemTemplate]="customItemTemplate" formControlName="manufacturer" (typeaheadOnSelect)="manufacturerOnSelect($event)" placeholder="Search..."
                         typeaheadOptionField="name" [typeahead]="manuactureList" class="form-control" (typeaheadNoResults)="typeaheadNoManufactureResults($event)">
                       <p class="errormessage" *ngIf="medicineFormErrors.manufacturer.required || (medicineForm.controls.manufacturer.pristine && submitted)">Manufacturer
                         can not be empty</p>
@@ -167,7 +167,7 @@
                       <!-- custom templte ends -->
 
                       <!-- <pre class="card card-block card-header mb-3">Model: {{selected | json}}</pre> -->
-                      <input class="form-control" formControlName="drugtype" [typeaheadItemTemplate]="customDrugTemplate" (typeaheadOnSelect)="drugtypeOnSelect($event)"
+                      <input class="form-control" formControlName="drugtype" [typeaheadItemTemplate]="customDrugTemplate" (typeaheadOnSelect)="drugtypeOnSelect($event)" placeholder="Search..."
                         typeaheadOptionField="type" [typeahead]="drugList" class="form-control" (typeaheadNoResults)="typeaheadNoDrugResults($event)">
                       <div class="alert alert-danger" *ngIf="noDrugResult">No Results Found</div>
                       <p class="errormessage" *ngIf="medicineFormErrors.drugtype.required || (medicineForm.controls.drugtype.pristine && submitted)">Drugtype
@@ -314,7 +314,7 @@
                         <h5>{{ model.name }} </h5>
                       </ng-template>
                       <!-- custom templte ends -->
-                      <input class="form-control" [typeaheadItemTemplate]="customPharmacyTemplate" formControlName="medicineId" (typeaheadOnSelect)="onMedicineSelect($event)"
+                      <input class="form-control" [typeaheadItemTemplate]="customPharmacyTemplate" formControlName="medicineId" (typeaheadOnSelect)="onMedicineSelect($event)" placeholder="Search..."
                         typeaheadOptionField="name" [typeahead]="medicineList" class="form-control" (typeaheadNoResults)="typeaheadNoDrugResults($event)">
                       <div class="alert alert-danger" *ngIf="noDrugResult">No Results Found</div>
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.medicineId.required || (pharmacyItemForm.controls.medicineId.pristine && submitted)">
@@ -350,7 +350,7 @@
                       </ng-template>
                       <!-- custom templte ends -->
 
-                      <input type="text" class="form-control" [typeaheadItemTemplate]="customSupplierTemplate" (typeaheadOnSelect)="onSupplierSelect($event)"
+                      <input type="text" class="form-control" [typeaheadItemTemplate]="customSupplierTemplate" (typeaheadOnSelect)="onSupplierSelect($event)" placeholder="Search..."
                         formControlName="supplier" typeaheadOptionField="name" [typeahead]="vendorList" class="form-control"
                         (typeaheadNoResults)="typeaheadNoSupplierResults($event)">
                       <div class="alert alert-danger" *ngIf="noSupplierResult">No Results Found</div>
@@ -587,7 +587,7 @@
                     <div class="col-md-6">
                       <label>Contact Number:</label>
                       <input type="text" formControlName="contactNumber" [textMask]="{mask: mask, guide: false}" class="form-control" minlength="10"
-                        placeholder="Enter Digits">
+                        placeholder="phone Number">
                       <p class="errormessage" *ngIf="vendorFormerrors.contactNumber.minlength">Please Enter valid Phone Number</p>
                       <p class="errormessage" *ngIf="vendorFormerrors.contactNumber.required || (vendorForm.controls.contactNumber.pristine && submitted)">Contact
                         Number can not be empty</p>
