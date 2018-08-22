@@ -21,6 +21,7 @@ export class PharmacydashboardComponent implements OnInit {
 
   p: number = 1;
   vendorpage: number = 1;
+  userpage: number = 1;
   medicineMasterPage: number = 1;
   manufacturePage: number = 1;
   pharmacyPage: number = 1;
@@ -29,10 +30,12 @@ export class PharmacydashboardComponent implements OnInit {
   medicineForm: FormGroup;
   manuactureForm: FormGroup;
   vendorForm: FormGroup;
+  userForm: FormGroup;
   pharmacyItemForm: FormGroup;
   pharmacyItemFormErrors: any;
   medicineFormErrors: any;
   drugtypeFormErrors: any;
+  userFormErrors: any;
   manufactureFormerrors: any
   vendorFormerrors: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
@@ -56,6 +59,9 @@ export class PharmacydashboardComponent implements OnInit {
   manuactureList: any = []
   pharmacyItemList: any = []
   substituteList: any = [];
+  userList: any = [];
+  tradelicence: any;
+
 
 
   constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
@@ -103,6 +109,12 @@ export class PharmacydashboardComponent implements OnInit {
       zipcode: {},
 
     }
+       /************USER FORM ERRORS***************/
+       this.userFormErrors = {
+        // username: {},
+        userNumber: {},
+        role:{}
+      };
     /*************************VENDOR FORM ERRORS********************/
     this.vendorFormerrors = {
       name: {},
@@ -154,6 +166,12 @@ export class PharmacydashboardComponent implements OnInit {
     this.pharmacyItemForm.valueChanges.subscribe(() => {
       this.onPharmacyFormValuesChanged();
     })
+   /***************************USER FORM*****************/
+   this.userForm = this.createUserForm()
+
+   this.userForm.valueChanges.subscribe(() => {
+     this.onUserFormValuesChanged();
+   });
 
     this.getAllDrug();
     this.getPharmacyDetail();
@@ -162,6 +180,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.getAllMedicine();
     this.getAllManufactureList();
     this.getPharmacyItemList();
+    this.getAllUser();
    
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
@@ -244,6 +263,22 @@ export class PharmacydashboardComponent implements OnInit {
       }
     }
   }
+    /********************************* IT CATCHES ALL CHANGES IN USER FORM**************************/
+    onUserFormValuesChanged() {
+      for (const field in this.userFormErrors) {
+        if (!this.userFormErrors.hasOwnProperty(field)) {
+          continue;
+        }
+        // Clear previous errors
+        this.userFormErrors[field] = {};
+        // Get the control
+        const control = this.userForm.get(field);
+  
+        if (control && control.dirty && !control.valid) {
+          this.userFormErrors[field] = control.errors;
+        }
+      }
+    }
   // DRUG FORM
   Drugform() {
     return this.formBuilder.group({
@@ -308,6 +343,14 @@ export class PharmacydashboardComponent implements OnInit {
       supplier: ['', Validators.required],
     });
   }
+    // *****************************CREATE USER FORM*************************************
+    createUserForm() {
+      return this.formBuilder.group({
+        // username: ['', Validators.required],
+        userNumber: ['', Validators.required],
+        role: ['', Validators.required],
+      });
+    }
   /*************************SAVE DRUG FORM************************************/
   saveDrugForm() {
     this.submitted = true
@@ -339,9 +382,41 @@ export class PharmacydashboardComponent implements OnInit {
       this.spinner.hide();/**HIDE LOADER */
       this.toastr.error('Drug Form not created!', 'Invalid Details')
     }
-    // this.drugtypeList.push(this.drugtypeForm.value);
-    // console.log(this.drugtypeList);
   }
+  /*************************SAVE USER FORM************************************/
+  saveUsersForm() {
+    this.submitted = true
+    console.log("Userformvalue", this.userForm.value);
+    if (this.userForm.valid) {
+      this.spinner.show(); /**SHOW LOADER */
+      let data = {
+        // name: this.userForm.value.username,
+        phoneno: this.userForm.value.userNumber,
+        Role:this.userForm.value.userNumber
+      }
+      this.medicineService.createUser(data).subscribe(value => {
+        this.spinner.hide();
+        this.userForm.reset();
+        this.toastr.success(' User Form created!', 'Toastr fun!');
+        this.spinner.hide();
+        this.getAllUser();
+        this.submitted = false;
+        $('#myModal6').modal('hide');
+      }, err => {
+        console.log(err);
+        this.submitted = false;
+        this.spinner.hide();/**HIDE LOADER */
+        this.toastr.error('User Form not created!', 'Server Issue')
+      })
+
+    }
+    else {
+      this.userForm.reset();
+      this.spinner.hide();/**HIDE LOADER */
+      this.toastr.error('User Form not created!', 'Invalid Details')
+    }
+  }
+
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
 
@@ -564,6 +639,20 @@ getAllVendor() {
     this.spinner.hide();
   })
 }
+ /*****************GET ALL USER LIST****************/
+ getAllUser() {
+  this.spinner.show();
+  this.medicineService.getUserList(this.tradelicence).subscribe(data => {
+    this.spinner.hide();
+    let value: any = {}
+    value = data;
+    this.userList = value
+    console.log(this.userList);
+  },
+err=>{
+  console.log(err)
+})
+}
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
@@ -572,8 +661,9 @@ getAllVendor() {
       console.log(result);
       let value: any = {}
       value = result
-      this.pharmaData = value
-      console.log("hide spinner");
+      this.pharmaData = value;
+      this.tradelicence=value.tradeLicenseId
+      console.log('this.tradelicence',this.tradelicence);
       this.spinner.hide(); /**HIDE LOADER */
     },
   err=>{

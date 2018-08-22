@@ -29,6 +29,9 @@
       <li class="active">
         <a href="#6a" data-toggle="tab" (click)="getPharmacyDetail()">Pharmacy Details</a>
       </li>
+      <li>
+        <a href="#7a" data-toggle="tab">Users</a>
+      </li>
     </ul>
 
     <div class="tab-content clearfix">
@@ -53,13 +56,13 @@
                 <form [formGroup]="drugtypeForm" class="drugType">
                   <div class="drugT">
                     <label class="dT">Drug Type:</label>
-                    <input type="text" formControlName="type" class="form-control">
+                    <input type="text" formControlName="type" class="form-control" maxlength="20">
                     <p class="errormessage" *ngIf="drugtypeFormErrors.type.required || (drugtypeForm.controls.type.pristine && submitted)">drugtype
                       can not be empty</p>
                   </div>
                   <div>
                     <p class="desc">Description:</p>
-                    <textarea rows="4" cols="50" formControlName="description" placeholder="Enter description here..." maxlength="250"></textarea>
+                    <textarea rows="4" cols="50" formControlName="description" maxlength="150" placeholder="Enter description here..." maxlength="250"></textarea>
                     <p class="errormessage" *ngIf="drugtypeFormErrors.description.required || (drugtypeForm.controls.description.pristine && submitted)">description
                       can not be empty</p>
                   </div>
@@ -741,6 +744,82 @@
         </form>
       </div>
       <!-- ****PHARMACYDETAILS FORM(END) ****-->
+
+     <!-- ****USERS FORM(START) ****-->
+     <div class="tab-pane" id="7a">
+      <div>
+        <button class="createform" data-toggle="modal" data-target="#myModal6">+</button>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal6" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-vertical-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Users</h4>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="userForm" class="pharmacyitem">
+                <div class="row">
+                  <!-- <div class="col-md-6">
+                    <label>Name:</label>
+                    <input formControlName="username" type="text" class="form-control">
+                    <p class="errormessage" *ngIf="userFormErrors.username.required || (userForm.controls.username.pristine && submitted)">Name
+                      can not be empty</p>
+                  </div> -->
+                  <div class="col-md-6">
+                    <label>Contact Number:</label>
+                    <input type="text" formControlName="userNumber" [textMask]="{mask: mask, guide: false}" class="form-control" minlength="10"
+                      placeholder="Enter Digits">
+                    <p class="errormessage" *ngIf="userFormErrors.userNumber.minlength">Please Enter valid Phone Number</p>
+                    <p class="errormessage" *ngIf="userFormErrors.userNumber.required || (userForm.controls.userNumber.pristine && submitted)">Contact
+                      Number can not be empty</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Role:</label>
+                    <select class="form-control" formControlName="role">kkkk
+                      <option value="a" [selected]="true" disabled>Choose option</option>
+                      <option value="Admin">Admin</option>
+                      <option value="Accountant">Accountant</option>
+                      <option value="Assistant">Assistant</option>
+                    </select>
+                    <p class="errormessage" *ngIf="userFormErrors.role.required || (userForm.controls.role.pristine && submitted)">Role
+                      can not be empty</p>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="saveUsersForm()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div>
+        <table class="pharmacyTable">
+          <tr>
+            <th>Name:</th>
+            <th>Contact Number:</th>
+            <th>Role:</th>
+          </tr>
+          <tr *ngFor="let user of userList | paginate: { id: 'userpagination',itemsPerPage: 5, currentPage: userpage }  ">
+            <td>{{user.username}}</td>
+            <td>{{user.role}}</td>
+            <td>{{user.userNumber}}</td>
+          </tr>
+
+        </table>
+        <pagination-controls id="userpagination" (pageChange)="userpage = $event"></pagination-controls>
+      </div>
+    </div>
+    <!-- ****USERS FORM(END) ****-->
+
 
     </div>
   </div>
