@@ -16,6 +16,7 @@ export class PharmalistComponent implements OnInit {
   selectedRow = false;
   message: any;
   showMessage = false
+ selectedName:any;
   constructor(private sharedShervice: SharedService, public pharmacyService: PharmacyService, private spinner: NgxSpinnerService, private router: Router) {
 
     this.userInfo = localStorage.getItem('phoneNumber');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
@@ -67,4 +68,10 @@ export class PharmalistComponent implements OnInit {
     localStorage.removeItem('tradeId');
     this.router.navigate(['/login'])
   }
+
+  
+//  highlightRow(emp) {
+//     this.selectedName = emp.name;
+//     console.log(this.selectedName)
+//   }
 }
