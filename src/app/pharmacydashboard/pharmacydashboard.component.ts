@@ -61,7 +61,6 @@ export class PharmacydashboardComponent implements OnInit {
   manuactureList: any = []
   pharmacyItemList: any = []
   substituteList: any = [];
-  pharmacyUserList: any = [];
   userPharmacyList: any = [];
   allUserList: any = []
   tradelicence: any;
