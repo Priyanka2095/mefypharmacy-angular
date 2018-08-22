@@ -30,7 +30,7 @@
         <a href="#6a" data-toggle="tab" (click)="getPharmacyDetail()">Pharmacy Details</a>
       </li>
       <li>
-        <a href="#7a" data-toggle="tab">Users</a>
+        <a href="#7a" data-toggle="tab" (click)="getAllPharmacyUser()">Users</a>
       </li>
     </ul>
 
@@ -314,23 +314,17 @@
                         <h5>{{ model.name }} </h5>
                       </ng-template>
                       <!-- custom templte ends -->
-                      <input class="form-control" 
-                      [typeaheadItemTemplate]="customPharmacyTemplate" 
-                      formControlName="medicineId" 
-                      (typeaheadOnSelect)="onMedicineSelect($event)"
-                      typeaheadOptionField="name" 
-                      [typeahead]="medicineList"
-                       class="form-control"
-                      (typeaheadNoResults)="typeaheadNoDrugResults($event)">
+                      <input class="form-control" [typeaheadItemTemplate]="customPharmacyTemplate" formControlName="medicineId" (typeaheadOnSelect)="onMedicineSelect($event)"
+                        typeaheadOptionField="name" [typeahead]="medicineList" class="form-control" (typeaheadNoResults)="typeaheadNoDrugResults($event)">
                       <div class="alert alert-danger" *ngIf="noDrugResult">No Results Found</div>
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.medicineId.required || (pharmacyItemForm.controls.medicineId.pristine && submitted)">
-                       Medicine name can not be empty</p>
+                        Medicine name can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Safety Stock:</label>
                       <input type="text" class="form-control" formControlName="safetyStock">
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.safetyStock.required || (pharmacyItemForm.controls.safetyStock.pristine && submitted)">
-                     Stock can not be empty</p>
+                        Stock can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
@@ -338,13 +332,13 @@
                       <label>Min-Max:</label>
                       <input type="text" class="form-control" formControlName="minMax">
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.minMax.required || (pharmacyItemForm.controls.minMax.pristine && submitted)">
-                      can not be empty</p>
+                        can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Lead Time:</label>
                       <input type="text" class="form-control" formControlName="leadTime">
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.leadTime.required || (pharmacyItemForm.controls.leadTime.pristine && submitted)">
-                          Lead time can not be empty</p>
+                        Lead time can not be empty</p>
                     </div>
                   </div>
                   <div class="row">
@@ -359,15 +353,15 @@
                       <input type="text" class="form-control" [typeaheadItemTemplate]="customSupplierTemplate" (typeaheadOnSelect)="onSupplierSelect($event)"
                         formControlName="supplier" typeaheadOptionField="name" [typeahead]="vendorList" class="form-control"
                         (typeaheadNoResults)="typeaheadNoSupplierResults($event)">
-                        <div class="alert alert-danger" *ngIf="noSupplierResult">No Results Found</div>
+                      <div class="alert alert-danger" *ngIf="noSupplierResult">No Results Found</div>
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.supplier.required || (pharmacyItemForm.controls.supplier.pristine && submitted)">
-                     Supplier can not be empty</p>
+                        Supplier can not be empty</p>
                     </div>
                     <div class="col-md-6">
                       <label>Bin ID:</label>
                       <input type="text" class="form-control" formControlName="binId">
                       <p class="errormessage" *ngIf="pharmacyItemFormErrors.binId.required || (pharmacyItemForm.controls.binId.pristine && submitted)">
-                          Bin Id can not be empty</p>
+                        Bin Id can not be empty</p>
                     </div>
                   </div>
                 </form>
@@ -716,7 +710,8 @@
               <div class="form-group">
                 <label>Degree file:</label>
                 <!-- <p>{{pharmaData.degreeFile}}</p> -->
-                <a class="licenseLink" target="_blank" href="https://api.meme.care/file/fileShow?fileId={{pharmaData.degreeFile}}">Download Me</a>
+                <a class="licenseLink" target="_blank" href="https://api.meme.care/file/fileShow?fileId={{pharmaData.degreeFile}}">Download
+                  Me</a>
               </div>
             </div>
             <div class="col-md-6">
@@ -745,80 +740,87 @@
       </div>
       <!-- ****PHARMACYDETAILS FORM(END) ****-->
 
-     <!-- ****USERS FORM(START) ****-->
-     <div class="tab-pane" id="7a">
-      <div>
-        <button class="createform" data-toggle="modal" data-target="#myModal6">+</button>
-      </div>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal6" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-vertical-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Users</h4>
-            </div>
-            <div class="modal-body">
-              <form [formGroup]="userForm" class="pharmacyitem">
-                <div class="row">
-                  <!-- <div class="col-md-6">
+      <!-- ****USERS FORM(START) ****-->
+      <div class="tab-pane" id="7a">
+        <div>
+          <button class="createform" data-toggle="modal" data-target="#myModal6">+</button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal6" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-vertical-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Users</h4>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="userForm" class="pharmacyitem">
+                  <div class="row">
+                    <!-- <div class="col-md-6">
                     <label>Name:</label>
                     <input formControlName="username" type="text" class="form-control">
                     <p class="errormessage" *ngIf="userFormErrors.username.required || (userForm.controls.username.pristine && submitted)">Name
                       can not be empty</p>
                   </div> -->
-                  <div class="col-md-6">
-                    <label>Contact Number:</label>
-                    <input type="text" formControlName="userNumber" [textMask]="{mask: mask, guide: false}" class="form-control" minlength="10"
-                      placeholder="Enter Digits">
-                    <p class="errormessage" *ngIf="userFormErrors.userNumber.minlength">Please Enter valid Phone Number</p>
-                    <p class="errormessage" *ngIf="userFormErrors.userNumber.required || (userForm.controls.userNumber.pristine && submitted)">Contact
-                      Number can not be empty</p>
-                  </div>
-                </div>
+                    <div class="col-md-6">
+                      <label>Contact Number:</label>
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Role:</label>
-                    <select class="form-control" formControlName="role">kkkk
-                      <option value="a" [selected]="true" disabled>Choose option</option>
-                      <option value="Admin">Admin</option>
-                      <option value="Accountant">Accountant</option>
-                      <option value="Assistant">Assistant</option>
-                    </select>
-                    <p class="errormessage" *ngIf="userFormErrors.role.required || (userForm.controls.role.pristine && submitted)">Role
-                      can not be empty</p>
+                      <!-- custom template -->
+                      <ng-template #customUserTemplate let-model="item" let-index="index">
+                        <h5>{{ model.name }} , {{model.phoneNumber}} </h5>
+                      </ng-template>
+                      <!-- custom templte ends -->
+                      <input class="form-control" [typeaheadItemTemplate]="customUserTemplate" formControlName="phoneNumber" (typeaheadOnSelect)="onUserSelect($event)"
+                        placeholder="Search from Phone number" typeaheadOptionField="phoneNumber" [typeahead]="allUserList"
+                        class="form-control" (typeaheadNoResults)="typeaheadNoManufactureResults($event)">
+                      <div class="alert alert-danger" *ngIf="noManufactureResult">No Results Found</div>
+                      <p class="errormessage" *ngIf="userFormErrors.phoneNumber.required || (userForm.controls.phoneNumber.pristine && submitted)">Contact
+                        Number can not be empty</p>
+                    </div>
                   </div>
-                </div>
 
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" (click)="saveUsersForm()">Submit</button>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Role:</label>
+                      <select class="form-control" formControlName="role">
+                        <option [selected]="true" disabled>Choose option</option>
+                        <option value="admin">Admin</option>
+                        <option value="accountant">Accountant</option>
+                        <option value="assistant">Assistant</option>
+                      </select>
+                      <p class="errormessage" *ngIf="userFormErrors.role.required || (userForm.controls.role.pristine && submitted)">Role
+                        can not be empty</p>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="saveUsersForm()">Submit</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- Modal -->
-      <div>
-        <table class="pharmacyTable">
-          <tr>
-            <th>Name:</th>
-            <th>Contact Number:</th>
-            <th>Role:</th>
-          </tr>
-          <tr *ngFor="let user of userList | paginate: { id: 'userpagination',itemsPerPage: 5, currentPage: userpage }  ">
-            <td>{{user.username}}</td>
-            <td>{{user.role}}</td>
-            <td>{{user.userNumber}}</td>
-          </tr>
+        <!-- Modal -->
+        <div>
+          <table class="pharmacyTable">
+            <tr>
+              <th>Name:</th>
+              <th>Contact Number:</th>
+              <th>Role:</th>
+            </tr>
+            <tr *ngFor="let user of userPharmacyList | paginate: { id: 'userpagination',itemsPerPage: 5, currentPage: userpage }  ">
+              <td>{{user.name}}</td>
+              <td>{{user.role}}</td>
+              <td>{{user.phoneNumber}}</td>
+            </tr>
 
-        </table>
-        <pagination-controls id="userpagination" (pageChange)="userpage = $event"></pagination-controls>
+          </table>
+          <pagination-controls id="userpagination" (pageChange)="userpage = $event"></pagination-controls>
+        </div>
       </div>
-    </div>
-    <!-- ****USERS FORM(END) ****-->
+      <!-- ****USERS FORM(END) ****-->
 
 
     </div>
