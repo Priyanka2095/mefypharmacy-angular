@@ -14,7 +14,9 @@ button.createform {
     border-collapse: collapse;
     width: 100%;
   }
-  
+  /* table.pharmaTable tr:hover{
+background:royalblue;
+  } */
   table.pharmaTable td, th {
     border: 1px solid #000;
     text-align: left;
@@ -30,9 +32,6 @@ button.createform {
     color: #337ab7;
     font-style: italic;
 }
-  .red{
-    color: blue
-  }
   button.logoutp {
     float: right;
     margin: 1em;
@@ -48,7 +47,11 @@ button.createform {
   /* table.pharmacyTable tr:hover {
     background-color: rgba(51, 122, 183, 0.18) !important;
   } */
-  tr.ng-star-inserted:hover {
+  /* tr.ng-star-inserted:hover {
     background-color: rgba(51, 122, 183, 0.8) ;
     cursor:pointer;
-  }
+  } */
+  table tr.highlight:hover{
+    background-color: #4CAF50 !important;
+    color: #ffffff;
+}

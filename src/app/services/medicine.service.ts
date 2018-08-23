@@ -73,4 +73,10 @@ export class MedicineService {
   getAllPharmacyItemList() {
     return this.httpClient.get(APIURL + 'PharmacyItem?filter={"where":{"pharmacyId":"resource:io.mefy.pharmacy.Pharmacy%23' + localStorage.getItem('tradeId') + '"}}')
   }
+  /*************************GET ALL USERS FROM SELECT PHARMACY by PHARMACYID*******************/
+  getPharmacyUsers(pharmacyId) {
+    console.log(pharmacyId)
+    return this.httpClient.get(APIURL + 'Pharmacy/details?pharmacy=' + pharmacyId)
+  }
+
 }
