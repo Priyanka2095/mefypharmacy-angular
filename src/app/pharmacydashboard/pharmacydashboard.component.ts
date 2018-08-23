@@ -577,8 +577,8 @@ export class PharmacydashboardComponent implements OnInit {
       this.pharmacyService.userPharmacy(data).subscribe(value => {
         this.userForm.reset();
         this.toastr.success(' User  created!', 'Toastr fun!');
-        this.getAllPharmacyUser();
         this.spinner.hide();
+        this.getAllPharmacyUser();
         this.submitted = false;
         $('#myModal6').modal('hide');
       }, err => {
