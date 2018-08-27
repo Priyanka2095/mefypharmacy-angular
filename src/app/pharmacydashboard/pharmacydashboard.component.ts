@@ -3,6 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { PharmacyService } from '../services/pharmacy.service';
 import { MedicineService } from '../services/medicine.service'
+import { UserService } from '../services/user.service'
 import { SharedService } from '../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -50,7 +51,8 @@ export class PharmacydashboardComponent implements OnInit {
   drugTypeId: any
   selectedMedicineId: any;
   manufactureGstin: any;
-  selectedSupplierId:any;
+  selectedSupplierId: any;
+  selectedPhoneNumber: any;
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
   drugtypeList: any = [];
   substitution: any = [];
@@ -59,12 +61,13 @@ export class PharmacydashboardComponent implements OnInit {
   manuactureList: any = []
   pharmacyItemList: any = []
   substituteList: any = [];
-  userList: any = [];
+  userPharmacyList: any = [];
+  allUserList: any = []
   tradelicence: any;
 
 
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private sharedService: SharedService, private medicineService: MedicineService, private spinner: NgxSpinnerService, private toastr: ToastrService, public pharmacyService: PharmacyService, public userSevice: UserService) {
     /************DRUG TYPE FORM ERRORS***************/
     this.drugtypeFormErrors = {
       type: {},
@@ -109,12 +112,11 @@ export class PharmacydashboardComponent implements OnInit {
       zipcode: {},
 
     }
-       /************USER FORM ERRORS***************/
-       this.userFormErrors = {
-        // username: {},
-        userNumber: {},
-        role:{}
-      };
+    /************USER FORM ERRORS***************/
+    this.userFormErrors = {
+      phoneNumber: {},
+      role: {}
+    };
     /*************************VENDOR FORM ERRORS********************/
     this.vendorFormerrors = {
       name: {},
@@ -128,7 +130,7 @@ export class PharmacydashboardComponent implements OnInit {
     }
     this.selectedPharmacyId = localStorage.getItem('tradeId');  // SET USER'S PHONENUMBER AS A ID FROM LOCALHOST
     console.log(this.selectedPharmacyId)
-    if(this.selectedPharmacyId==null){
+    if (this.selectedPharmacyId == null) {
       this.router.navigate(['/pharmalist'])   /*IF PHARMACY IS NOT SELECTED THEN ,GO BACK TO PHARMACY LIST**/
     }
   }
@@ -166,12 +168,12 @@ export class PharmacydashboardComponent implements OnInit {
     this.pharmacyItemForm.valueChanges.subscribe(() => {
       this.onPharmacyFormValuesChanged();
     })
-   /***************************USER FORM*****************/
-   this.userForm = this.createUserForm()
+    /***************************USER FORM*****************/
+    this.userForm = this.createUserForm()
 
-   this.userForm.valueChanges.subscribe(() => {
-     this.onUserFormValuesChanged();
-   });
+    this.userForm.valueChanges.subscribe(() => {
+      this.onUserFormValuesChanged();
+    });
 
     this.getAllDrug();
     this.getPharmacyDetail();
@@ -180,8 +182,9 @@ export class PharmacydashboardComponent implements OnInit {
     this.getAllMedicine();
     this.getAllManufactureList();
     this.getPharmacyItemList();
-    this.getAllUser();
-   
+    this.getAllPharmacyUser();
+    this.getAllUsers();
+
   }
   /********************************* IT CATCHES ALL CHANGES IN DRUG FORM**************************/
   onDrugFormValuesChanged() {
@@ -263,22 +266,22 @@ export class PharmacydashboardComponent implements OnInit {
       }
     }
   }
-    /********************************* IT CATCHES ALL CHANGES IN USER FORM**************************/
-    onUserFormValuesChanged() {
-      for (const field in this.userFormErrors) {
-        if (!this.userFormErrors.hasOwnProperty(field)) {
-          continue;
-        }
-        // Clear previous errors
-        this.userFormErrors[field] = {};
-        // Get the control
-        const control = this.userForm.get(field);
-  
-        if (control && control.dirty && !control.valid) {
-          this.userFormErrors[field] = control.errors;
-        }
+  /********************************* IT CATCHES ALL CHANGES IN USER FORM**************************/
+  onUserFormValuesChanged() {
+    for (const field in this.userFormErrors) {
+      if (!this.userFormErrors.hasOwnProperty(field)) {
+        continue;
+      }
+      // Clear previous errors
+      this.userFormErrors[field] = {};
+      // Get the control
+      const control = this.userForm.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        this.userFormErrors[field] = control.errors;
       }
     }
+  }
   // DRUG FORM
   Drugform() {
     return this.formBuilder.group({
@@ -343,14 +346,13 @@ export class PharmacydashboardComponent implements OnInit {
       supplier: ['', Validators.required],
     });
   }
-    // *****************************CREATE USER FORM*************************************
-    createUserForm() {
-      return this.formBuilder.group({
-        // username: ['', Validators.required],
-        userNumber: ['', Validators.required],
-        role: ['', Validators.required],
-      });
-    }
+  // *****************************CREATE USER FORM*************************************
+  createUserForm() {
+    return this.formBuilder.group({
+      phoneNumber: ['', Validators.required],
+      role: ['', Validators.required],
+    });
+  }
   /*************************SAVE DRUG FORM************************************/
   saveDrugForm() {
     this.submitted = true
@@ -383,40 +385,6 @@ export class PharmacydashboardComponent implements OnInit {
       this.toastr.error('Drug Form not created!', 'Invalid Details')
     }
   }
-  /*************************SAVE USER FORM************************************/
-  saveUsersForm() {
-    this.submitted = true
-    console.log("Userformvalue", this.userForm.value);
-    if (this.userForm.valid) {
-      this.spinner.show(); /**SHOW LOADER */
-      let data = {
-        // name: this.userForm.value.username,
-        phoneno: this.userForm.value.userNumber,
-        Role:this.userForm.value.userNumber
-      }
-      this.medicineService.createUser(data).subscribe(value => {
-        this.spinner.hide();
-        this.userForm.reset();
-        this.toastr.success(' User Form created!', 'Toastr fun!');
-        this.spinner.hide();
-        this.getAllUser();
-        this.submitted = false;
-        $('#myModal6').modal('hide');
-      }, err => {
-        console.log(err);
-        this.submitted = false;
-        this.spinner.hide();/**HIDE LOADER */
-        this.toastr.error('User Form not created!', 'Server Issue')
-      })
-
-    }
-    else {
-      this.userForm.reset();
-      this.spinner.hide();/**HIDE LOADER */
-      this.toastr.error('User Form not created!', 'Invalid Details')
-    }
-  }
-
   /****************************SAVE MEDICINE FORM***************************/
   saveMedicineForm() {
 
@@ -551,6 +519,7 @@ export class PharmacydashboardComponent implements OnInit {
     this.medicineForm.reset();
     this.vendorForm.reset();
     this.drugtypeForm.reset();
+    this.userForm.reset();
     this.pharmacyItemForm.reset();
   }
   /*************************SAVE VENDOR FORM (start)************************************/
@@ -593,66 +562,99 @@ export class PharmacydashboardComponent implements OnInit {
     }
   }
   /*************************SAVE VENDOR FORM (end)************************************/
- /*****************GET ALL DRUG TYPE****************/
- getAllDrug() {
-  this.spinner.show();
-  this.medicineService.getDrugType().subscribe(data => {
-    this.spinner.hide();
-    let value: any = {}
-    value = data;
-    this.drugList = value
-    console.log(this.drugList);
-  },
-err=>{
-  console.log(err)
-})
-}
-/*****************GET ALL MEDICINE LIST****************/
-getAllMedicine() {
-  this.medicineService.getMedicine().subscribe(data => {
-    let value: any = {}
-    value = data;
-    this.medicineList = value
-    console.log(this.medicineList);
-    for (var i = 0; i < this.medicineList.length; i++) {
-      var datamed = {
-        medicineName: this.medicineList[i].name,
-        medId: this.medicineList[i].medicineId
+  /*************************SAVE USER FORM************************************/
+  saveUsersForm() {
+    this.submitted = true
+    console.log("Userformvalue", this.userForm.value);
+    if (this.userForm.valid) {
+      this.spinner.show(); /**SHOW LOADER */
+      let data = {
+        user: this.selectedPhoneNumber,
+        role: this.userForm.value.role,
+        pharmacy: this.selectedPharmacyId
+      }
+      console.log(data)
+      this.pharmacyService.userPharmacy(data).subscribe(value => {
+        this.userForm.reset();
+        this.toastr.success(' User  created!', 'Toastr fun!');
+        this.spinner.hide();
+        this.getAllPharmacyUser();
+        this.submitted = false;
+        $('#myModal6').modal('hide');
+      }, err => {
+        console.log(err);
+        this.submitted = false;
+        this.spinner.hide();/**HIDE LOADER */
+        this.toastr.error('User  not created!', 'Server Issue')
+      })
+
+    }
+    else {
+      this.userForm.reset();
+      this.spinner.hide();/**HIDE LOADER */
+    }
+  }
+  /*****************GET ALL DRUG TYPE****************/
+  getAllDrug() {
+    this.spinner.show();
+    this.medicineService.getDrugType().subscribe(data => {
+      this.spinner.hide();
+      let value: any = {}
+      value = data;
+      this.drugList = value
+      console.log(this.drugList);
+    },
+      err => {
+        console.log(err)
+      })
+  }
+  /*****************GET ALL MEDICINE LIST****************/
+  getAllMedicine() {
+    this.medicineService.getMedicine().subscribe(data => {
+      let value: any = {}
+      value = data;
+      this.medicineList = value
+      console.log(this.medicineList);
+      for (var i = 0; i < this.medicineList.length; i++) {
+        var datamed = {
+          medicineName: this.medicineList[i].name,
+          medId: this.medicineList[i].medicineId
 
         }
         this.arrayOfObjects.push(datamed);
         console.log(this.arrayOfObjects);
       }
     },
-    err=>{
-      console.log(err)
+      err => {
+        console.log(err)
+      })
+  }
+  /*****************GET ALL VENDOR ****************/
+  getAllVendor() {
+    this.spinner.show();
+    this.medicineService.getVendorType().subscribe(data => {
+      let value: any = {}
+      value = data;
+      this.vendorList = value
+      console.log(this.vendorList);
+      this.spinner.hide();
     })
-    }
-/*****************GET ALL VENDOR ****************/
-getAllVendor() {
-  this.spinner.show();
-  this.medicineService.getVendorType().subscribe(data => {
-    let value: any = {}
-    value = data;
-    this.vendorList = value
-    console.log(this.vendorList);
-    this.spinner.hide();
-  })
-}
- /*****************GET ALL USER LIST****************/
- getAllUser() {
-  this.spinner.show();
-  this.medicineService.getUserList(this.tradelicence).subscribe(data => {
-    this.spinner.hide();
-    let value: any = {}
-    value = data;
-    this.userList = value
-    console.log(this.userList);
-  },
-err=>{
-  console.log(err)
-})
-}
+  }
+  /*****************GET  USER'S PHARMACY LIST****************/
+  getAllPharmacyUser() {
+    this.spinner.show();
+    this.medicineService.getPharmacyUsers(this.selectedPharmacyId).subscribe(data => {
+      console.log(data)
+      let value: any = {}
+      value = data;
+      this.userPharmacyList = value.response.users
+      console.log('ALL users related to selected pharmacy', this.userPharmacyList)
+      this.spinner.hide();
+    },
+      err => {
+        console.log(err)
+      })
+  }
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
@@ -662,13 +664,13 @@ err=>{
       let value: any = {}
       value = result
       this.pharmaData = value;
-      this.tradelicence=value.tradeLicenseId
-      console.log('this.tradelicence',this.tradelicence);
+      this.tradelicence = value.tradeLicenseId
+      console.log('this.tradelicence', this.tradelicence);
       this.spinner.hide(); /**HIDE LOADER */
     },
-  err=>{
-   console.log(err)
-  })
+      err => {
+        console.log(err)
+      })
   }
 
   /***********************************GET MANUFACTURE LIST******************/
@@ -681,9 +683,9 @@ err=>{
       this.manuactureList = result;
       this.spinner.hide();
     },
-  err=>{
-    console.log(err)
-  })
+      err => {
+        console.log(err)
+      })
   }
   /*******************************GET PHARMACY ITEM LIST******************/
   getPharmacyItemList() {
@@ -695,10 +697,19 @@ err=>{
       console.log(this.pharmacyItemList)
       this.spinner.hide()
     },
-  err=>{
-    console.log(err)
-    this.spinner.hide()
-  })
+      err => {
+        console.log(err)
+        this.spinner.hide()
+      })
+  }
+  /*****************************GET ALL USERS(REGISTERD)********************* */
+  getAllUsers() {
+    this.userSevice.getAllUsers().subscribe(data => {
+      console.log(data)
+      let result: any = {};
+      result = data
+      this.allUserList = result
+    })
   }
   /**************************CLEAR LOCAL STORAGE**********************/
   logout() {
@@ -744,7 +755,12 @@ err=>{
   /***********************SUPPLIER ON SELECT IN PHARMACY FORM*********/
   onSupplierSelect(evt) {
     console.log(evt.item)
-   this.selectedSupplierId=evt.item.gstin
+    this.selectedSupplierId = evt.item.gstin
+  }
+  /*************************USER'S PHONENUMBER SELECTED IN USERS FORM**************/
+  onUserSelect(evt) {
+    console.log(evt.item)
+    this.selectedPhoneNumber = evt.item.phoneNumber
   }
   /**************IF RESULT IS NOT FOUND THEN SHOW MESSAGE */
   typeaheadNoDrugResults(event: boolean): void {
@@ -759,7 +775,7 @@ err=>{
   typeaheadNoManufactureResults(event: boolean): void {
     this.noManufactureResult = event
   }
-  
+
 }
 
 

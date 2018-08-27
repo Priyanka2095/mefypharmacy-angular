@@ -58,7 +58,7 @@ export class PharmalistComponent implements OnInit {
     console.log(data)
     let result: any = {};
     result = data
-    localStorage.setItem('tradeId', result.pharmacy[0].tradeLicenseId);// SET TRADEID IN LOCAL STORAGE
+    localStorage.setItem('tradeId', result.pharmacy.tradeLicenseId);// SET TRADEID IN LOCAL STORAGE
 
     this.router.navigate(['/dashboard'])
   }
