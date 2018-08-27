@@ -26,12 +26,12 @@
       <li>
         <a href="#5a" data-toggle="tab" (click)="getAllVendor()">Vendor</a>
       </li>
+      <li>
+          <a href="#7a" data-toggle="tab">Users</a>
+        </li>
       <li class="active">
         <a href="#6a" data-toggle="tab" (click)="getPharmacyDetail()">Pharmacy Details</a>
-      </li>
-      <li>
-        <a href="#7a" data-toggle="tab">Users</a>
-      </li>
+      </li> 
     </ul>
 
     <div class="tab-content clearfix">
@@ -768,7 +768,7 @@
                     <p class="errormessage" *ngIf="userFormErrors.username.required || (userForm.controls.username.pristine && submitted)">Name
                       can not be empty</p>
                   </div> -->
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <label>Contact Number:</label>
                     <input type="text" formControlName="userNumber" [textMask]="{mask: mask, guide: false}" class="form-control" minlength="10"
                       placeholder="Enter Digits">
@@ -779,7 +779,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <label>Role:</label>
                     <select class="form-control" formControlName="role">kkkk
                       <option value="a" [selected]="true" disabled>Choose option</option>
@@ -810,8 +810,8 @@
           </tr>
           <tr *ngFor="let user of userList | paginate: { id: 'userpagination',itemsPerPage: 5, currentPage: userpage }  ">
             <td>{{user.username}}</td>
-            <td>{{user.role}}</td>
             <td>{{user.userNumber}}</td>
+            <td>{{user.role}}</td>
           </tr>
 
         </table>
