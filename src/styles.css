@@ -6,6 +6,8 @@
     color: red;
     text-align: center;
     font-size: 14px;
+    font-style: italic;
+    font-family: 'Roboto', sans-serif;
   }
   .black-overlay {
     position: fixed !important;

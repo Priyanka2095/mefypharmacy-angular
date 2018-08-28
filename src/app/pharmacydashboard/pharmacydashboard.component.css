@@ -137,19 +137,27 @@ button.logout {
   color: #fff;
   cursor: pointer;
 }
-
-/* .ng2-dropdown-menu {
-  z-index: 1051 !important;
-} */
 button.logoutp {
   float: right;
-  margin: 1em;
-  background: #428bca;
+  margin: 10px 0 20px 0;
+  background: #ffffff;
   border-radius: 50px;
   outline: none;
   height: 35px;
   width: 76px;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 1px solid #6b5ed4;
+  color: #6b5ed4;
   cursor: pointer;
 }
+/* navbar css */
+img.mefycarelogo {
+  width: 130px;
+  height: auto;
+  margin-top: 19px;
+  padding-left: 10px;
+}
+nav.navbar.navbar-default.mefynavbar {
+  border-radius: 0px;
+  background-color: #6b5ed4;
+}
+/* navbar css */

@@ -1,28 +1,36 @@
 /* loginpage css */
 .loginpage{
-  background-image: linear-gradient(#ffffff45, rgba(255, 255, 255, 0.3)), url('./../../assets/images/login.jpeg');
-    background-repeat: no-repeat;
+  /* background-image: linear-gradient(#6e82e5, rgba(52, 142, 218, 0.54)), url('./../../assets/images/loginscreen.jpeg'); */
+  background-image: linear-gradient( to right,#6e82e5eb, rgba(112, 129, 222, 0.75),#598edfde,#5296ebe0), url('./../../assets/images/loginscreen.jpeg');  
+  background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    overflow: hidden;
     height: 100vh;
 }
 form.logform {
-  padding: 9em;
-  background: rgba(255, 255, 255, 0.47);
+  background: #fff;
+  border-radius: 8px;
+  width: 491px;
+  height: 301px;
+  padding: 7em
 }
 .formContent {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  flex-direction: column;
 }
 button.btn.sigin {
-  margin-right: 1em;
-  background: #3487b7;
+  background: #5d6ee4;
   color: #fff;
   height: 33px;
-  width: 79px;
-  font-size: 15px;
+  width: 97px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 1em;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  font-family: 'Roboto', sans-serif;
 }
 button.btn.register {
   margin-right: 1em;
@@ -31,5 +39,56 @@ button.btn.register {
   height: 33px;
   width: 79px;
   font-size: 15px;
+}
+.headerlogin {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 1em;
+}
+.headerlogin h1 {
+  font-size: 29px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.headerlogin p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  padding-top: 10px;
+}
+label.phone {
+  color: #696565;
+  font-family: 'Roboto', sans-serif;
+}
+input#phone {
+  border: 2px solid #ecedef;
+}
+input#phone:focus {
+  box-shadow: none;
+}
+.logosvg {
+  background: #fff;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+  margin-bottom: -7em;
+}
+img.mefycareloginlogo {
+  height: 36px;
+  width: 38px;
+}
+svg#pharmacy {
+  height: 33px;
+  width: 33px;
+  margin-top: -3em;
+}
+img.mefycareloglogo {
+  height: 33px;
+  width: auto;
+  margin: 1em 0 0 2em;
 }
 /* loginpage css */
