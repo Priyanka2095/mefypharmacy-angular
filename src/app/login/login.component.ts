@@ -139,6 +139,7 @@ export class LoginComponent implements OnInit {
           this.submitted=false;
           this.spinner.hide(); /**HIDE LOADER */
           this.toastr.success('Phone Number registered successfully !', 'Follow steps to complete registration', {
+            timeOut: 5000
           });
           // this.router.navigate(['/user'])
         }
