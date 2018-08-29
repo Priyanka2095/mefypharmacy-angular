@@ -1,44 +1,24 @@
 <!-- Loginform -->
 <div class="loginpage">
-    <img src="../../assets/images/mefylogo.png"  class="mefycareloglogo">
+  <img src="../../assets/images/mefylogo.png" class="mefycareloglogo">
   <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" class="ngfixed" type="ball-scale-multiple">
     <p style="font-size: 20px; color: white">Loading...</p>
   </ngx-spinner>
   <div class="container">
-    <!-- <div class="headerlogin">
-    <h1>Let's get started now!</h1>
-    <p>Or create an account if not registered yet</p>
-  </div> -->
     <div class="formContent">
-      <!-- <h1>LOGIN FORM</h1> -->
       <div class="headerlogin">
         <h1>Let's get started now!</h1>
         <p>Or <b>create an account</b> if not registered yet</p>
       </div>
       <div class="logosvg">
-        <!-- <img src="../../assets/images/fav.png"  class="mefycareloginlogo"> -->
-        <!-- <svg version="1.1" id="pharmacy" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-          viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-          <path style="fill:#17ACE8;" d="M351.301,351.399L230.4,472.3c-52.5,52.8-138.3,52.8-190.8,0c-52.8-52.5-52.8-138.3,0-190.8
-       l120.899-120.901l56.1-3.9L328.2,268.3L351.301,351.399z" />
-          <path style="fill:#1689FC;" d="M351.301,351.399L230.4,472.3c-52.5,52.8-138.3,52.8-190.8,0l246.299-246.301L328.2,268.3
-       L351.301,351.399z" />
-          <path style="fill:#E5E5E5;" d="M472.2,230.5L351.301,351.399l-95.402-95.4l-95.4-95.4L281.4,39.7c52.5-52.8,138.3-52.8,190.8,0
-       C525,92.2,525,178,472.2,230.5z" />
-          <path style="fill:#D9D9D9;" d="M472.2,230.5L351.301,351.399l-95.402-95.4L472.2,39.7C525,92.2,525,178,472.2,230.5z" />
-          <path style="fill:#FCBF29;" d="M512,376.9c0,74.399-60.601,135-135,135l-30-25.668V273.15l30-31.25
-       C451.399,241.9,512,302.499,512,376.9z" />
-          <path style="fill:#FEDB41;" d="M377,241.9c-74.399,0-135,60.599-135,135c0,74.399,60.601,135,135,135V241.9z" />
-        </svg> -->
-
         <svg version="1.1" id="pharmacy" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-     <polygon style="fill:#EF5959;" points="512,159.869 352.131,159.869 352.131,0 159.869,0 159.869,159.869 0,159.869 0,352.131 
-       159.869,352.131 159.869,512 352.131,512 352.131,352.131 512,352.131 "/>
-      </svg>
+          viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+          <polygon style="fill:#EF5959;" points="512,159.869 352.131,159.869 352.131,0 159.869,0 159.869,159.869 0,159.869 0,352.131 
+       159.869,352.131 159.869,512 352.131,512 352.131,352.131 512,352.131 " />
+        </svg>
 
       </div>
-      <form class="logform" [formGroup]="loginForm">
+      <form class="logform" [formGroup]="loginForm" *ngIf="phoneshow">
         <div class="row">
           <div class="form-group">
             <label class="phone">Phone No.</label>
@@ -48,11 +28,27 @@
             <p class="errormessage" *ngIf="loginFormErrors.phoneNumber.required || (loginForm.controls.phoneNumber.pristine && submitted)">Number
               can not be empty</p>
           </div>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn sigin" (click)="saveLoginForm()">Log in</button>
+          <div class="text-center">
+            <button type="submit" class="btn sigin" (click)="saveLoginForm()">Log in</button>
+          </div>
         </div>
       </form>
+
+      <form class="logform" [formGroup]="userForm" *ngIf="nameshow">
+        <div class="row">
+          <div class="form-group">
+            <label class="phone">Name</label>
+            <input type="text" class="form-control phoneinput" id="name" formControlName="name" >
+            <p class="errormessage" *ngIf="userFormErrors.name.required || (userForm.controls.name.pristine && submitted)">Name can not be empty</p>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn sigin" (click)="saveUserForm()">Submit</button>
+          </div>
+        </div>
+       
+      </form>
+
+
     </div>
   </div>
 </div>
