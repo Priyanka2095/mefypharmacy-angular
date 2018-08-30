@@ -21,6 +21,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TagInputModule } from 'ngx-chips';
 import { TypeaheadModule } from 'ngx-bootstrap';
+import { TooltipModule } from 'ng2-tooltip-directive';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { TypeaheadModule } from 'ngx-bootstrap';
     TextMaskModule,
     NgxSpinnerModule,
     NgxPaginationModule,
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    TooltipModule
   ],
   providers: [UserService,SharedService,PharmacyService,MedicineService],
   bootstrap: [AppComponent]

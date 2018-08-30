@@ -273,7 +273,7 @@
               <td>{{list.name}}</td>
               <td>{{list.form}}</td>
               <td>{{list.rxname}}</td>
-              <td>{{list.description}}</td>
+              <td><span tooltip="{{list.description}}" placement="right" >{{list.description.substring(0,12)}}</span></td>              
               <td>{{list.manufacturer?.gstin}}</td>
               <td>{{list.drugtype.type}}</td>
               <td>{{list.condition}}</td>
