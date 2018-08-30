@@ -16,12 +16,26 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginFormErrors: any;
+  public nameshow: boolean = false;
+  public phoneshow: boolean = true;
+  userForm: FormGroup;
+  userFormErrors: any;
+  userData: any;
   submitted: boolean = false; //SHOW ERROR,IF INVALID FORM IS SUBMITTED
   public mask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] // Phone number validation 
 
-  constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService, public pharmacyService: PharmacyService, private toastr: ToastrService,private spinner: NgxSpinnerService) {
+  constructor(private formBuilder: FormBuilder, public userService: UserService, private router: Router, private sharedService: SharedService, public pharmacyService: PharmacyService, private toastr: ToastrService, private spinner: NgxSpinnerService) {
     this.loginFormErrors = {
       phoneNumber: {},
+      // name: {}
+    };
+    this.sharedService.userNumber.subscribe(data => {
+      console.log(data);
+      this.userData = data;   // STORED LOGIN USER PHONENUMBER
+
+    })
+    this.userFormErrors = {
+      name: {},
     };
   }
 
@@ -30,6 +44,11 @@ export class LoginComponent implements OnInit {
 
     this.loginForm.valueChanges.subscribe(() => {
       this.onLoginFormValuesChanged();
+    });
+    this.userForm = this.createuserform()
+
+    this.userForm.valueChanges.subscribe(() => {
+      this.onUserFormValuesChanged();
     });
   }
 
@@ -49,9 +68,31 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+   /*************************** IT CATCHES ALL CHANGES IN FORM***********************/
+   onUserFormValuesChanged() {
+    for (const field in this.userFormErrors) {
+      if (!this.userFormErrors.hasOwnProperty(field)) {
+        continue;
+      }
+      // Clear previous errors
+      this.userFormErrors[field] = {};
+      // Get the control
+      const control = this.userForm.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        this.userFormErrors[field] = control.errors;
+      }
+    }
+  }
   createLoginForm() {
     return this.formBuilder.group({
-      phoneNumber: ['', Validators.required]
+      phoneNumber: ['', Validators.required],
+      // name: ['', Validators.required]
+    });
+  }
+  createuserform() {
+    return this.formBuilder.group({
+      name: ['', Validators.required],
     });
   }
   /*******************CREATE LOGIN ***************************/
@@ -71,7 +112,7 @@ export class LoginComponent implements OnInit {
         if (result.exists == true) {
           localStorage.setItem('phoneNumber', this.loginForm.value.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
           let data = {
-            user: this.loginForm.value.phoneNumber
+            user: this.loginForm.value.phoneNumber,
           }
           /****************CHECK PHARMACY EXIST WITH USER PHONENUMBER OR NOT***************/
           this.userService.checkPharmacy(data).subscribe(data => {
@@ -93,8 +134,14 @@ export class LoginComponent implements OnInit {
           )
         }
         else {
-
-          this.router.navigate(['/user'])
+          this.nameshow = true;
+          this.phoneshow = false;
+          this.submitted=false;
+          this.spinner.hide(); /**HIDE LOADER */
+          this.toastr.success('Phone Number registered successfully !', 'Follow steps to complete registration', {
+            timeOut: 5000
+          });
+          // this.router.navigate(['/user'])
         }
       },
         err => {
@@ -105,10 +152,43 @@ export class LoginComponent implements OnInit {
 
     }
   }
-  // SHOW  TOAST NOTIFICTATION,
-  showError() {
-    this.toastr.error('Server Error!', 'Major Error', {
+
+  /**************************NEW USER FORM**************************************** */
+  saveUserForm() {
+    console.log(this.userForm.value);
+    this.submitted = true;
+    // STOP  HERE IF FORM IS INVALID
+    if (this.userForm.valid) {
+      console.log(this.userForm.value);
+      this.spinner.show(); /**SHOW LOADER */
+      var data: any = {
+        phoneNumber: this.userData.phoneNumber,
+        name: this.userForm.value.name
+      }
+      this.userService.newUser(data).subscribe(data => {
+        console.log(data)
+        localStorage.setItem('phoneNumber', this.userData.phoneNumber);// SET PHONENUMBER IN LOCAL STORAGE
+        this.showSuccess();
+        this.sharedService.userInfo(data);
+        this.router.navigate(['/createpharmacy'])
+        this.spinner.hide(); /**HIDE LOADER */
+      },
+        err => {
+          this.showError();
+          this.spinner.hide(); /**HIDE LOADER */
+        })
+    }
+  }
+  /****************************SHOW TOAST NOTIFICATION********************/
+  showSuccess() {
+    this.toastr.success('User created!', 'Toastr fun!', {
     });
   }
+    // SHOW  TOAST NOTIFICTATION,
+    showError() {
+      this.toastr.error('Server Error!', 'Major Error', {
+      });
+    }
+  
 }
 
