@@ -269,7 +269,7 @@
               <th>Substitute</th>
               <th>GST Rate</th>
             </tr>
-            <tr *ngFor="let list of medicineList | paginate: { id: 'medicinePagination',itemsPerPage: 2, currentPage: medicineMasterPage }  ">
+            <tr *ngFor="let list of medicineList  | paginate: { id: 'medicinePagination',itemsPerPage: 2, currentPage: medicineMasterPage };let i=index  ">
               <td>{{list.name}}</td>
               <td>{{list.form}}</td>
               <td>{{list.rxname}}</td>
@@ -282,7 +282,7 @@
               <td>{{list.strength}}</td>
               <td>{{list.unit}}</td>
               <td>{{list.quantity}}</td>
-              <td>{{list?.substitute}}</td>
+              <td><p *ngFor="let li of list.substitutes; let i=index">{{li?.name}} {{i === list.substitutes.length - 1 ? '' : ', '}}</p></td>
               <td>{{list.gstrate}}</td>
             </tr>
           </table>

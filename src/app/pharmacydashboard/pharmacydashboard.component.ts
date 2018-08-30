@@ -60,10 +60,10 @@ export class PharmacydashboardComponent implements OnInit {
   medicineList: any = [];
   manuactureList: any = []
   pharmacyItemList: any = []
-  substituteList: any = [];
+  substituteItem: any = [];
   userPharmacyList: any = [];
   allUserList: any = []
-  tradelicence: any;
+  substituteList:any=[]
 
 
 
@@ -407,7 +407,7 @@ export class PharmacydashboardComponent implements OnInit {
         strength: this.medicineForm.value.strength,
         unit: this.medicineForm.value.unit,
         quantity: this.medicineForm.value.quantity,
-        substitute: this.substituteList,
+        substitute: this.substituteItem,
         gstrate: this.medicineForm.value.gstrate
       }
       console.log(data)
@@ -658,14 +658,11 @@ export class PharmacydashboardComponent implements OnInit {
   /*************************GET PHARMACY DETAIL THROUGH API CALL*************************/
   getPharmacyDetail() {
     this.spinner.show(); /**SHOW LOADER */
-    console.log("show spinner");
     this.medicineService.getPharmacy(this.selectedPharmacyId).subscribe(result => {
       console.log(result);
       let value: any = {}
       value = result
       this.pharmaData = value;
-      this.tradelicence = value.tradeLicenseId
-      console.log('this.tradelicence', this.tradelicence);
       this.spinner.hide(); /**HIDE LOADER */
     },
       err => {
@@ -745,7 +742,7 @@ export class PharmacydashboardComponent implements OnInit {
   onSubstistueAdd(evt) {
     console.log(evt)
     console.log(this.medicineForm.value)
-    this.substituteList.push(evt.medId)
+    this.substituteItem.push(evt.medId)
   }
   /***********************MEDICINE ON SELECT IN PHARMACY FORM*********/
   onMedicineSelect(evt) {
